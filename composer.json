@@ -42,8 +42,7 @@
             "Cake\\TwigView\\Test\\": "tests/",
             "App\\": "tests/test_app/",
             "TestTwigView\\": "tests/test_app/Plugin/TestTwigView/src",
-            "Modern\\": "tests/test_app/Plugin/Modern/src",
-            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+            "Modern\\": "tests/test_app/Plugin/Modern/src"
         }
     },
     "scripts": {

@@ -34,7 +34,7 @@ class TwigTemplateTaskTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'core.Authors',
+        'plugin.Cake\TwigView.Authors',
     ];
 
     /**
