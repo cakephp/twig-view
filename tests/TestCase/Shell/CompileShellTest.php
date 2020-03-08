@@ -10,7 +10,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\TestCase\Test\Shell;
+namespace Cake\TwigView\Test\TestCase\Shell;
 
 use Cake\Console\ConsoleOptionParser;
 use Cake\TestSuite\TestCase;

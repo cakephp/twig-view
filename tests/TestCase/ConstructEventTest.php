@@ -10,7 +10,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\TestCase\Test\Event;
+namespace Cake\TwigView\Test\TestCase\Event;
 
 use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\ConstructEvent;

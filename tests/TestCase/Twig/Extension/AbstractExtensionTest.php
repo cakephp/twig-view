@@ -10,7 +10,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\TestCase\Test\Twig\Extension;
+namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
 use Cake\TestSuite\TestCase;
 use Twig\TokenParser\TokenParserInterface;

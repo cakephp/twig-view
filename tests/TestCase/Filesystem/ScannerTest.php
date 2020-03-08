@@ -10,7 +10,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\TestCase\Test\Filesystem;
+namespace Cake\TwigView\Test\TestCase\Filesystem;
 
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
@@ -18,7 +18,7 @@ use Cake\TwigView\Filesystem\Scanner;
 
 /**
  * Class ScannerTest.
- * @package Cake\TwigView\TestCase\Test\Twig
+ * @package Cake\TwigView\Test\TestCase\Twig
  */
 class ScannerTest extends TestCase
 {

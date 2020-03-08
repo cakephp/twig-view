@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Cake\TwigView\TestCase\Test;
+namespace Cake\TwigView\Test\TestCase;
 
 /**
  * This file is part of TwigView.
@@ -117,7 +117,7 @@ class TwigViewTest extends TestCase
 
     /**
      * @param $name
-     * @return \Cake\TwigView\TestCase\Test\ReflectionMethod
+     * @return \Cake\TwigView\Test\TestCase\ReflectionMethod
      */
     protected static function getMethod($name)
     {
@@ -130,7 +130,7 @@ class TwigViewTest extends TestCase
 
     /**
      * @param $name
-     * @return \Cake\TwigView\TestCase\Test\ReflectionProperty
+     * @return \Cake\TwigView\Test\TestCase\ReflectionProperty
      */
     protected static function getProperty($name)
     {
