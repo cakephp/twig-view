@@ -10,31 +10,40 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig\Extension;
+namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class I18n.
+ * Class Basic.
  *
  * @internal
  */
-final class I18n extends AbstractExtension
+class PotentialDangerous extends AbstractExtension
 {
+    /**
+     * Get declared filters.
+     *
+     * @return \Twig\TwigFilter[]
+     */
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('env', 'env'),
+        ];
+    }
+
     /**
      * Get declared functions.
      *
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions(): array
+    public function getFunctions()
     {
         return [
-            new TwigFunction('__', '__'),
-            new TwigFunction('__d', '__d'),
-            new TwigFunction('__n', '__n'),
-            new TwigFunction('__x', '__x'),
-            new TwigFunction('__dn', '__dn'),
+            new TwigFunction('config', 'Cake\Core\Configure::read'),
         ];
     }
 
@@ -43,8 +52,8 @@ final class I18n extends AbstractExtension
      *
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
-        return 'i18n';
+        return 'potential_dangerous';
     }
 }

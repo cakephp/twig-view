@@ -10,40 +10,31 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig\Extension;
+namespace Cake\TwigView\Twig\Extension;
 
+use Cake\I18n\Time as CakeTime;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class Basic.
+ * Class Time.
  *
  * @internal
  */
-class PotentialDangerous extends AbstractExtension
+final class Time extends AbstractExtension
 {
-    /**
-     * Get declared filters.
-     *
-     * @return \Twig\TwigFilter[]
-     */
-    public function getFilters()
-    {
-        return [
-            new TwigFilter('env', 'env'),
-        ];
-    }
-
     /**
      * Get declared functions.
      *
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new TwigFunction('config', 'Cake\Core\Configure::read'),
+            new TwigFunction('time', function ($time = null, $timezone = null) {
+                return new CakeTime($time, $timezone);
+            }),
+            new TwigFunction('timezones', 'Cake\I18n\Time::listTimezones'),
         ];
     }
 
@@ -52,8 +43,8 @@ class PotentialDangerous extends AbstractExtension
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return 'potential_dangerous';
+        return 'time';
     }
 }

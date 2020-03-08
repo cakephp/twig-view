@@ -10,30 +10,42 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig\Node;
+namespace Cake\TwigView\Twig\Node;
 
 use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Node;
+use Twig\Node\NodeOutputInterface;
 
 /**
- * Class Element.
+ * Class Cell.
  *
  * @internal
  */
-final class Element extends Node
+final class Cell extends Node implements NodeOutputInterface
 {
+    /**
+     * Whether to assign the data or not.
+     *
+     * @var bool
+     */
+    protected $assign = false;
+
     /**
      * Constructor.
      *
+     * @param bool $assign Assign or echo.
+     * @param mixed $variable Variable to assign to.
      * @param \Twig\Node\Expression\AbstractExpression $name Name.
-     * @param \Twig\Node\Expression\AbstractExpression $data Data.
-     * @param \Twig\Node\Expression\AbstractExpression $options Options.
-     * @param int $lineno Linenumber.
-     * @param string $tag Tag.
+     * @param \Twig\Node\Expression\AbstractExpression $data Data array.
+     * @param \Twig\Node\Expression\AbstractExpression $options Options array.
+     * @param int $lineno Line number.
+     * @param string $tag Tag name.
      */
     public function __construct(
+        bool $assign,
+        $variable,
         AbstractExpression $name,
         ?AbstractExpression $data = null,
         ?AbstractExpression $options = null,
@@ -54,14 +66,18 @@ final class Element extends Node
                 'data' => $data,
                 'options' => $options,
             ],
-            [],
+            [
+                'variable' => $variable,
+            ],
             $lineno,
             $tag
         );
+
+        $this->assign = $assign;
     }
 
     /**
-     * Compile node.
+     * Compile tag.
      *
      * @param \Twig\Compiler $compiler Compiler.
      * @return void
@@ -70,7 +86,12 @@ final class Element extends Node
     {
         $compiler->addDebugInfo($this);
 
-        $compiler->raw('echo $context[\'_view\']->element(');
+        if ($this->assign) {
+            $compiler->raw('$context[\'' . $this->getAttribute('variable') . '\'] = ');
+        } else {
+            $compiler->raw('echo ');
+        }
+        $compiler->raw('$context[\'_view\']->cell(');
         $compiler->subcompile($this->getNode('name'));
 
         $data = $this->getNode('data');

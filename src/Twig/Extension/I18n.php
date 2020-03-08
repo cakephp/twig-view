@@ -10,18 +10,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig\Extension;
+namespace Cake\TwigView\Twig\Extension;
 
-use Cake\I18n\Time as CakeTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Class Time.
+ * Class I18n.
  *
  * @internal
  */
-final class Time extends AbstractExtension
+final class I18n extends AbstractExtension
 {
     /**
      * Get declared functions.
@@ -31,10 +30,11 @@ final class Time extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('time', function ($time = null, $timezone = null) {
-                return new CakeTime($time, $timezone);
-            }),
-            new TwigFunction('timezones', 'Cake\I18n\Time::listTimezones'),
+            new TwigFunction('__', '__'),
+            new TwigFunction('__d', '__d'),
+            new TwigFunction('__n', '__n'),
+            new TwigFunction('__x', '__x'),
+            new TwigFunction('__dn', '__dn'),
         ];
     }
 
@@ -45,6 +45,6 @@ final class Time extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'time';
+        return 'i18n';
     }
 }

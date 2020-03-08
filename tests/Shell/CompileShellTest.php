@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\Shell;
 
 use Cake\Console\ConsoleOptionParser;
-use Cake\TwigView\Lib\Scanner;
+use Cake\TwigView\Filesystem\Scanner;
 use Cake\TwigView\Shell\CompileShell;
 use Cake\TwigView\Test\TestCase;
 use Cake\TwigView\View\TwigView;

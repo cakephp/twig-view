@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Cake\TwigView\Event;
 
 use Cake\Event\EventListenerInterface;
-use Cake\TwigView\Lib\Twig\TokenParser;
+use Cake\TwigView\Twig\TokenParser;
 use LogicException;
 
 /**

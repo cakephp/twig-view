@@ -10,9 +10,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig\TokenParser;
+namespace Cake\TwigView\Twig\TokenParser;
 
-use Cake\TwigView\Lib\Twig\Node\Cell as CellNode;
+use Cake\TwigView\Twig\Node\Element as ElementNode;
 use Twig\Node\Node;
 use Twig\Token;
 use Twig\TokenParser\IncludeTokenParser;
@@ -22,7 +22,7 @@ use Twig\TokenParser\IncludeTokenParser;
  *
  * @internal
  */
-final class Cell extends IncludeTokenParser
+final class Element extends IncludeTokenParser
 {
     /**
      * Parse token.
@@ -33,22 +33,13 @@ final class Cell extends IncludeTokenParser
     public function parse(Token $token): Node
     {
         $stream = $this->parser->getStream();
-
-        $variable = null;
-        if ($stream->test(Token::NAME_TYPE)) {
-            $variable = $stream->expect(Token::NAME_TYPE)->getValue();
-        }
-        $assign = false;
-        if ($stream->test(Token::OPERATOR_TYPE)) {
-            $stream->expect(Token::OPERATOR_TYPE, '=');
-            $assign = true;
-        }
-
         $name = $this->parser->getExpressionParser()->parseExpression();
+
         $data = null;
         if (!$stream->test(Token::BLOCK_END_TYPE)) {
             $data = $this->parser->getExpressionParser()->parseExpression();
         }
+
         $options = null;
         if (!$stream->test(Token::BLOCK_END_TYPE)) {
             $options = $this->parser->getExpressionParser()->parseExpression();
@@ -56,16 +47,16 @@ final class Cell extends IncludeTokenParser
 
         $stream->expect(Token::BLOCK_END_TYPE);
 
-        return new CellNode($assign, $variable, $name, $data, $options, $token->getLine(), $this->getTag());
+        return new ElementNode($name, $data, $options, $token->getLine(), $this->getTag());
     }
 
     /**
-     * Tag name.
+     * Get tag name.
      *
      * @return string
      */
     public function getTag(): string
     {
-        return 'cell';
+        return 'element';
     }
 }

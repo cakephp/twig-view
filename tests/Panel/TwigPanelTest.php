@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\Panel;
 
-use Cake\TwigView\Lib\TreeScanner;
+use Cake\TwigView\Filesystem\TreeScanner;
 use Cake\TwigView\Panel\TwigPanel;
 use Cake\TwigView\Test\TestCase;
 

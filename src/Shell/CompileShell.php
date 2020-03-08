@@ -16,7 +16,7 @@ use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 use Cake\ORM\Locator\LocatorInterface;
-use Cake\TwigView\Lib\Scanner;
+use Cake\TwigView\Filesystem\Scanner;
 use Cake\TwigView\View\TwigView;
 
 /**

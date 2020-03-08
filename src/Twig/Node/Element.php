@@ -10,42 +10,30 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig\Node;
+namespace Cake\TwigView\Twig\Node;
 
 use Twig\Compiler;
 use Twig\Node\Expression\AbstractExpression;
 use Twig\Node\Expression\ArrayExpression;
 use Twig\Node\Node;
-use Twig\Node\NodeOutputInterface;
 
 /**
- * Class Cell.
+ * Class Element.
  *
  * @internal
  */
-final class Cell extends Node implements NodeOutputInterface
+final class Element extends Node
 {
-    /**
-     * Whether to assign the data or not.
-     *
-     * @var bool
-     */
-    protected $assign = false;
-
     /**
      * Constructor.
      *
-     * @param bool $assign Assign or echo.
-     * @param mixed $variable Variable to assign to.
      * @param \Twig\Node\Expression\AbstractExpression $name Name.
-     * @param \Twig\Node\Expression\AbstractExpression $data Data array.
-     * @param \Twig\Node\Expression\AbstractExpression $options Options array.
-     * @param int $lineno Line number.
-     * @param string $tag Tag name.
+     * @param \Twig\Node\Expression\AbstractExpression $data Data.
+     * @param \Twig\Node\Expression\AbstractExpression $options Options.
+     * @param int $lineno Linenumber.
+     * @param string $tag Tag.
      */
     public function __construct(
-        bool $assign,
-        $variable,
         AbstractExpression $name,
         ?AbstractExpression $data = null,
         ?AbstractExpression $options = null,
@@ -66,18 +54,14 @@ final class Cell extends Node implements NodeOutputInterface
                 'data' => $data,
                 'options' => $options,
             ],
-            [
-                'variable' => $variable,
-            ],
+            [],
             $lineno,
             $tag
         );
-
-        $this->assign = $assign;
     }
 
     /**
-     * Compile tag.
+     * Compile node.
      *
      * @param \Twig\Compiler $compiler Compiler.
      * @return void
@@ -86,12 +70,7 @@ final class Cell extends Node implements NodeOutputInterface
     {
         $compiler->addDebugInfo($this);
 
-        if ($this->assign) {
-            $compiler->raw('$context[\'' . $this->getAttribute('variable') . '\'] = ');
-        } else {
-            $compiler->raw('echo ');
-        }
-        $compiler->raw('$context[\'_view\']->cell(');
+        $compiler->raw('echo $context[\'_view\']->element(');
         $compiler->subcompile($this->getNode('name'));
 
         $data = $this->getNode('data');

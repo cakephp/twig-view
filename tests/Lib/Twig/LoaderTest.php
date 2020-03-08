@@ -10,15 +10,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Lib\Twig;
+namespace Cake\TwigView\Test\Twig;
 
-use Cake\TwigView\Lib\Twig\Loader;
 use Cake\TwigView\Test\TestCase;
+use Cake\TwigView\Twig\Loader;
 use Twig\Error\LoaderError;
 
 /**
  * Class LoaderTest.
- * @package Cake\TwigView\Test\Lib\Twig
+ * @package Cake\TwigView\Test\Twig
  */
 class LoaderTest extends TestCase
 {

@@ -14,8 +14,8 @@ namespace Cake\TwigView\Test\Event;
 
 use Cake\TwigView\Event\ConstructEvent;
 use Cake\TwigView\Event\ProfilerListener;
-use Cake\TwigView\Lib\Twig\Extension\Profiler;
 use Cake\TwigView\Test\TestCase;
+use Cake\TwigView\Twig\Extension\Profiler;
 use Cake\TwigView\View\TwigView;
 use Twig\Environment;
 

@@ -10,7 +10,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Lib\Twig;
+namespace Cake\TwigView\Twig;
 
 use Cake\Core\App;
 use Cake\Core\Plugin;

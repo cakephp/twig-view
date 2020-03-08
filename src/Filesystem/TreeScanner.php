@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Cake\TwigView\Lib;
+namespace Cake\TwigView\Filesystem;
 
 /**
  * Class TreeScanner.

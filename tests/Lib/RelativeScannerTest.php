@@ -10,15 +10,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Lib;
+namespace Cake\TwigView\Test\Filesystem;
 
 use Cake\Routing\Router;
-use Cake\TwigView\Lib\RelativeScanner;
+use Cake\TwigView\Filesystem\RelativeScanner;
 use Cake\TwigView\Test\TestCase;
 
 /**
  * Class RelativeScannerTest.
- * @package Cake\TwigView\Test\Lib\Twig
+ * @package Cake\TwigView\Test\Twig
  */
 class RelativeScannerTest extends TestCase
 {
