@@ -1,5 +1,5 @@
 {
-    "name": "wyrihaximus/twig-view",
+    "name": "cake/twig-view",
     "description": "Twig powered View for CakePHP",
     "type":"cakephp-plugin",
     "license": "MIT",
@@ -12,11 +12,16 @@
     ],
     "authors": [
         {
-            "name": "Cees-Jan Kiewiet",
-            "email": "ceesjank@gmail.com",
-            "homepage": "http://wyrihaximus.net/"
+            "name": "CakePHP Community",
+            "homepage": "https://github.com/cakephp/cakephp/graphs/contributors"
         }
     ],
+    "support": {
+        "issues": "https://github.com/cakephp/twig-view/issues",
+        "forum": "https://stackoverflow.com/tags/cakephp",
+        "irc": "irc://irc.freenode.org/cakephp",
+        "source": "https://github.com/cakephp/twig-view"
+    },
     "require": {
         "php": "^7.2",
         "cakephp/cakephp": "^4.0",
