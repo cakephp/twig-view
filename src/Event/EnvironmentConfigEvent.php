@@ -55,7 +55,3 @@ final class EnvironmentConfigEvent extends Event
         return $this;
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\EnvironmentConfigEvent', 'Wyrihaximus\TwigView\Event\EnvironmentConfigEvent');
-// phpcs:enable

@@ -49,7 +49,3 @@ final class ConstructEvent extends Event
         return $this->getData()['twig'];
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\ConstructEvent', 'Wyrihaximus\TwigView\Event\ConstructEvent');
-// phpcs:enable

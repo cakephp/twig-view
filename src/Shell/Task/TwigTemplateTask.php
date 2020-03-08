@@ -57,7 +57,3 @@ final class TwigTemplateTask extends TemplateTask
         return $content;
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Shell\Task\TwigTemplateTask', 'Wyrihaximus\TwigView\Shell\Task\TwigTemplateTask');
-// phpcs:enable

@@ -33,8 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Cake\\TwigView\\": "src/",
-            "WyriHaximus\\TwigView\\": "src/"
+            "Cake\\TwigView\\": "src/"
         }
     },
     "autoload-dev": {

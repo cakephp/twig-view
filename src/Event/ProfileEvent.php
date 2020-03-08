@@ -36,7 +36,3 @@ final class ProfileEvent extends Event
         return $this->getSubject();
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\ProfileEvent', 'Wyrihaximus\TwigView\Event\ProfileEvent');
-// phpcs:enable
