@@ -10,11 +10,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Panel;
+namespace Cake\TwigView\TestCase\Test\Panel;
 
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Filesystem\TreeScanner;
 use Cake\TwigView\Panel\TwigPanel;
-use Cake\TwigView\Test\TestCase;
 
 class TwigPanelTest extends TestCase
 {

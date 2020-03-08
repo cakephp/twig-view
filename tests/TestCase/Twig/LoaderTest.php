@@ -10,15 +10,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Twig;
+namespace Cake\TwigView\TestCase\Test\Twig;
 
-use Cake\TwigView\Test\TestCase;
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Twig\Loader;
 use Twig\Error\LoaderError;
 
 /**
  * Class LoaderTest.
- * @package Cake\TwigView\Test\Twig
+ * @package Cake\TwigView\TestCase\Test\Twig
  */
 class LoaderTest extends TestCase
 {
@@ -61,7 +61,7 @@ class LoaderTest extends TestCase
     public function testGetCacheKeyNoPlugin()
     {
         $this->assertSame(
-            PLUGIN_REPO_ROOT . 'tests/test_app/templates/layout.twig',
+            TEST_APP . 'templates/layout.twig',
             $this->Loader->getCacheKey('layout')
         );
     }
@@ -69,11 +69,11 @@ class LoaderTest extends TestCase
     public function testGetCacheKeyPlugin()
     {
         $this->assertSame(
-            PLUGIN_REPO_ROOT . 'tests/test_app/Plugin/TestTwigView/templates/twig.twig',
+            TEST_APP . 'plugins/TestTwigView/templates/twig.twig',
             $this->Loader->getCacheKey('TestTwigView.twig')
         );
         $this->assertSame(
-            PLUGIN_REPO_ROOT . 'tests/test_app/Plugin/TestTwigView/templates/twig.twig',
+            TEST_APP . 'plugins/TestTwigView/templates/twig.twig',
             $this->Loader->getCacheKey('TestTwigView.twig.twig')
         );
     }

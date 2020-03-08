@@ -10,10 +10,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Event;
+namespace Cake\TwigView\TestCase\Test\Event;
 
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\EnvironmentConfigEvent;
-use Cake\TwigView\Test\TestCase;
 
 class EnvironmentConfigEventTest extends TestCase
 {

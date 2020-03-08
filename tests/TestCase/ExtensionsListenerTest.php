@@ -10,12 +10,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Event;
+namespace Cake\TwigView\TestCase\Test\Event;
 
 use Cake\Core\Configure;
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\ConstructEvent;
 use Cake\TwigView\Event\ExtensionsListener;
-use Cake\TwigView\Test\TestCase;
 use Cake\TwigView\View\TwigView;
 use Prophecy\Argument;
 use Twig\Environment;
@@ -26,7 +26,7 @@ use Twig\Extra\Markdown\MarkdownInterface;
 
 /**
  * Class ExtensionsListenerTest.
- * @package Cake\TwigView\Test\Event
+ * @package Cake\TwigView\TestCase\Test\Event
  */
 class ExtensionsListenerTest extends TestCase
 {

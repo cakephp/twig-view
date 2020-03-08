@@ -10,12 +10,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Shell;
+namespace Cake\TwigView\TestCase\Test\Shell;
 
 use Cake\Console\ConsoleOptionParser;
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Filesystem\Scanner;
 use Cake\TwigView\Shell\CompileShell;
-use Cake\TwigView\Test\TestCase;
 use Cake\TwigView\View\TwigView;
 use Twig\Environment;
 use Twig\Template;

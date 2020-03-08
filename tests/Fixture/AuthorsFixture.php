@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Cake\TwigView\Test\Fixture;
+namespace Cake\TwigView\TestCase\Test\Fixture;
 
 use Cake\TestSuite\Fixture\TestFixture;
 

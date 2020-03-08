@@ -10,9 +10,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Twig\Extension;
+namespace Cake\TwigView\TestCase\Test\Twig\Extension;
 
-use Cake\TwigView\Test\TestCase;
+use Cake\TestSuite\TestCase;
 use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFilter;
 

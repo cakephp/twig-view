@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Cake\TwigView\Test;
+namespace Cake\TwigView\TestCase\Test;
 
 /**
  * This file is part of TwigView.
@@ -16,6 +16,7 @@ use App\Exception\MissingSomethingException;
 use App\View\AppView;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\ConstructEvent;
 use Cake\TwigView\Event\EnvironmentConfigEvent;
 use Cake\TwigView\View\TwigView;
@@ -116,7 +117,7 @@ class TwigViewTest extends TestCase
 
     /**
      * @param $name
-     * @return \Cake\TwigView\Test\ReflectionMethod
+     * @return \Cake\TwigView\TestCase\Test\ReflectionMethod
      */
     protected static function getMethod($name)
     {
@@ -129,7 +130,7 @@ class TwigViewTest extends TestCase
 
     /**
      * @param $name
-     * @return \Cake\TwigView\Test\ReflectionProperty
+     * @return \Cake\TwigView\TestCase\Test\ReflectionProperty
      */
     protected static function getProperty($name)
     {

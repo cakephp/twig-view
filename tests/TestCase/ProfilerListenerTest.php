@@ -10,25 +10,24 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Event;
+namespace Cake\TwigView\TestCase\Test\Event;
 
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\ConstructEvent;
-use Cake\TwigView\Event\TokenParsersListener;
-use Cake\TwigView\Test\TestCase;
+use Cake\TwigView\Event\ProfilerListener;
+use Cake\TwigView\Twig\Extension\Profiler;
 use Cake\TwigView\View\TwigView;
-use Prophecy\Argument;
 use Twig\Environment;
-use Twig\TokenParser\IncludeTokenParser;
 
 /**
- * Class TokenParserListenerTest.
- * @package Cake\TwigView\Test\Event
+ * Class ProfilerListenerTest.
+ * @package Cake\TwigView\TestCase\Test\Event
  */
-class TokenParsersListenerTest extends TestCase
+class ProfilerListenerTest extends TestCase
 {
     public function testImplementedEvents()
     {
-        $eventsList = (new TokenParsersListener())->implementedEvents();
+        $eventsList = (new ProfilerListener())->implementedEvents();
         $this->assertIsArray($eventsList);
         $this->assertSame(1, count($eventsList));
     }
@@ -36,9 +35,9 @@ class TokenParsersListenerTest extends TestCase
     public function testConstruct()
     {
         $twig = $this->prophesize(Environment::class);
-        $twig->addTokenParser(Argument::type(IncludeTokenParser::class))->shouldBeCalled();
+        $twig->hasExtension(Profiler::class)->shouldBeCalled()->willReturn(true);
 
         $twigView = new TwigView();
-        (new TokenParsersListener())->construct(ConstructEvent::create($twigView, $twig->reveal()));
+        (new ProfilerListener())->construct(ConstructEvent::create($twigView, $twig->reveal()));
     }
 }

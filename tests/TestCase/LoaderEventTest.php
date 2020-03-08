@@ -10,10 +10,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cake\TwigView\Test\Event;
+namespace Cake\TwigView\TestCase\Test\Event;
 
+use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\LoaderEvent;
-use Cake\TwigView\Test\TestCase;
 use Cake\TwigView\Twig\Loader;
 use Twig\Loader\LoaderInterface;
 
