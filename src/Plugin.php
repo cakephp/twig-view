@@ -52,7 +52,3 @@ class Plugin extends BasePlugin
         }
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Plugin', 'Wyrihaximus\TwigView\Plugin');
-// phpcs:enable

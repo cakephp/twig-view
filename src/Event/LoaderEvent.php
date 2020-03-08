@@ -54,7 +54,3 @@ final class LoaderEvent extends Event
         return $this->getLoader();
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\LoaderEvent', 'Wyrihaximus\TwigView\Event\LoaderEvent');
-// phpcs:enable

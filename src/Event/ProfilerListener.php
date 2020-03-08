@@ -52,7 +52,3 @@ final class ProfilerListener implements EventListenerInterface
         EventManager::instance()->dispatch(ProfileEvent::create($profile));
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\ProfilerListener', 'Wyrihaximus\TwigView\Event\ProfilerListener');
-// phpcs:enable

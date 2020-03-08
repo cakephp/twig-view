@@ -27,7 +27,3 @@ final class TwigPanel extends DebugPanel
         ];
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Panel\TwigPanel', 'Wyrihaximus\TwigView\Panel\TwigPanel');
-// phpcs:enable

@@ -70,11 +70,6 @@ class TwigView extends View
      */
     public function initialize(): void
     {
-        if (!Configure::check('TwigView') && Configure::check('Wyrihaximus.TwigView')) {
-            Configure::write('TwigView', Configure::read('Wyrihaximus.TwigView'));
-            deprecationWarning('Use of configure key `Wyrihaximus.TwigView` is deprecated, use `TwigView` instead.');
-        }
-
         $this->twig = new Environment($this->getLoader(), $this->resolveConfig());
 
         $this->getEventManager()->dispatch(ConstructEvent::create($this, $this->twig));
@@ -249,7 +244,3 @@ class TwigView extends View
         return false;
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\View\TwigView', 'Wyrihaximus\TwigView\View\TwigView');
-// phpcs:enable

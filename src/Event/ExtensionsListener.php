@@ -124,7 +124,3 @@ final class ExtensionsListener implements EventListenerInterface
         // @codingStandardsIgnoreEnd
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\ExtensionsListener', 'Wyrihaximus\TwigView\Event\ExtensionsListener');
-// phpcs:enable

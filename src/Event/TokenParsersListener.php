@@ -50,7 +50,3 @@ final class TokenParsersListener implements EventListenerInterface
         }
     }
 }
-
-// phpcs:disable
-class_alias('Cake\TwigView\Event\TokenParsersListener', 'Wyrihaximus\TwigView\Event\TokenParsersListener');
-// phpcs:enable
