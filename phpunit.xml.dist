@@ -2,7 +2,7 @@
 <phpunit bootstrap="tests/bootstrap.php" colors="true">
     <testsuites>
         <testsuite name="twig-view">
-            <directory>tests/</directory>
+            <directory>tests/TestCase</directory>
         </testsuite>
     </testsuites>
     <filter>
