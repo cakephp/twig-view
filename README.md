@@ -14,7 +14,7 @@ In addition to enabling the use of most of Twig's features, the plugin is tightl
 To install via [Composer](http://getcomposer.org/), use the command below.
 
 ```bash
-composer require wyrihaximus/twig-view
+composer require cakephp/twig-view
 ```
 
 ## Configuration ##
