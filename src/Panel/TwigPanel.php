@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Panel;
 
-use Cake\TwigView\Lib\TreeScanner;
+use Cake\TwigView\Filesystem\TreeScanner;
 use DebugKit\DebugPanel;
 
 final class TwigPanel extends DebugPanel

@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\Event;
 
 use Cake\TwigView\Event\LoaderEvent;
-use Cake\TwigView\Lib\Twig\Loader;
 use Cake\TwigView\Test\TestCase;
+use Cake\TwigView\Twig\Loader;
 use Twig\Loader\LoaderInterface;
 
 class LoaderEventTest extends TestCase

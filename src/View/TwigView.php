@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 use Cake\TwigView\Event\ConstructEvent;
 use Cake\TwigView\Event\EnvironmentConfigEvent;
 use Cake\TwigView\Event\LoaderEvent;
-use Cake\TwigView\Lib\Twig\Loader;
+use Cake\TwigView\Twig\Loader;
 use Cake\View\View;
 use Exception;
 use Twig\Environment;

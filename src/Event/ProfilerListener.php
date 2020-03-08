@@ -14,7 +14,7 @@ namespace Cake\TwigView\Event;
 
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
-use Cake\TwigView\Lib\Twig\Extension;
+use Cake\TwigView\Twig\Extension;
 use Twig\Profiler\Profile;
 
 /**

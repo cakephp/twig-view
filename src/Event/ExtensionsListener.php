@@ -14,7 +14,7 @@ namespace Cake\TwigView\Event;
 
 use Cake\Core\Configure;
 use Cake\Event\EventListenerInterface;
-use Cake\TwigView\Lib\Twig\Extension;
+use Cake\TwigView\Twig\Extension;
 use Jasny\Twig\ArrayExtension;
 use Jasny\Twig\DateExtension;
 use Jasny\Twig\PcreExtension;
