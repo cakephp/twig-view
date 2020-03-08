@@ -18,7 +18,6 @@ use Twig\Error\LoaderError;
 
 /**
  * Class LoaderTest.
- * @package Cake\TwigView\Test\TestCase\Twig
  */
 class LoaderTest extends TestCase
 {

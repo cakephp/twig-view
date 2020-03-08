@@ -23,7 +23,6 @@ use Twig\TemplateWrapper;
 
 /**
  * Class CompileShell.
- * @package Cake\TwigView\Shell
  */
 class CompileShellTest extends TestCase
 {

@@ -22,7 +22,6 @@ use Twig\TokenParser\IncludeTokenParser;
 
 /**
  * Class TokenParserListenerTest.
- * @package Cake\TwigView\Test\TestCase\Event
  */
 class TokenParsersListenerTest extends TestCase
 {

@@ -18,7 +18,6 @@ use Cake\TwigView\Filesystem\RelativeScanner;
 
 /**
  * Class RelativeScannerTest.
- * @package Cake\TwigView\Test\TestCase\Twig
  */
 class RelativeScannerTest extends TestCase
 {

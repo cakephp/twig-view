@@ -26,7 +26,6 @@ use Twig\Extra\Markdown\MarkdownInterface;
 
 /**
  * Class ExtensionsListenerTest.
- * @package Cake\TwigView\Test\TestCase\Event
  */
 class ExtensionsListenerTest extends TestCase
 {

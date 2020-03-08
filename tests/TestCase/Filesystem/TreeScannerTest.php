@@ -18,7 +18,6 @@ use Cake\TwigView\Filesystem\TreeScanner;
 
 /**
  * Class TreeScannerTest.
- * @package Cake\TwigView\Test\TestCase\Twig
  */
 class TreeScannerTest extends TestCase
 {

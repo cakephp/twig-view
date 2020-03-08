@@ -21,7 +21,6 @@ use Twig\Environment;
 
 /**
  * Class ProfilerListenerTest.
- * @package Cake\TwigView\Test\TestCase\Event
  */
 class ProfilerListenerTest extends TestCase
 {
