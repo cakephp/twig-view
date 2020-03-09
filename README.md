@@ -1,7 +1,7 @@
 # TwigView plugin for CakePHP #
 
 [![Build Status](https://img.shields.io/travis/cakephp/twig-view?style=flat-square)](https://travis-ci.com/cakephp/twig-view)
-[![Latest Stable Version](https://img.shields.io/github/v/release/cakephp/twig-view?sort=semver&style=flat-square)](https://packagist.org/packages/wyrihaximus/twig-view)
+[![Latest Stable Version](https://img.shields.io/github/v/release/cakephp/twig-view?sort=semver&style=flat-square)](https://packagist.org/packages/cakephp/twig-view)
 [![Total Downloads](https://img.shields.io/packagist/dt/cakephp/twig-view?style=flat-square)](https://packagist.org/packages/cakephp/twig-view/stats)
 [![Code Coverage](https://img.shields.io/coveralls/cakephp/twig-view/master.svg?style=flat-square)](https://coveralls.io/r/cakephp/twig-view?branch=master)
 
