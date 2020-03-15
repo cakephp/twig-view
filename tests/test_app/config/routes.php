@@ -15,16 +15,3 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-
-namespace TestApp\View\Helper;
-
-use Cake\View\Helper;
-use TestApp\Exception\MissingSomethingException;
-
-class TestSecondHelper extends Helper
-{
-    public function bogus()
-    {
-        throw new MissingSomethingException('Something is missing');
-    }
-}

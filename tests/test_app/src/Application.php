@@ -16,15 +16,28 @@ declare(strict_types=1);
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace TestApp\View\Helper;
+namespace TestApp;
 
-use Cake\View\Helper;
-use TestApp\Exception\MissingSomethingException;
+use Cake\Http\BaseApplication;
+use Cake\Http\MiddlewareQueue;
 
-class TestSecondHelper extends Helper
+class Application extends BaseApplication
 {
-    public function bogus()
+    /**
+     * @return void
+     */
+    public function bootstrap(): void
     {
-        throw new MissingSomethingException('Something is missing');
+        parent::bootstrap();
+    }
+
+    /**
+     * @param \Cake\Http\MiddlewareQueue $middlewareQueue
+     *
+     * @return \Cake\Http\MiddlewareQueue
+     */
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
+    {
+        return $middlewareQueue;
     }
 }

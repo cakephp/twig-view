@@ -16,7 +16,7 @@ declare(strict_types=1);
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace App\View;
+namespace TestApp\View;
 
 class AppView extends \Cake\TwigView\View\TwigView
 {

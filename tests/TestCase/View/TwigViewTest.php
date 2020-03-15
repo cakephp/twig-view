@@ -18,14 +18,14 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase;
 
-use App\Exception\MissingSomethingException;
-use App\View\AppView;
 use Cake\Core\Configure;
 use Cake\Event\EventManager;
 use Cake\TestSuite\TestCase;
 use Cake\TwigView\Event\ConstructEvent;
 use Cake\TwigView\Event\EnvironmentConfigEvent;
 use Cake\TwigView\View\TwigView;
+use TestApp\Exception\MissingSomethingException;
+use TestApp\View\AppView;
 use Twig\Environment;
 use Twig\Error\SyntaxError;
 

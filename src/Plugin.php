@@ -18,11 +18,13 @@ declare(strict_types=1);
 
 namespace Cake\TwigView;
 
+use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Event\EventManager;
+use Cake\TwigView\Command\CompileCommand;
 
 /**
  * Plugin class for Cake\TwigView.
@@ -37,10 +39,7 @@ class Plugin extends BasePlugin
     protected $routesEnabled = false;
 
     /**
-     * Load all the plugin configuration and bootstrap logic.
-     *
-     * @param \Cake\Core\PluginApplicationInterface $app The host application
-     * @return void
+     * @inheritDoc
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
@@ -56,5 +55,15 @@ class Plugin extends BasePlugin
             ));
             EventManager::instance()->on(new Event\ProfilerListener());
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function console(CommandCollection $commands): CommandCollection
+    {
+        $commands->add('twig-view compile', CompileCommand::class);
+
+        return $commands;
     }
 }
