@@ -56,9 +56,9 @@ class CompileCommand extends BaseCommand
      *
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console logger
-     * @return int|null|void
+     * @return int
      */
-    protected function executeAll(Arguments $args, ConsoleIo $io)
+    protected function executeAll(Arguments $args, ConsoleIo $io): int
     {
         $io->info('Compiling all templates');
 
@@ -79,9 +79,9 @@ class CompileCommand extends BaseCommand
      *
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console logger
-     * @return int|null|void
+     * @return int
      */
-    protected function executePlugin(Arguments $args, ConsoleIo $io)
+    protected function executePlugin(Arguments $args, ConsoleIo $io): int
     {
         $plugin = $args->getArgumentAt(1);
         if ($plugin === null) {
@@ -105,9 +105,9 @@ class CompileCommand extends BaseCommand
      *
      * @param \Cake\Console\Arguments $args The command arguments
      * @param \Cake\Console\ConsoleIo $io The console logger
-     * @return int|null|void
+     * @return int
      */
-    protected function executeFile(Arguments $args, ConsoleIo $io)
+    protected function executeFile(Arguments $args, ConsoleIo $io): int
     {
         $filename = $args->getArgumentAt(1);
         if ($filename === null) {
