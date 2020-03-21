@@ -44,7 +44,7 @@
     "autoload-dev": {
         "psr-4": {
             "Cake\\TwigView\\Test\\": "tests/",
-            "App\\": "tests/test_app/src/"
+            "TestApp\\": "tests/test_app/src/"
         }
     },
     "scripts": {

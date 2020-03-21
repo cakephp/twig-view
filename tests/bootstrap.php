@@ -36,6 +36,7 @@ define('TMP', sys_get_temp_dir() . '/TwigViewTmp/');
 define('CACHE', sys_get_temp_dir() . '/TwigViewTmp/cache/');
 define('PLUGIN_REPO_ROOT', dirname(__DIR__) . DS);
 define('TEST_APP', PLUGIN_REPO_ROOT . 'tests/test_app/');
+define('CONFIG', TEST_APP . 'config' . DS);
 
 $fs = new Filesystem();
 $fs->mkdir(TMP . 'cache/models', 0777);
@@ -50,16 +51,13 @@ ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 
 Plugin::getCollection()->add(new \Cake\TwigView\Plugin());
 
-Configure::write(
-    'App',
-    [
-        'namespace' => 'App',
-        'paths' => [
-            'plugins' => [TEST_APP . 'plugins' . DS],
-            'templates' => [TEST_APP . 'templates' . DS],
-        ],
-    ]
-);
+Configure::write('App', [
+    'namespace' => 'TestApp',
+    'paths' => [
+        'plugins' => [TEST_APP . 'plugins' . DS],
+        'templates' => [TEST_APP . 'templates' . DS],
+    ],
+]);
 
 $cache = [
     'default' => [
