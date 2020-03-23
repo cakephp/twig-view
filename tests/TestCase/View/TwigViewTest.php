@@ -89,10 +89,7 @@ class TwigViewTest extends TestCase
         $output = 'foo:bar with a beer';
         $filename = 'cakephp';
 
-        $twig = $this->prophesize(Environment::class);
-
         $view = new TwigView();
-        $view->setTwig($twig->reveal());
         $renderedView = $view->render($filename);
 
         self::assertSame($output, $renderedView);
