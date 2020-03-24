@@ -105,16 +105,6 @@ class TwigView extends View
     }
 
     /**
-     * @param \Twig\Environment $twig Twig environment.
-     * @return void
-     * @internal
-     */
-    public function setTwig(Environment $twig): void
-    {
-        $this->twig = $twig;
-    }
-
-    /**
      * @return array
      */
     protected function resolveConfig(): array
