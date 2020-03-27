@@ -23,11 +23,11 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class Strings.
+ * Class StringsExtension.
  *
  * @internal
  */
-final class Strings extends AbstractExtension
+final class StringsExtension extends AbstractExtension
 {
     /**
      * Get declared filters.
@@ -79,6 +79,6 @@ final class Strings extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'string';
+        return 'twigview-string';
     }
 }

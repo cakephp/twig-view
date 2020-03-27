@@ -19,15 +19,15 @@ declare(strict_types=1);
 namespace Cake\TwigView\Twig\Extension;
 
 use DebugKit\DebugTimer;
-use Twig\Extension\ProfilerExtension;
+use Twig\Extension\ProfilerExtension as TwigProfilerExtension;
 use Twig\Profiler\Profile;
 
 /**
- * Class Basic.
+ * Class ProfilerExtension.
  *
  * @internal
  */
-final class Profiler extends ProfilerExtension
+final class ProfilerExtension extends TwigProfilerExtension
 {
     /**
      * Enter $profile.

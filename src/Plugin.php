@@ -23,7 +23,6 @@ use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\Plugin as CorePlugin;
 use Cake\Core\PluginApplicationInterface;
-use Cake\Event\EventManager;
 use Cake\TwigView\Command\CompileCommand;
 
 /**
@@ -43,9 +42,6 @@ class Plugin extends BasePlugin
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        EventManager::instance()->on(new Event\ExtensionsListener());
-        EventManager::instance()->on(new Event\TokenParsersListener());
-
         if (Configure::read('debug') && CorePlugin::isLoaded('DebugKit')) {
             Configure::write('DebugKit.panels', array_merge(
                 (array)Configure::read('DebugKit.panels'),
@@ -53,7 +49,6 @@ class Plugin extends BasePlugin
                     'Cake/TwigView.Twig',
                 ]
             ));
-            EventManager::instance()->on(new Event\ProfilerListener());
         }
     }
 

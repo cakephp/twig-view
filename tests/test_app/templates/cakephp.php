@@ -1,1 +1,0 @@
-foo:bar with a beer

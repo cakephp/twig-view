@@ -18,13 +18,13 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
-use Cake\TwigView\Twig\Extension\Basic;
+use Cake\TwigView\Twig\Extension\BasicExtension;
 
-final class BasicTest extends AbstractExtensionTest
+final class BasicExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {
-        $this->extension = new Basic();
+        $this->extension = new BasicExtension();
         parent::setUp();
     }
 

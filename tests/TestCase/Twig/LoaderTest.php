@@ -66,8 +66,8 @@ class LoaderTest extends TestCase
     public function testGetCacheKeyNoPlugin()
     {
         $this->assertSame(
-            TEST_APP . 'templates/layout.twig',
-            $this->Loader->getCacheKey('layout')
+            TEST_APP . 'templates/simple.twig',
+            $this->Loader->getCacheKey('simple')
         );
     }
 

@@ -19,14 +19,26 @@ declare(strict_types=1);
 namespace Cake\TwigView\View;
 
 use Cake\Core\Configure;
-use Cake\TwigView\Event\ConstructEvent;
-use Cake\TwigView\Event\EnvironmentConfigEvent;
-use Cake\TwigView\Event\LoaderEvent;
+use Cake\Core\Plugin;
+use Cake\TwigView\Twig\Extension;
 use Cake\TwigView\Twig\Loader;
+use Cake\TwigView\Twig\TokenParser;
+use Cake\View\Exception\MissingLayoutException;
+use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
-use Exception;
+use Jasny\Twig\ArrayExtension;
+use Jasny\Twig\DateExtension;
+use Jasny\Twig\PcreExtension;
+use Jasny\Twig\TextExtension;
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Extension\StringLoaderExtension;
+use Twig\Extra\Markdown\MarkdownExtension;
+use Twig\Extra\Markdown\MarkdownInterface;
+use Twig\Extra\Markdown\MarkdownRuntime;
 use Twig\Loader\LoaderInterface;
+use Twig\Profiler\Profile;
+use Twig\RuntimeLoader\RuntimeLoaderInterface;
 
 /**
  * Class TwigView.
@@ -38,26 +50,28 @@ class TwigView extends View
     public const ENV_CONFIG = 'TwigView.environment';
 
     /**
-     * Extension to use.
-     *
-     * @var string
+     * @inheritDoc
      */
-    protected $_ext = self::EXT;
+    protected $_ext = '.twig';
 
     /**
+     * List of extensions searched when loading templates.
+     *
      * @var string[]
      */
     protected $extensions = [
-        self::EXT,
-        '.php',
+        '.twig',
     ];
 
     /**
-     * Twig instance.
-     *
      * @var \Twig\Environment
      */
     protected $twig;
+
+    /**
+     * @var \Twig\Profiler\Profile
+     */
+    protected $profile;
 
     /**
      * Return empty string when View instance is cast to string.
@@ -76,26 +90,19 @@ class TwigView extends View
      */
     public function initialize(): void
     {
-        $this->twig = new Environment($this->getLoader(), $this->resolveConfig());
-
-        $this->getEventManager()->dispatch(ConstructEvent::create($this, $this->twig));
-
-        $this->_ext = self::EXT;
-
         parent::initialize();
+
+        $this->twig = new Environment($this->createLoader(), $this->createEnvironmentConfig());
+        $this->initializeTokenParser();
+        $this->initializeExtensions();
+
+        if (Configure::read('debug') && Plugin::isLoaded('DebugKit')) {
+            $this->initializeProfiler();
+        }
     }
 
     /**
-     * @param string $extension Extension.
-     * @return void
-     */
-    public function unshiftExtension(string $extension): void
-    {
-        array_unshift($this->extensions, $extension);
-    }
-
-    /**
-     * Get twig environment instance.
+     * Get Twig Environment instance.
      *
      * @return \Twig\Environment
      */
@@ -105,9 +112,31 @@ class TwigView extends View
     }
 
     /**
+     * Gets Twig Profile if profiler enabled.
+     *
+     * @return \Twig\Profiler\Profile
+     */
+    public function getProfile(): Profile
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Creates the Twig LoaderInterface instance.
+     *
+     * @return \Twig\Loader\LoaderInterface
+     */
+    protected function createLoader(): LoaderInterface
+    {
+        return new Loader();
+    }
+
+    /**
+     * Creates the Twig Environment configuration.
+     *
      * @return array
      */
-    protected function resolveConfig(): array
+    protected function createEnvironmentConfig(): array
     {
         $debug = Configure::read('debug', false);
 
@@ -122,110 +151,150 @@ class TwigView extends View
             $config['cache'] = CACHE . 'twigView' . DS;
         }
 
-        $configEvent = EnvironmentConfigEvent::create($config);
-        $this->getEventManager()->dispatch($configEvent);
-
-        return $configEvent->getConfig();
+        return $config;
     }
 
     /**
-     * Create the template loader.
+     * Adds custom Twig token parsers.
      *
-     * @return \Twig\Loader\LoaderInterface
+     * @return void
      */
-    protected function getLoader(): LoaderInterface
+    protected function initializeTokenParser(): void
     {
-        $event = LoaderEvent::create(new Loader());
-        $this->getEventManager()->dispatch($event);
-
-        return $event->getResultLoader();
+        $this->twig->addTokenParser(new TokenParser\CellParser());
+        $this->twig->addTokenParser(new TokenParser\ElementParser());
     }
 
+    // phpcs:disable CakePHP.Commenting.FunctionComment.InvalidReturnVoid
+
     /**
-     * Render the template.
+     * Adds Twig extensions.
      *
-     * @param string $viewFile Template file.
-     * @param array $data Data that can be used by the template.
-     * @throws \Exception
-     * @return string
+     * @return void
      */
-    protected function _render(string $viewFile, array $data = []): string
+    protected function initializeExtensions(): void
     {
-        if (empty($data)) {
-            $data = $this->viewVars;
-        }
+        // Twig core extensions
+        $this->twig->addExtension(new StringLoaderExtension());
+        $this->twig->addExtension(new DebugExtension());
 
-        if (substr($viewFile, -3) === 'php') {
-            $out = parent::_render($viewFile, $data);
-        } else {
-            $data = array_merge(
-                $data,
-                iterator_to_array($this->helpers()->getIterator()),
-                [
-                    '_view' => $this,
-                ]
-            );
+        // CakePHP bridging extensions
+        $this->twig->addExtension(new Extension\ArraysExtension());
+        $this->twig->addExtension(new Extension\BasicExtension());
+        $this->twig->addExtension(new Extension\ConfigureExtension());
+        $this->twig->addExtension(new Extension\I18nExtension());
+        $this->twig->addExtension(new Extension\InflectorExtension());
+        $this->twig->addExtension(new Extension\NumberExtension());
+        $this->twig->addExtension(new Extension\StringsExtension());
+        $this->twig->addExtension(new Extension\TimeExtension());
+        $this->twig->addExtension(new Extension\UtilsExtension());
 
-            try {
-                $out = $this->getTwig()->load($viewFile)->render($data);
-            } catch (Exception $e) {
-                $previous = $e->getPrevious();
+        // Markdown extension
+        if (Configure::read('TwigView.markdown.engine') instanceof MarkdownInterface) {
+            $engine = Configure::read('TwigView.markdown.engine');
+            $this->twig->addExtension(new MarkdownExtension());
 
-                if ($previous !== null && $previous instanceof Exception) {
-                    throw $previous;
-                } else {
-                    throw $e;
+            $this->twig->addRuntimeLoader(new class ($engine) implements RuntimeLoaderInterface {
+                /**
+                 * @var \Twig\Extra\Markdown\MarkdownInterface
+                 */
+                private $engine;
+
+                /**
+                 * @param \Twig\Extra\Markdown\MarkdownInterface $engine MarkdownInterface instance
+                 */
+                public function __construct(MarkdownInterface $engine)
+                {
+                    $this->engine = $engine;
                 }
-            }
+
+                /**
+                 * @param string $class FQCN
+                 * @return object|null
+                 */
+                public function load($class)
+                {
+                    if ($class === MarkdownRuntime::class) {
+                        return new MarkdownRuntime($this->engine);
+                    }
+
+                    return null;
+                }
+            });
         }
 
-        return $out;
+        // jasny/twig-extensions
+        $this->twig->addExtension(new DateExtension());
+        $this->twig->addExtension(new ArrayExtension());
+        $this->twig->addExtension(new PcreExtension());
+        $this->twig->addExtension(new TextExtension());
+    }
+
+    // phpcs:enable
+
+    /**
+     * Initializes Twig profiler extension.
+     *
+     * @return void
+     */
+    protected function initializeProfiler(): void
+    {
+        $this->profile = new Profile();
+        $this->twig->addExtension(new Extension\ProfilerExtension($this->profile));
     }
 
     /**
-     * @param string|null $name Template name.
-     * @throws \Exception
-     * @return string
+     * @inheritDoc
+     */
+    protected function _render(string $templateFile, array $data = []): string
+    {
+        $data = array_merge(
+            empty($data) ? $this->viewVars : $data,
+            iterator_to_array($this->helpers()->getIterator()),
+            [
+                '_view' => $this,
+            ]
+        );
+
+        return $this->getTwig()->load($templateFile)->render($data);
+    }
+
+    /**
+     * @inheritDoc
      */
     protected function _getTemplateFileName(?string $name = null): string
     {
-        $rethrow = new Exception('You\'re not supposed to get here');
         foreach ($this->extensions as $extension) {
             $this->_ext = $extension;
             try {
                 return parent::_getTemplateFileName($name);
-            } catch (Exception $exception) {
-                $rethrow = $exception;
+            } catch (MissingTemplateException $exception) {
+                $missingException = $exception;
             }
         }
 
-        throw $rethrow;
+        throw $missingException ?? new MissingTemplateException($name ?? $this->getTemplate());
     }
 
     /**
-     * @param string|null $name Layout name.
-     * @throws \Exception
-     * @return string
+     * @inheritDoc
      */
     protected function _getLayoutFileName(?string $name = null): string
     {
-        $rethrow = new Exception('You\'re not supposed to get here');
         foreach ($this->extensions as $extension) {
             $this->_ext = $extension;
             try {
                 return parent::_getLayoutFileName($name);
-            } catch (Exception $exception) {
-                $rethrow = $exception;
+            } catch (MissingLayoutException $exception) {
+                $missingException = $exception;
             }
         }
 
-        throw $rethrow;
+        throw $missingException ?? new MissingLayoutException($name ?? $this->getLayout());
     }
 
     /**
-     * @param string $name Element name.
-     * @param bool $pluginCheck Whether to check within plugin.
-     * @return string|false
+     * @inheritDoc
      */
     protected function _getElementFileName(string $name, bool $pluginCheck = true)
     {

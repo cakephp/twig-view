@@ -20,42 +20,31 @@ namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 /**
- * Class Number.
+ * Class UtilsExtension.
  *
  * @internal
  */
-final class Number extends AbstractExtension
+final class UtilsExtension extends AbstractExtension
 {
     /**
-     * Get declared functions.
+     * Get declared filters.
      *
      * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {
         return [
-            new TwigFilter('toReadableSize', 'Cake\I18n\Number::toReadableSize'),
-            new TwigFilter('toPercentage', 'Cake\I18n\Number::toPercentage'),
-            new TwigFilter('number_format', 'Cake\I18n\Number::format'),
-            new TwigFilter('formatDelta', 'Cake\I18n\Number::formatDelta'),
-            new TwigFilter('currency', 'Cake\I18n\Number::currency'),
-            new TwigFilter('format', 'Cake\I18n\Number::format'),
-        ];
-    }
-
-    /**
-     * Get declared functions.
-     *
-     * @return \Twig\TwigFunction[]
-     */
-    public function getFunctions(): array
-    {
-        return [
-            new TwigFunction('defaultCurrency', 'Cake\I18n\Number::defaultCurrency'),
-            new TwigFunction('number_formatter', 'Cake\I18n\Number::formatter'),
+            new TwigFilter('serialize', 'serialize'),
+            new TwigFilter('unserialize', 'unserialize'),
+            new TwigFilter('md5', 'md5'),
+            new TwigFilter('base64_encode', 'base64_encode'),
+            new TwigFilter('base64_decode', 'base64_decode'),
+            new TwigFilter('nl2br', 'nl2br'),
+            new TwigFilter('string', function ($str) {
+                return (string)$str;
+            }),
         ];
     }
 
@@ -66,6 +55,6 @@ final class Number extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'number';
+        return 'twigview-utils';
     }
 }

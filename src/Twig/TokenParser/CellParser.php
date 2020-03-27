@@ -24,11 +24,11 @@ use Twig\Token;
 use Twig\TokenParser\IncludeTokenParser;
 
 /**
- * Class Element.
+ * Class CellParser.
  *
  * @internal
  */
-final class Cell extends IncludeTokenParser
+final class CellParser extends IncludeTokenParser
 {
     /**
      * Parse token.

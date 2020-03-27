@@ -22,11 +22,11 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 /**
- * Class Arrays.
+ * Class ArraysExtension.
  *
  * @internal
  */
-final class Arrays extends AbstractExtension
+final class ArraysExtension extends AbstractExtension
 {
     /**
      * Get declared functions.
@@ -55,6 +55,6 @@ final class Arrays extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'array';
+        return 'twigview-array';
     }
 }

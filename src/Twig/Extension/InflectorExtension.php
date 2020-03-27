@@ -22,11 +22,11 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * Class Inflector.
+ * Class InflectorExtension.
  *
  * @internal
  */
-final class Inflector extends AbstractExtension
+final class InflectorExtension extends AbstractExtension
 {
     /**
      * Get filters for this extension.
@@ -56,6 +56,6 @@ final class Inflector extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'inflector';
+        return 'twigview-inflector';
     }
 }

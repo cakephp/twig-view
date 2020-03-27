@@ -18,15 +18,9 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase;
 
-use Cake\Core\Configure;
-use Cake\Event\EventManager;
 use Cake\TestSuite\TestCase;
-use Cake\TwigView\Event\ConstructEvent;
-use Cake\TwigView\Event\EnvironmentConfigEvent;
-use Cake\TwigView\View\TwigView;
-use TestApp\Exception\MissingSomethingException;
 use TestApp\View\AppView;
-use Twig\Environment;
+use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
@@ -34,141 +28,69 @@ use Twig\Error\SyntaxError;
  */
 class TwigViewTest extends TestCase
 {
-    public function testInheritance()
+    /**
+     * Test rendering simple twig template.
+     *
+     * @return void
+     */
+    public function testRenderSimpleTemplate()
     {
-        $this->assertInstanceOf('Cake\View\View', new TwigView());
-    }
+        $view = new AppView();
+        $output = $view->render('simple', false);
 
-    public function testConstruct()
-    {
-        $this->_hibernateListeners(ConstructEvent::EVENT);
-
-        $callbackFired = false;
-        $eventCallback = function ($event) use (&$callbackFired) {
-            self::assertInstanceof(Environment::class, $event->getSubject()->getTwig());
-            $callbackFired = true;
-        };
-        EventManager::instance()->on(ConstructEvent::EVENT, $eventCallback);
-
-        new TwigView();
-
-        EventManager::instance()->off(ConstructEvent::EVENT, $eventCallback);
-        $this->_wakeupListeners(ConstructEvent::EVENT);
-
-        $this->assertTrue($callbackFired);
-    }
-
-    public function testConstructConfig()
-    {
-        Configure::write(TwigView::ENV_CONFIG, [
-            'true' => true,
-        ]);
-
-        $this->_hibernateListeners(EnvironmentConfigEvent::EVENT);
-
-        $callbackFired = false;
-        $that = $this;
-        $eventCallback = function ($event) use ($that, &$callbackFired) {
-            $that->assertIsArray($event->getConfig());
-            $that->assertTrue($event->getConfig()['true']);
-
-            $callbackFired = true;
-        };
-        EventManager::instance()->on(EnvironmentConfigEvent::EVENT, $eventCallback);
-
-        new TwigView();
-
-        EventManager::instance()->off(EnvironmentConfigEvent::EVENT, $eventCallback);
-        $this->_wakeupListeners(EnvironmentConfigEvent::EVENT);
-
-        $this->assertTrue($callbackFired);
-    }
-
-    public function test_renderPhp()
-    {
-        $output = 'foo:bar with a beer';
-        $filename = 'cakephp';
-
-        $view = new TwigView();
-        $renderedView = $view->render($filename);
-
-        self::assertSame($output, $renderedView);
+        $this->assertSame('underscore_me', $output);
     }
 
     /**
-     * Tests that a twig file that throws a custom exception correctly renders the thrown exception and not a Twig one.
+     * Test rendering simple twig template with layout.
+     *
+     * @return void
      */
-    public function test_renderTwigCustomException()
+    public function testRenderSimpleTemplateWithLayout()
     {
-        $this->expectException(MissingSomethingException::class);
+        $view = new AppView();
+        $output = $view->render('simple');
+
+        $this->assertSame('underscore_me', $output);
+    }
+
+    /**
+     * Test rendering template with layout.
+     *
+     * @return void
+     */
+    public function testRenderLayoutWithElements()
+    {
+        $view = new AppView();
+        $output = $view->render('Blog/index');
+
+        $this->assertSame('blog_entry', $output);
+    }
+
+    /**
+     * Tests a twig file that throws internal exception throw a Twig exception with message.
+     *
+     * @return void
+     */
+    public function testThrowWrappedException()
+    {
+        $this->expectException(RuntimeError::class);
+        $this->expectExceptionMessage('Something is missing');
 
         $view = new AppView();
         $view->render('exception', false);
     }
 
     /**
-     * Tests that a twig file that throws a Twig exception correctly throws the twig exception and does not get caught
-     * byt the modification.
+     * Tests invalid twig template throws exception.
+     *
+     * @return void
      */
-    public function test_renderTwigTwigException()
+    public function testThrowSyntaxError()
     {
         $this->expectException(SyntaxError::class);
 
         $view = new AppView();
         $view->render('syntaxerror', false);
-    }
-
-    /**
-     * @param $name
-     * @return \Cake\TwigView\Test\TestCase\ReflectionMethod
-     */
-    protected static function getMethod($name)
-    {
-        $class = new ReflectionClass('Cake\TwigView\View\TwigView');
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-
-        return $method;
-    }
-
-    /**
-     * @param $name
-     * @return \Cake\TwigView\Test\TestCase\ReflectionProperty
-     */
-    protected static function getProperty($name)
-    {
-        $class = new ReflectionClass('Cake\TwigView\View\TwigView');
-        $property = $class->getProperty($name);
-        $property->setAccessible(true);
-
-        return $property;
-    }
-
-    protected function _hibernateListeners($eventKey)
-    {
-        $this->__preservedEventListeners[$eventKey] = EventManager::instance()->listeners($eventKey);
-
-        foreach ($this->__preservedEventListeners[$eventKey] as $eventListener) {
-            EventManager::instance()->off($eventListener['callable'], $eventKey);
-        }
-    }
-
-    protected function _wakeupListeners($eventKey)
-    {
-        if (isset($this->__preservedEventListeners[$eventKey])) {
-            return;
-        }
-
-        foreach ($this->__preservedEventListeners[$eventKey] as $eventListener) {
-            EventManager::instance()->on(
-                $eventListener['callable'],
-                $eventKey,
-                [
-                    'passParams' => $eventListener['passParams'],
-                ]
-            );
-        }
-
-        $this->__preservedEventListeners = [];
     }
 }

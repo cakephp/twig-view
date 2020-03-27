@@ -18,13 +18,13 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
-use Cake\TwigView\Twig\Extension\PotentialDangerous;
+use Cake\TwigView\Twig\Extension\ConfigureExtension;
 
-final class PotentialDangerousTest extends AbstractExtensionTest
+final class ConfigureExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {
-        $this->extension = new PotentialDangerous();
+        $this->extension = new ConfigureExtension();
         parent::setUp();
     }
 

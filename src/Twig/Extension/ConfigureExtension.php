@@ -16,22 +16,37 @@ declare(strict_types=1);
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Cake\TwigView\Test\TestCase\Event;
+namespace Cake\TwigView\Twig\Extension;
 
-use Cake\TestSuite\TestCase;
-use Cake\TwigView\Event\ConstructEvent;
-use Cake\TwigView\View\TwigView;
-use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class ConstructEventTest extends TestCase
+/**
+ * Class ConfigureExtension.
+ *
+ * @internal
+ */
+class ConfigureExtension extends AbstractExtension
 {
-    public function testCreate()
+    /**
+     * Get declared functions.
+     *
+     * @return \Twig\TwigFunction[]
+     */
+    public function getFunctions()
     {
-        $twigView = $this->prophesize(TwigView::class)->reveal();
-        $twigEnvironment = $this->prophesize(Environment::class)->reveal();
-        $event = ConstructEvent::create($twigView, $twigEnvironment);
+        return [
+            new TwigFunction('config', 'Cake\Core\Configure::read'),
+        ];
+    }
 
-        $this->assertEquals($twigView, $event->getTwigView());
-        $this->assertEquals($twigEnvironment, $event->getTwig());
+    /**
+     * Get extension name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return 'twigview-configure';
     }
 }

@@ -47,10 +47,10 @@ class RelativeScannerTest extends TestCase
         $expected = [
             'APP' => [
                 'Blog/index.twig',
-                'element/element.twig',
+                'element/blog_entry.twig',
                 'exception.twig',
-                'layout.twig',
-                'layout/layout.twig',
+                'layout/default.twig',
+                'simple.twig',
                 'syntaxerror.twig',
             ],
             'TestTwigView' => [

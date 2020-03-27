@@ -16,29 +16,41 @@ declare(strict_types=1);
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Cake\TwigView\Event;
+namespace Cake\TwigView\Twig\Extension;
 
-use Cake\Event\Event;
-use Twig\Profiler\Profile;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-final class ProfileEvent extends Event
+/**
+ * Class I18nExtension.
+ *
+ * @internal
+ */
+final class I18nExtension extends AbstractExtension
 {
-    public const EVENT = 'TwigView.TwigView.profile';
-
     /**
-     * @param \Twig\Profiler\Profile $profile Profile instance.
-     * @return static
+     * Get declared functions.
+     *
+     * @return \Twig\TwigFunction[]
      */
-    public static function create(Profile $profile): ProfileEvent
+    public function getFunctions(): array
     {
-        return new static(static::EVENT, $profile);
+        return [
+            new TwigFunction('__', '__'),
+            new TwigFunction('__d', '__d'),
+            new TwigFunction('__n', '__n'),
+            new TwigFunction('__x', '__x'),
+            new TwigFunction('__dn', '__dn'),
+        ];
     }
 
     /**
-     * @return \Twig\Profiler\Profile
+     * Get extension name.
+     *
+     * @return string
      */
-    public function getLoader(): Profile
+    public function getName(): string
     {
-        return $this->getSubject();
+        return 'twigview-i18n';
     }
 }

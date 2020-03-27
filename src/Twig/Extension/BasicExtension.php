@@ -20,36 +20,32 @@ namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 /**
- * Class Basic.
+ * Class BasicExtension.
  *
  * @internal
  */
-class PotentialDangerous extends AbstractExtension
+final class BasicExtension extends AbstractExtension
 {
     /**
      * Get declared filters.
      *
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
+            new TwigFilter('debug', 'debug'),
+            new TwigFilter('pr', 'pr'),
+            new TwigFilter('low', 'strtolower'),
+            new TwigFilter('up', 'strtoupper'),
             new TwigFilter('env', 'env'),
-        ];
-    }
-
-    /**
-     * Get declared functions.
-     *
-     * @return \Twig\TwigFunction[]
-     */
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('config', 'Cake\Core\Configure::read'),
+            new TwigFilter('count', 'count'),
+            new TwigFilter('h', 'h'),
+            new TwigFilter('null', function () {
+                return '';
+            }),
         ];
     }
 
@@ -58,8 +54,8 @@ class PotentialDangerous extends AbstractExtension
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return 'potential_dangerous';
+        return 'twigview-basic';
     }
 }
