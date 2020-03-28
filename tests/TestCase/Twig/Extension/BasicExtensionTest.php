@@ -20,7 +20,7 @@ namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
 use Cake\TwigView\Twig\Extension\BasicExtension;
 
-final class BasicExtensionTest extends AbstractExtensionTest
+class BasicExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {

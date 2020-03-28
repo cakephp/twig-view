@@ -26,10 +26,8 @@ use Twig\Node\NodeOutputInterface;
 
 /**
  * Class Cell.
- *
- * @internal
  */
-final class Cell extends Node implements NodeOutputInterface
+class Cell extends Node implements NodeOutputInterface
 {
     /**
      * Whether to assign the data or not.

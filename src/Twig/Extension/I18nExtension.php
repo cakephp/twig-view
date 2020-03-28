@@ -23,10 +23,8 @@ use Twig\TwigFunction;
 
 /**
  * Class I18nExtension.
- *
- * @internal
  */
-final class I18nExtension extends AbstractExtension
+class I18nExtension extends AbstractExtension
 {
     /**
      * Get declared functions.

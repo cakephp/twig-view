@@ -23,10 +23,8 @@ use Twig\TwigFunction;
 
 /**
  * Class ArraysExtension.
- *
- * @internal
  */
-final class ArraysExtension extends AbstractExtension
+class ArraysExtension extends AbstractExtension
 {
     /**
      * Get declared functions.

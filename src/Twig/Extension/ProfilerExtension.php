@@ -24,10 +24,8 @@ use Twig\Profiler\Profile;
 
 /**
  * Class ProfilerExtension.
- *
- * @internal
  */
-final class ProfilerExtension extends TwigProfilerExtension
+class ProfilerExtension extends TwigProfilerExtension
 {
     /**
      * Enter $profile.

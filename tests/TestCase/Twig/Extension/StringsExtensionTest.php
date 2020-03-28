@@ -20,7 +20,7 @@ namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
 use Cake\TwigView\Twig\Extension\StringsExtension;
 
-final class StringsExtensionTest extends AbstractExtensionTest
+class StringsExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {

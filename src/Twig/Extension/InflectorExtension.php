@@ -23,10 +23,8 @@ use Twig\TwigFilter;
 
 /**
  * Class InflectorExtension.
- *
- * @internal
  */
-final class InflectorExtension extends AbstractExtension
+class InflectorExtension extends AbstractExtension
 {
     /**
      * Get filters for this extension.

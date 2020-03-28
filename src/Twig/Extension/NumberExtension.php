@@ -24,10 +24,8 @@ use Twig\TwigFunction;
 
 /**
  * Class NumberExtension.
- *
- * @internal
  */
-final class NumberExtension extends AbstractExtension
+class NumberExtension extends AbstractExtension
 {
     /**
      * Get declared functions.

@@ -25,10 +25,8 @@ use Twig\TokenParser\IncludeTokenParser;
 
 /**
  * Class CellParser.
- *
- * @internal
  */
-final class CellParser extends IncludeTokenParser
+class CellParser extends IncludeTokenParser
 {
     /**
      * Parse token.

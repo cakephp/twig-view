@@ -23,10 +23,8 @@ use Twig\TwigFilter;
 
 /**
  * Class BasicExtension.
- *
- * @internal
  */
-final class BasicExtension extends AbstractExtension
+class BasicExtension extends AbstractExtension
 {
     /**
      * Get declared filters.

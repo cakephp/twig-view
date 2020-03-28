@@ -24,10 +24,8 @@ use Twig\TwigFunction;
 
 /**
  * Class TimeExtension.
- *
- * @internal
  */
-final class TimeExtension extends AbstractExtension
+class TimeExtension extends AbstractExtension
 {
     /**
      * Get declared functions.

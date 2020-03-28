@@ -24,10 +24,8 @@ use Twig\TwigFunction;
 
 /**
  * Class StringsExtension.
- *
- * @internal
  */
-final class StringsExtension extends AbstractExtension
+class StringsExtension extends AbstractExtension
 {
     /**
      * Get declared filters.
