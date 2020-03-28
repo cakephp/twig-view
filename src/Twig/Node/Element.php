@@ -25,10 +25,8 @@ use Twig\Node\Node;
 
 /**
  * Class Element.
- *
- * @internal
  */
-final class Element extends Node
+class Element extends Node
 {
     /**
      * Constructor.

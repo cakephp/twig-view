@@ -47,10 +47,10 @@ class ScannerTest extends TestCase
         $this->assertSame([
             'APP' => [
                 TEST_APP . 'templates' . DS . 'Blog' . DS . 'index.twig',
-                TEST_APP . 'templates' . DS . 'element' . DS . 'element.twig',
+                TEST_APP . 'templates' . DS . 'element' . DS . 'blog_entry.twig',
                 TEST_APP . 'templates' . DS . 'exception.twig',
-                TEST_APP . 'templates' . DS . 'layout.twig',
-                TEST_APP . 'templates' . DS . 'layout' . DS . 'layout.twig',
+                TEST_APP . 'templates' . DS . 'layout' . DS . 'default.twig',
+                TEST_APP . 'templates' . DS . 'simple.twig',
                 TEST_APP . 'templates' . DS . 'syntaxerror.twig',
             ],
             //'Bake' => Scanner::plugin('Bake'),

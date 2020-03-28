@@ -30,7 +30,7 @@ use Twig\Source;
  *
  * @internal
  */
-final class Loader implements LoaderInterface
+class Loader implements LoaderInterface
 {
     /**
      * Get the file contents of a template.

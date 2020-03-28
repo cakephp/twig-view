@@ -71,10 +71,10 @@ class CompileCommandTest extends TestCase
      */
     public function testFile()
     {
-        $this->exec('twig-view compile file ' . TEST_APP . DS . 'templates' . DS . 'layout.twig');
+        $this->exec('twig-view compile file ' . TEST_APP . DS . 'templates' . DS . 'simple.twig');
         $this->assertExitSuccess();
         $this->assertOutputContains('Compiled');
-        $this->assertOutputContains(TEST_APP . DS . 'templates' . DS . 'layout.twig');
+        $this->assertOutputContains(TEST_APP . DS . 'templates' . DS . 'simple.twig');
     }
 
     /**

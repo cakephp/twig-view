@@ -16,29 +16,26 @@ declare(strict_types=1);
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Cake\TwigView\Event;
+namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
-use Cake\Event\Event;
-use Twig\Profiler\Profile;
+use Cake\TwigView\Twig\Extension\ConfigureExtension;
 
-final class ProfileEvent extends Event
+class ConfigureExtensionTest extends AbstractExtensionTest
 {
-    public const EVENT = 'TwigView.TwigView.profile';
-
-    /**
-     * @param \Twig\Profiler\Profile $profile Profile instance.
-     * @return static
-     */
-    public static function create(Profile $profile): ProfileEvent
+    public function setUp(): void
     {
-        return new static(static::EVENT, $profile);
+        $this->extension = new ConfigureExtension();
+        parent::setUp();
     }
 
-    /**
-     * @return \Twig\Profiler\Profile
-     */
-    public function getLoader(): Profile
+    public function testFunctionConfig()
     {
-        return $this->getSubject();
+        $callable = $this->getFunction('config')->getCallable();
+
+        $result = call_user_func($callable, 'foo');
+        $this->assertNull($result);
+
+        $result = call_user_func($callable, 'debug');
+        $this->assertIsBool($result);
     }
 }

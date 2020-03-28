@@ -18,32 +18,30 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
-use Cake\View\View as CakeView;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class View.
- *
- * @internal
+ * Class NumberExtension.
  */
-final class View extends AbstractExtension
+class NumberExtension extends AbstractExtension
 {
     /**
-     * View to call methods upon.
+     * Get declared functions.
      *
-     * @var \Cake\View\View
+     * @return \Twig\TwigFilter[]
      */
-    protected $view;
-
-    /**
-     * Constructor.
-     *
-     * @param \Cake\View\View $view View instance.
-     */
-    public function __construct(CakeView $view)
+    public function getFilters(): array
     {
-        $this->view = $view;
+        return [
+            new TwigFilter('toReadableSize', 'Cake\I18n\Number::toReadableSize'),
+            new TwigFilter('toPercentage', 'Cake\I18n\Number::toPercentage'),
+            new TwigFilter('number_format', 'Cake\I18n\Number::format'),
+            new TwigFilter('formatDelta', 'Cake\I18n\Number::formatDelta'),
+            new TwigFilter('currency', 'Cake\I18n\Number::currency'),
+            new TwigFilter('format', 'Cake\I18n\Number::format'),
+        ];
     }
 
     /**
@@ -54,15 +52,8 @@ final class View extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('elementExists', function ($name) {
-                return $this->view->elementExists($name);
-            }),
-            new TwigFunction('getVars', function () {
-                return $this->view->getVars();
-            }),
-            new TwigFunction('get', function ($var, $default = null) {
-                return $this->view->get($var, $default);
-            }),
+            new TwigFunction('defaultCurrency', 'Cake\I18n\Number::defaultCurrency'),
+            new TwigFunction('number_formatter', 'Cake\I18n\Number::formatter'),
         ];
     }
 
@@ -73,6 +64,6 @@ final class View extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'view';
+        return 'twigview-number';
     }
 }

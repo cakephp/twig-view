@@ -19,32 +19,31 @@ declare(strict_types=1);
 namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFunction;
+use Twig\TwigFilter;
 
 /**
- * Class Arrays.
- *
- * @internal
+ * Class BasicExtension.
  */
-final class Arrays extends AbstractExtension
+class BasicExtension extends AbstractExtension
 {
     /**
-     * Get declared functions.
+     * Get declared filters.
      *
-     * @return \Twig\TwigFunction[]
+     * @return \Twig\TwigFilter[]
      */
-    public function getFunctions(): array
+    public function getFilters(): array
     {
         return [
-            new TwigFunction('in_array', 'in_array'),
-            new TwigFunction('explode', 'explode'),
-            new TwigFunction('array', function ($array) {
-                return (array)$array;
+            new TwigFilter('debug', 'debug'),
+            new TwigFilter('pr', 'pr'),
+            new TwigFilter('low', 'strtolower'),
+            new TwigFilter('up', 'strtoupper'),
+            new TwigFilter('env', 'env'),
+            new TwigFilter('count', 'count'),
+            new TwigFilter('h', 'h'),
+            new TwigFilter('null', function () {
+                return '';
             }),
-            new TwigFunction('array_push', 'array_push'),
-            new TwigFunction('array_prev', 'prev'),
-            new TwigFunction('array_next', 'next'),
-            new TwigFunction('array_current', 'current'),
         ];
     }
 
@@ -55,6 +54,6 @@ final class Arrays extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'array';
+        return 'twigview-basic';
     }
 }

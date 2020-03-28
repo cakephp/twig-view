@@ -19,32 +19,26 @@ declare(strict_types=1);
 namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
- * Class Utils.
- *
- * @internal
+ * Class I18nExtension.
  */
-final class Utils extends AbstractExtension
+class I18nExtension extends AbstractExtension
 {
     /**
-     * Get declared filters.
+     * Get declared functions.
      *
-     * @return \Twig\TwigFilter[]
+     * @return \Twig\TwigFunction[]
      */
-    public function getFilters(): array
+    public function getFunctions(): array
     {
         return [
-            new TwigFilter('serialize', 'serialize'),
-            new TwigFilter('unserialize', 'unserialize'),
-            new TwigFilter('md5', 'md5'),
-            new TwigFilter('base64_encode', 'base64_encode'),
-            new TwigFilter('base64_decode', 'base64_decode'),
-            new TwigFilter('nl2br', 'nl2br'),
-            new TwigFilter('string', function ($str) {
-                return (string)$str;
-            }),
+            new TwigFunction('__', '__'),
+            new TwigFunction('__d', '__d'),
+            new TwigFunction('__n', '__n'),
+            new TwigFunction('__x', '__x'),
+            new TwigFunction('__dn', '__dn'),
         ];
     }
 
@@ -55,6 +49,6 @@ final class Utils extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'utils';
+        return 'twigview-i18n';
     }
 }

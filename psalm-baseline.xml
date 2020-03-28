@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="3.9.4@352bd3f5c5789db04e4010856c2f4e01ed354f4e">
-  <file src="src/Shell/CompileShell.php">
-    <DeprecatedClass occurrences="3">
-      <code>Shell</code>
-      <code>parent::__construct($io, $locator)</code>
-      <code>parent::getOptionParser()</code>
-    </DeprecatedClass>
-  </file>
-  <file src="src/Twig/TokenParser/Cell.php">
+  <file src="src/Twig/TokenParser/CellParser.php">
     <InternalMethod occurrences="3">
       <code>parseExpression</code>
       <code>parseExpression</code>
       <code>parseExpression</code>
     </InternalMethod>
   </file>
-  <file src="src/Twig/TokenParser/Element.php">
+  <file src="src/Twig/TokenParser/ElementParser.php">
     <InternalMethod occurrences="3">
       <code>parseExpression</code>
       <code>parseExpression</code>

@@ -9,8 +9,5 @@ return [
         'markdown' => [
             'engine' => 'engine', // See https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html and then set to `new DefaultMarkdown()`
         ],
-        'flags' => [
-            'potentialDangerous' => false,
-        ],
     ],
 ];

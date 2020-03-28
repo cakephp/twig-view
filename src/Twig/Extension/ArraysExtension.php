@@ -19,37 +19,30 @@ declare(strict_types=1);
 namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class Basic.
- *
- * @internal
+ * Class ArraysExtension.
  */
-class PotentialDangerous extends AbstractExtension
+class ArraysExtension extends AbstractExtension
 {
-    /**
-     * Get declared filters.
-     *
-     * @return \Twig\TwigFilter[]
-     */
-    public function getFilters()
-    {
-        return [
-            new TwigFilter('env', 'env'),
-        ];
-    }
-
     /**
      * Get declared functions.
      *
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new TwigFunction('config', 'Cake\Core\Configure::read'),
+            new TwigFunction('in_array', 'in_array'),
+            new TwigFunction('explode', 'explode'),
+            new TwigFunction('array', function ($array) {
+                return (array)$array;
+            }),
+            new TwigFunction('array_push', 'array_push'),
+            new TwigFunction('array_prev', 'prev'),
+            new TwigFunction('array_next', 'next'),
+            new TwigFunction('array_current', 'current'),
         ];
     }
 
@@ -58,8 +51,8 @@ class PotentialDangerous extends AbstractExtension
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
-        return 'potential_dangerous';
+        return 'twigview-array';
     }
 }

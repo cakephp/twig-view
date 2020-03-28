@@ -18,34 +18,15 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\I18n\Time as CakeTime;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * Class Number.
- *
- * @internal
+ * Class TimeExtension.
  */
-final class Number extends AbstractExtension
+class TimeExtension extends AbstractExtension
 {
-    /**
-     * Get declared functions.
-     *
-     * @return \Twig\TwigFilter[]
-     */
-    public function getFilters(): array
-    {
-        return [
-            new TwigFilter('toReadableSize', 'Cake\I18n\Number::toReadableSize'),
-            new TwigFilter('toPercentage', 'Cake\I18n\Number::toPercentage'),
-            new TwigFilter('number_format', 'Cake\I18n\Number::format'),
-            new TwigFilter('formatDelta', 'Cake\I18n\Number::formatDelta'),
-            new TwigFilter('currency', 'Cake\I18n\Number::currency'),
-            new TwigFilter('format', 'Cake\I18n\Number::format'),
-        ];
-    }
-
     /**
      * Get declared functions.
      *
@@ -54,8 +35,10 @@ final class Number extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('defaultCurrency', 'Cake\I18n\Number::defaultCurrency'),
-            new TwigFunction('number_formatter', 'Cake\I18n\Number::formatter'),
+            new TwigFunction('time', function ($time = null, $timezone = null) {
+                return new CakeTime($time, $timezone);
+            }),
+            new TwigFunction('timezones', 'Cake\I18n\Time::listTimezones'),
         ];
     }
 
@@ -66,6 +49,6 @@ final class Number extends AbstractExtension
      */
     public function getName(): string
     {
-        return 'number';
+        return 'twigview-time';
     }
 }

@@ -21,7 +21,7 @@ namespace Cake\TwigView\Panel;
 use Cake\TwigView\Filesystem\TreeScanner;
 use DebugKit\DebugPanel;
 
-final class TwigPanel extends DebugPanel
+class TwigPanel extends DebugPanel
 {
     /**
      * Plugin name.
