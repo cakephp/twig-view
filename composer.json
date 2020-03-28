@@ -36,6 +36,9 @@
         "jakub-onderka/php-parallel-lint": "^1.0",
         "phpunit/phpunit": "^8.5"
     },
+    "conflict": {
+        "wyrihaximus/twig-view": "*"
+    },
     "autoload": {
         "psr-4": {
             "Cake\\TwigView\\": "src/"
