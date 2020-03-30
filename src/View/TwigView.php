@@ -74,16 +74,6 @@ class TwigView extends View
     protected $profile;
 
     /**
-     * Return empty string when View instance is cast to string.
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return '';
-    }
-
-    /**
      * Initialize view.
      *
      * @return void
