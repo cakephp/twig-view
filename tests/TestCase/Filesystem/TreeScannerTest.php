@@ -18,9 +18,11 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase\Filesystem;
 
+use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\TwigView\Filesystem\TreeScanner;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * Class TreeScannerTest.
@@ -44,16 +46,44 @@ class TreeScannerTest extends TestCase
 
     public function testAll()
     {
+        vfsStream::setup('root');
+        $structure = [
+            'plugins' => [
+                'TestTwigView' => [
+                    'templates' => [
+                        'Controller' => [
+                            'twig.twig' => '',
+                        ],
+                    ],
+                ],
+            ],
+            'templates' => [
+                'layout' => [
+                    'default.twig' => '',
+                ],
+                'element' => [
+                    'element.twig' => '',
+                ],
+                'Blog' => [
+                    'index.twig' => 'index',
+                ],
+            ],
+        ];
+        vfsStream::create($structure);
+
+        $vfsPath = vfsStream::url('root');
+
+        $templatePaths = Configure::read('App.paths.templates');
+        Configure::delete('App.paths.templates');
+        Configure::write('App.paths.templates', [$vfsPath . '/templates/']);
+
         $this->assertEquals([
             'APP' => [
-                2 => 'exception.twig',
-                4 => 'simple.twig',
-                5 => 'syntaxerror.twig',
                 'Blog' => [
                     'index.twig',
                 ],
                 'element' => [
-                    'blog_entry.twig',
+                    'element.twig',
                 ],
                 'layout' => [
                     'default.twig',
@@ -69,8 +99,9 @@ class TreeScannerTest extends TestCase
                     'view.twig',
                 ],
             ],
-            //'Bake' => TreeScanner::plugin('Bake'),
         ], TreeScanner::all());
+
+        Configure::write('App.paths.templates', $templatePaths);
     }
 
     public function testPlugin()
