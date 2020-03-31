@@ -48,15 +48,6 @@ class TreeScannerTest extends TestCase
     {
         vfsStream::setup('root');
         $structure = [
-            'plugins' => [
-                'TestTwigView' => [
-                    'templates' => [
-                        'Controller' => [
-                            'twig.twig' => '',
-                        ],
-                    ],
-                ],
-            ],
             'templates' => [
                 'layout' => [
                     'default.twig' => '',

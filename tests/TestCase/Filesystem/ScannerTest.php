@@ -18,9 +18,11 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase\Filesystem;
 
+use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\TwigView\Filesystem\Scanner;
+use org\bovigo\vfs\vfsStream;
 
 /**
  * Class ScannerTest.
@@ -44,16 +46,34 @@ class ScannerTest extends TestCase
 
     public function testAll()
     {
+        vfsStream::setup('root');
+        $structure = [
+            'templates' => [
+                'layout' => [
+                    'default.twig' => '',
+                ],
+                'element' => [
+                    'element.twig' => '',
+                ],
+                'Blog' => [
+                    'index.twig' => 'index',
+                ],
+            ],
+        ];
+        vfsStream::create($structure);
+
+        $vfsPath = vfsStream::url('root');
+
+        $templatePaths = Configure::read('App.paths.templates');
+        Configure::delete('App.paths.templates');
+        Configure::write('App.paths.templates', [$vfsPath . '/templates/']);
+
         $this->assertSame([
             'APP' => [
-                TEST_APP . 'templates' . DS . 'Blog' . DS . 'index.twig',
-                TEST_APP . 'templates' . DS . 'element' . DS . 'blog_entry.twig',
-                TEST_APP . 'templates' . DS . 'exception.twig',
-                TEST_APP . 'templates' . DS . 'layout' . DS . 'default.twig',
-                TEST_APP . 'templates' . DS . 'simple.twig',
-                TEST_APP . 'templates' . DS . 'syntaxerror.twig',
+                $vfsPath . '/templates/Blog/index.twig',
+                $vfsPath . '/templates/element/element.twig',
+                $vfsPath . '/templates/layout/default.twig',
             ],
-            //'Bake' => Scanner::plugin('Bake'),
             'TestTwigView' => [
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'Component' . DS . 'magic.twig',
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'index.twig',
@@ -61,6 +81,8 @@ class ScannerTest extends TestCase
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'twig.twig',
             ],
         ], Scanner::all());
+
+        Configure::write('App.paths.templates', $templatePaths);
     }
 
     public function testPlugin()
