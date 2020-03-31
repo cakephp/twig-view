@@ -1,0 +1,5 @@
+{{ _view.fetch('content')|raw }}
+
+{%- if _view.exists('block') %}
+{{ _view.fetch('block')|raw }}
+{%- endif -%}

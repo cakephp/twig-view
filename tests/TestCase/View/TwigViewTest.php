@@ -64,7 +64,20 @@ class TwigViewTest extends TestCase
         $view = new AppView();
         $output = $view->render('Blog/index');
 
-        $this->assertSame('blog_entry', $output);
+        $this->assertSame("blog_entry", $output);
+    }
+
+    /**
+     * Test rendering template with view block assignment
+     *
+     * @return void
+     */
+    public function testRenderLayoutWithViewBlockAssignment()
+    {
+        $view = new AppView();
+        $output = $view->render('Blog/with_extra_block', 'with_extra_block');
+
+        $this->assertSame("main content\nextra content", $output);
     }
 
     /**
