@@ -75,7 +75,6 @@ class Loader implements LoaderInterface
      *
      * @param string $name Template.
      * @param int $time Timestamp.
-     *
      * @return bool
      */
     public function isFresh(string $name, int $time): bool

@@ -33,7 +33,6 @@ class Application extends BaseApplication
 
     /**
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue
-     *
      * @return \Cake\Http\MiddlewareQueue
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue

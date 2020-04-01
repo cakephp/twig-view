@@ -19,7 +19,7 @@ class CompileCommand extends BaseCommand
     protected $twigView;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -38,7 +38,7 @@ class CompileCommand extends BaseCommand
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
