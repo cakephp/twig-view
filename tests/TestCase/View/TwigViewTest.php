@@ -87,7 +87,7 @@ class TwigViewTest extends TestCase
      */
     public function testCustomViewVariable()
     {
-        $view = new AppView(null, null, null, ['viewVar' => 'myView']);
+        $view = new AppView(null, null, null, ['contextName' => 'myView']);
 
         $view->assign('title', 'my title');
         $output = $view->render('custom_variable', false);
