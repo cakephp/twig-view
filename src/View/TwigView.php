@@ -47,7 +47,26 @@ class TwigView extends View
 {
     public const EXT = '.twig';
 
-    public const ENV_CONFIG = 'TwigView.environment';
+    /**
+     * Default config options.
+     *
+     * Use ViewBuilder::setOption()/setOptions() in your controller to set these options.
+     *
+     * - `environment` - Array of config you would pass into \Twig\Environment to overwrite the default settings,
+     *   see: http://twig.sensiolabs.org/doc/api.html#environment-options
+     * - `markdown` - Config for MarkdownExtension. Array must contain `engine` key which is
+     *   an instance of Twig\Extra\Markdown\MarkdownInterface,
+     *   see https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html
+     *
+     * @var array
+     */
+    protected $_defaultConfig = [
+        'environment' => [
+        ],
+        'markdown' => [
+            'engine' => null,
+        ],
+    ];
 
     /**
      * @inheritDoc
@@ -130,8 +149,7 @@ class TwigView extends View
     {
         $debug = Configure::read('debug', false);
 
-        $config = Configure::read(static::ENV_CONFIG, []);
-        $config += [
+        $config = $this->getConfig('environment') + [
             'charset' => Configure::read('App.encoding', 'UTF-8'),
             'debug' => $debug,
             'cache' => $debug ? false : CACHE . 'twigView' . DS,
@@ -180,11 +198,11 @@ class TwigView extends View
         $this->twig->addExtension(new Extension\UtilsExtension());
 
         // Markdown extension
-        if (Configure::read('TwigView.markdown.engine') instanceof MarkdownInterface) {
-            $engine = Configure::read('TwigView.markdown.engine');
+        $markdownEngine = $this->getConfig('markdown.engine');
+        if ($markdownEngine instanceof MarkdownInterface) {
             $this->twig->addExtension(new MarkdownExtension());
 
-            $this->twig->addRuntimeLoader(new class ($engine) implements RuntimeLoaderInterface {
+            $this->twig->addRuntimeLoader(new class ($markdownEngine) implements RuntimeLoaderInterface {
                 /**
                  * @var \Twig\Extra\Markdown\MarkdownInterface
                  */
