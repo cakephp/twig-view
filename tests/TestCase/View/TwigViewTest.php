@@ -80,6 +80,11 @@ class TwigViewTest extends TestCase
         $this->assertSame("main content\nextra content", $output);
     }
 
+    /**
+     * Test setting custom View variable name.
+     *
+     * @return void
+     */
     public function testCustomViewVariable()
     {
         $view = new AppView(null, null, null, ['viewVar' => 'myView']);
@@ -88,6 +93,22 @@ class TwigViewTest extends TestCase
         $output = $view->render('custom_variable', false);
 
         $this->assertSame('my title', $output);
+    }
+
+    /**
+     * Tests using View helper in template.
+     *
+     * @return void
+     */
+    public function testHelper()
+    {
+        $view = new AppView(null, null, null, ['environment' => ['strict_variables' => true]]);
+        $view->loadHelper('Text');
+
+        $view->set('sample', 'Sample text.');
+        $output = $view->render('helpers', false);
+
+        $this->assertSame("<p>Sample text.</p>\n", $output);
     }
 
     /**

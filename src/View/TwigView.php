@@ -263,6 +263,7 @@ class TwigView extends View
             empty($data) ? $this->viewVars : $data,
             iterator_to_array($this->helpers()->getIterator()),
             [
+                '__internal' => $this,
                 $viewVar => $this,
             ]
         );
