@@ -27,4 +27,9 @@ class TestSecondHelper extends Helper
     {
         throw new MissingSomethingException('Something is missing');
     }
+
+    public function useElement()
+    {
+        return $this->_View->element('element_with_var');
+    }
 }

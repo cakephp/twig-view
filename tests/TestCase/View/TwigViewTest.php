@@ -112,4 +112,16 @@ class TwigViewTest extends TestCase
 
         $this->view->render('syntaxerror', false);
     }
+
+    public function testHelperFunction()
+    {
+        $view = new AppView(null, null, null, [
+            'viewVars' => ['elementVar' => 'var echoed inside element'],
+        ]);
+
+        $output = $view->render('helper_test', false);
+
+        $expected = "var echoed inside element\n<p>I love CakePHP</p>\n";
+        $this->assertSame($expected, $output);
+    }
 }
