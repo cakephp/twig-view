@@ -64,7 +64,7 @@ class TwigViewTest extends TestCase
         $view = new AppView();
         $output = $view->render('Blog/index');
 
-        $this->assertSame("blog_entry", $output);
+        $this->assertSame('blog_entry', $output);
     }
 
     /**
@@ -78,6 +78,16 @@ class TwigViewTest extends TestCase
         $output = $view->render('Blog/with_extra_block', 'with_extra_block');
 
         $this->assertSame("main content\nextra content", $output);
+    }
+
+    public function testCustomViewVariable()
+    {
+        $view = new AppView(null, null, null, ['viewVar' => 'myView']);
+
+        $view->assign('title', 'my title');
+        $output = $view->render('custom_variable', false);
+
+        $this->assertSame('my title', $output);
     }
 
     /**
