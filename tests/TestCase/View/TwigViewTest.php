@@ -29,14 +29,25 @@ use Twig\Error\SyntaxError;
 class TwigViewTest extends TestCase
 {
     /**
+     * @var \TestApp\View\AppView
+     */
+    protected $view;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->view = new AppView();
+    }
+
+    /**
      * Test rendering simple twig template.
      *
      * @return void
      */
     public function testRenderSimpleTemplate()
     {
-        $view = new AppView();
-        $output = $view->render('simple', false);
+        $output = $this->view->render('simple', false);
 
         $this->assertSame('underscore_me', $output);
     }
@@ -48,8 +59,7 @@ class TwigViewTest extends TestCase
      */
     public function testRenderSimpleTemplateWithLayout()
     {
-        $view = new AppView();
-        $output = $view->render('simple');
+        $output = $this->view->render('simple');
 
         $this->assertSame('underscore_me', $output);
     }
@@ -61,8 +71,7 @@ class TwigViewTest extends TestCase
      */
     public function testRenderLayoutWithElements()
     {
-        $view = new AppView();
-        $output = $view->render('Blog/index');
+        $output = $this->view->render('Blog/index');
 
         $this->assertSame('blog_entry', $output);
     }
@@ -74,8 +83,7 @@ class TwigViewTest extends TestCase
      */
     public function testRenderLayoutWithViewBlockAssignment()
     {
-        $view = new AppView();
-        $output = $view->render('Blog/with_extra_block', 'with_extra_block');
+        $output = $this->view->render('Blog/with_extra_block', 'with_extra_block');
 
         $this->assertSame("main content\nextra content", $output);
     }
@@ -100,8 +108,7 @@ class TwigViewTest extends TestCase
         $this->expectException(RuntimeError::class);
         $this->expectExceptionMessage('Something is missing');
 
-        $view = new AppView();
-        $view->render('exception', false);
+        $this->view->render('exception', false);
     }
 
     /**
@@ -113,7 +120,6 @@ class TwigViewTest extends TestCase
     {
         $this->expectException(SyntaxError::class);
 
-        $view = new AppView();
-        $view->render('syntaxerror', false);
+        $this->view->render('syntaxerror', false);
     }
 }
