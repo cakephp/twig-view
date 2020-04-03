@@ -200,6 +200,7 @@ class TwigView extends View
         $this->twig->addExtension(new Extension\StringsExtension());
         $this->twig->addExtension(new Extension\TimeExtension());
         $this->twig->addExtension(new Extension\UtilsExtension());
+        $this->twig->addExtension(new Extension\ViewExtension());
 
         // Markdown extension
         $markdownEngine = $this->getConfig('markdown.engine');
