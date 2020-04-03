@@ -74,7 +74,7 @@ class Element extends Node
     {
         $compiler->addDebugInfo($this);
 
-        $compiler->raw('echo $context[\'this\']->element(');
+        $compiler->raw('echo $context[\'_view\']->element(');
         $compiler->subcompile($this->getNode('name'));
 
         $data = $this->getNode('data');

@@ -57,7 +57,6 @@ class TwigView extends View
      * - `markdown` - Config for MarkdownExtension. Array must contain `engine` key which is
      *   an instance of Twig\Extra\Markdown\MarkdownInterface,
      *   see https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html
-     * - 'viewVar' - Twig template variable name to access View. Defaults to `this`.
      *
      * @var array
      */
@@ -67,7 +66,6 @@ class TwigView extends View
         'markdown' => [
             'engine' => null,
         ],
-        'viewVar' => 'this',
     ];
 
     /**
@@ -258,12 +256,11 @@ class TwigView extends View
      */
     protected function _render(string $templateFile, array $data = []): string
     {
-        $viewVar = $this->getConfig('viewVar');
         $data = array_merge(
             empty($data) ? $this->viewVars : $data,
             iterator_to_array($this->helpers()->getIterator()),
             [
-                $viewVar => $this,
+                '_view' => $this,
             ]
         );
 
