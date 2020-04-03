@@ -30,6 +30,7 @@ use Jasny\Twig\ArrayExtension;
 use Jasny\Twig\DateExtension;
 use Jasny\Twig\PcreExtension;
 use Jasny\Twig\TextExtension;
+use RuntimeException;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extension\StringLoaderExtension;
@@ -46,6 +47,16 @@ use Twig\RuntimeLoader\RuntimeLoaderInterface;
 class TwigView extends View
 {
     public const EXT = '.twig';
+
+    /**
+     * @var \Twig\Environment|null
+     */
+    protected static $twig;
+
+    /**
+     * @var \Twig\Profiler\Profile|null
+     */
+    protected static $profile;
 
     /**
      * Default config options.
@@ -83,16 +94,6 @@ class TwigView extends View
     ];
 
     /**
-     * @var \Twig\Environment
-     */
-    protected $twig;
-
-    /**
-     * @var \Twig\Profiler\Profile
-     */
-    protected $profile;
-
-    /**
      * Initialize view.
      *
      * @return void
@@ -101,13 +102,16 @@ class TwigView extends View
     {
         parent::initialize();
 
-        $this->twig = $this->createEnvironment();
+        if (static::$twig === null) {
+            // Cache instance to avoid re-creating when rendering Cells
+            static::$twig = $this->createEnvironment();
 
-        $this->initializeTokenParser();
-        $this->initializeExtensions();
+            $this->initializeTokenParser();
+            $this->initializeExtensions();
 
-        if (Configure::read('debug') && Plugin::isLoaded('DebugKit')) {
-            $this->initializeProfiler();
+            if (Configure::read('debug') && Plugin::isLoaded('DebugKit')) {
+                $this->initializeProfiler();
+            }
         }
     }
 
@@ -118,17 +122,21 @@ class TwigView extends View
      */
     public function getTwig(): Environment
     {
-        return $this->twig;
+        if (static::$twig === null) {
+            throw new RuntimeException('Twig Environment instance not created.');
+        }
+
+        return static::$twig;
     }
 
     /**
      * Gets Twig Profile if profiler enabled.
      *
-     * @return \Twig\Profiler\Profile
+     * @return \Twig\Profiler\Profile|null
      */
-    public function getProfile(): Profile
+    public function getProfile(): ?Profile
     {
-        return $this->profile;
+        return static::$profile;
     }
 
     /**
@@ -161,6 +169,7 @@ class TwigView extends View
         }
 
         $env = new Environment($this->createLoader(), $config);
+        // Must add before any templates are rendered so can be updated in _render().
         $env->addGlobal('_view', $this);
 
         return $env;
@@ -173,8 +182,8 @@ class TwigView extends View
      */
     protected function initializeTokenParser(): void
     {
-        $this->twig->addTokenParser(new TokenParser\CellParser());
-        $this->twig->addTokenParser(new TokenParser\ElementParser());
+        $this->getTwig()->addTokenParser(new TokenParser\CellParser());
+        $this->getTwig()->addTokenParser(new TokenParser\ElementParser());
     }
 
     // phpcs:disable CakePHP.Commenting.FunctionComment.InvalidReturnVoid
@@ -186,28 +195,30 @@ class TwigView extends View
      */
     protected function initializeExtensions(): void
     {
+        $twig = $this->getTwig();
+
         // Twig core extensions
-        $this->twig->addExtension(new StringLoaderExtension());
-        $this->twig->addExtension(new DebugExtension());
+        $twig->addExtension(new StringLoaderExtension());
+        $twig->addExtension(new DebugExtension());
 
         // CakePHP bridging extensions
-        $this->twig->addExtension(new Extension\ArraysExtension());
-        $this->twig->addExtension(new Extension\BasicExtension());
-        $this->twig->addExtension(new Extension\ConfigureExtension());
-        $this->twig->addExtension(new Extension\I18nExtension());
-        $this->twig->addExtension(new Extension\InflectorExtension());
-        $this->twig->addExtension(new Extension\NumberExtension());
-        $this->twig->addExtension(new Extension\StringsExtension());
-        $this->twig->addExtension(new Extension\TimeExtension());
-        $this->twig->addExtension(new Extension\UtilsExtension());
-        $this->twig->addExtension(new Extension\ViewExtension());
+        $twig->addExtension(new Extension\ArraysExtension());
+        $twig->addExtension(new Extension\BasicExtension());
+        $twig->addExtension(new Extension\ConfigureExtension());
+        $twig->addExtension(new Extension\I18nExtension());
+        $twig->addExtension(new Extension\InflectorExtension());
+        $twig->addExtension(new Extension\NumberExtension());
+        $twig->addExtension(new Extension\StringsExtension());
+        $twig->addExtension(new Extension\TimeExtension());
+        $twig->addExtension(new Extension\UtilsExtension());
+        $twig->addExtension(new Extension\ViewExtension());
 
         // Markdown extension
         $markdownEngine = $this->getConfig('markdown.engine');
         if ($markdownEngine instanceof MarkdownInterface) {
-            $this->twig->addExtension(new MarkdownExtension());
+            $twig->addExtension(new MarkdownExtension());
 
-            $this->twig->addRuntimeLoader(new class ($markdownEngine) implements RuntimeLoaderInterface {
+            $twig->addRuntimeLoader(new class ($markdownEngine) implements RuntimeLoaderInterface {
                 /**
                  * @var \Twig\Extra\Markdown\MarkdownInterface
                  */
@@ -237,10 +248,10 @@ class TwigView extends View
         }
 
         // jasny/twig-extensions
-        $this->twig->addExtension(new DateExtension());
-        $this->twig->addExtension(new ArrayExtension());
-        $this->twig->addExtension(new PcreExtension());
-        $this->twig->addExtension(new TextExtension());
+        $twig->addExtension(new DateExtension());
+        $twig->addExtension(new ArrayExtension());
+        $twig->addExtension(new PcreExtension());
+        $twig->addExtension(new TextExtension());
     }
 
     // phpcs:enable
@@ -252,8 +263,8 @@ class TwigView extends View
      */
     protected function initializeProfiler(): void
     {
-        $this->profile = new Profile();
-        $this->twig->addExtension(new Extension\ProfilerExtension($this->profile));
+        static::$profile = new Profile();
+        $this->getTwig()->addExtension(new Extension\ProfilerExtension(static::$profile));
     }
 
     /**
@@ -261,6 +272,9 @@ class TwigView extends View
      */
     protected function _render(string $templateFile, array $data = []): string
     {
+        // Set _view for each render because Twig Environment is shared between views.
+        $this->getTwig()->addGlobal('_view', $this);
+
         $data = array_merge(
             empty($data) ? $this->viewVars : $data,
             iterator_to_array($this->helpers()->getIterator())

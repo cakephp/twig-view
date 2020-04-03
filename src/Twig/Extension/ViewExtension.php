@@ -34,6 +34,20 @@ class ViewExtension extends AbstractExtension
     {
         return [
             new TwigFunction(
+                'cell',
+                function ($context, string $name, array $data = [], array $options = []) {
+                    return $context['_view']->cell($name, $data, $options);
+                },
+                ['needs_context' => true, 'is_safe' => ['all']]
+            ),
+            new TwigFunction(
+                'element',
+                function ($context, string $name, array $data = [], array $options = []) {
+                    return $context['_view']->element($name, $data, $options);
+                },
+                ['needs_context' => true, 'is_safe' => ['all']]
+            ),
+            new TwigFunction(
                 'helper_*_*',
                 function ($context, $helper, $method, array $args = []) {
                     return $context['_view']->{$helper}->{$method}(...$args);
