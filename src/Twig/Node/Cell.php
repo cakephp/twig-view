@@ -95,7 +95,7 @@ class Cell extends Node implements NodeOutputInterface
         } else {
             $compiler->raw('echo ');
         }
-        $compiler->raw('$context[\'this\']->cell(');
+        $compiler->raw('$context[\'_view\']->cell(');
         $compiler->subcompile($this->getNode('name'));
 
         $data = $this->getNode('data');

@@ -57,7 +57,6 @@ class TwigView extends View
      * - `markdown` - Config for MarkdownExtension. Array must contain `engine` key which is
      *   an instance of Twig\Extra\Markdown\MarkdownInterface,
      *   see https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html
-     * - 'viewVar' - Twig template variable name to access View. Defaults to `this`.
      *
      * @var array
      */
@@ -67,7 +66,6 @@ class TwigView extends View
         'markdown' => [
             'engine' => null,
         ],
-        'viewVar' => 'this',
     ];
 
     /**
@@ -103,7 +101,8 @@ class TwigView extends View
     {
         parent::initialize();
 
-        $this->twig = new Environment($this->createLoader(), $this->createEnvironmentConfig());
+        $this->twig = $this->createEnvironment();
+
         $this->initializeTokenParser();
         $this->initializeExtensions();
 
@@ -143,11 +142,11 @@ class TwigView extends View
     }
 
     /**
-     * Creates the Twig Environment configuration.
+     * Creates the Twig Environment.
      *
-     * @return array
+     * @return \Twig\Environment
      */
-    protected function createEnvironmentConfig(): array
+    protected function createEnvironment(): Environment
     {
         $debug = Configure::read('debug', false);
 
@@ -161,7 +160,10 @@ class TwigView extends View
             $config['cache'] = CACHE . 'twigView' . DS;
         }
 
-        return $config;
+        $env = new Environment($this->createLoader(), $config);
+        $env->addGlobal('_view', $this);
+
+        return $env;
     }
 
     /**
@@ -258,13 +260,9 @@ class TwigView extends View
      */
     protected function _render(string $templateFile, array $data = []): string
     {
-        $viewVar = $this->getConfig('viewVar');
         $data = array_merge(
             empty($data) ? $this->viewVars : $data,
-            iterator_to_array($this->helpers()->getIterator()),
-            [
-                $viewVar => $this,
-            ]
+            iterator_to_array($this->helpers()->getIterator())
         );
 
         return $this->getTwig()->load($templateFile)->render($data);
