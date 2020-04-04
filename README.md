@@ -246,7 +246,6 @@ We can write in a view
 * `md5` maps to [`md5`](http://php.net/md5)
 * `base64_encode` maps to [`base64_encode`](http://php.net/base64_encode)
 * `base64_decode` maps to [`base64_decode`](http://php.net/base64_decode)
-* `nl2br` maps to [`nl2br`](http://php.net/nl2br)
 * `string` cast to [`string`](http://php.net/manual/en/language.types.type-juggling.php)
 
 ### Functions
