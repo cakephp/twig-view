@@ -149,15 +149,16 @@ class TwigView extends View
     protected function createEnvironment(): Environment
     {
         $debug = Configure::read('debug', false);
+        $cachePath = CACHE . 'twig_view' . DS;
 
         $config = $this->getConfig('environment') + [
             'charset' => Configure::read('App.encoding', 'UTF-8'),
             'debug' => $debug,
-            'cache' => $debug ? false : CACHE . 'twigView' . DS,
+            'cache' => $debug ? false : $cachePath,
         ];
 
         if ($config['cache'] === true) {
-            $config['cache'] = CACHE . 'twigView' . DS;
+            $config['cache'] = $cachePath;
         }
 
         $env = new Environment($this->createLoader(), $config);
