@@ -151,7 +151,7 @@ class TwigView extends View
         $debug = Configure::read('debug', false);
         $cachePath = CACHE . 'twig_view' . DS;
 
-        $config = $this->getConfig('environment') + [
+        $config = (array)$this->getConfig('environment') + [
             'charset' => Configure::read('App.encoding', 'UTF-8'),
             'debug' => $debug,
             'cache' => $debug ? false : $cachePath,
