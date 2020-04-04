@@ -28,23 +28,25 @@ final class TreeScanner
     /**
      * Return all sections (app & plugins) with an Template directory.
      *
+     * @param string[] $extensions Template extensions to search
      * @return array
      */
-    public static function all(): array
+    public static function all(array $extensions): array
     {
-        return static::deepen(RelativeScanner::all());
+        return static::deepen(RelativeScanner::all($extensions));
     }
 
     /**
      * Return all templates for a given plugin.
      *
      * @param string $plugin The plugin to find all templates for.
+     * @param string[] $extensions Template extensions to search
      * @return array
      */
-    public static function plugin(string $plugin): array
+    public static function plugin(string $plugin, array $extensions): array
     {
         return static::deepen([
-            $plugin => RelativeScanner::plugin($plugin),
+            $plugin => RelativeScanner::plugin($plugin, $extensions),
         ])[$plugin];
     }
 

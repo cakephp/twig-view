@@ -111,4 +111,18 @@ class CompileCommandTest extends TestCase
 
         Configure::write('App.paths.templates', $templates);
     }
+
+    /**
+     * Test passing view class option.
+     *
+     * @return void
+     */
+    public function testViewOption()
+    {
+        $path = TEST_APP . DS . 'templates' . DS . 'simple.twig';
+        $this->exec('twig-view compile file --view-class TestApp\View\AppView ' . $path);
+        $this->assertExitSuccess();
+        $this->assertOutputContains('Compiled');
+        $this->assertOutputContains(TEST_APP . DS . 'templates' . DS . 'simple.twig');
+    }
 }

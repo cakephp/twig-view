@@ -79,11 +79,12 @@ class RelativeScannerTest extends TestCase
                 'Controller/Component/magic.twig',
                 'Controller/index.twig',
                 'Controller/view.twig',
+                'element/nested/plugin_test.twig',
                 'twig.twig',
             ],
         ];
 
-        $this->assertEquals($expected, RelativeScanner::all());
+        $this->assertEquals($expected, RelativeScanner::all(['.twig']));
 
         Configure::write('App.paths.templates', $templatePaths);
     }
@@ -94,7 +95,8 @@ class RelativeScannerTest extends TestCase
             'Controller/Component/magic.twig',
             'Controller/index.twig',
             'Controller/view.twig',
+            'element/nested/plugin_test.twig',
             'twig.twig',
-        ], RelativeScanner::plugin('TestTwigView'));
+        ], RelativeScanner::plugin('TestTwigView', ['.twig']));
     }
 }
