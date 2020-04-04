@@ -111,6 +111,17 @@ class TwigViewTest extends TestCase
     }
 
     /**
+     * Tests deprecated element and cell tags render.
+     *
+     * @return void
+     */
+    public function testDeprecatedTags()
+    {
+        $output = $this->view->render('deprecated_tags', false);
+        $this->assertSame("<b>10</b>\nblog_entry", $output);
+    }
+
+    /**
      * Tests a twig file that throws internal exception throw a Twig exception with message.
      *
      * @return void
