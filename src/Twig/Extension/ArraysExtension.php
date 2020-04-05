@@ -45,14 +45,4 @@ class ArraysExtension extends AbstractExtension
             new TwigFunction('array_current', 'current'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-array';
-    }
 }

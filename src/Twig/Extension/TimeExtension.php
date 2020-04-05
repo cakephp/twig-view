@@ -41,14 +41,4 @@ class TimeExtension extends AbstractExtension
             new TwigFunction('timezones', 'Cake\I18n\Time::listTimezones'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-time';
-    }
 }

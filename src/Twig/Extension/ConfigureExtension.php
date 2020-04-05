@@ -39,14 +39,4 @@ class ConfigureExtension extends AbstractExtension
             new TwigFunction('config', 'Cake\Core\Configure::read'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return 'twigview-configure';
-    }
 }
