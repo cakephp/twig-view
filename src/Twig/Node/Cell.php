@@ -26,6 +26,8 @@ use Twig\Node\NodeOutputInterface;
 
 /**
  * Class Cell.
+ *
+ * @deprecated 1.0.0 Cells are now rendered using `cell()` function instead, provided by `ViewExtension`.
  */
 class Cell extends Node implements NodeOutputInterface
 {

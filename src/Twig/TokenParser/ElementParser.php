@@ -25,6 +25,8 @@ use Twig\TokenParser\IncludeTokenParser;
 
 /**
  * Class ElementParser.
+ *
+ * @deprecated 1.0.0 Elements are now rendered using `element()` function instead, provided by `ViewExtension`.
  */
 class ElementParser extends IncludeTokenParser
 {

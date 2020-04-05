@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="3.9.4@352bd3f5c5789db04e4010856c2f4e01ed354f4e">
+<files psalm-version="3.10.1@eeed5ecccc10131397f0eb7ee6da810c0be3a7fc">
   <file src="src/Twig/TokenParser/CellParser.php">
+    <DeprecatedClass occurrences="1">
+      <code>new CellNode($assign, $variable, $name, $data, $options, $token-&gt;getLine(), $this-&gt;getTag())</code>
+    </DeprecatedClass>
     <InternalMethod occurrences="3">
       <code>parseExpression</code>
       <code>parseExpression</code>
@@ -8,10 +11,19 @@
     </InternalMethod>
   </file>
   <file src="src/Twig/TokenParser/ElementParser.php">
+    <DeprecatedClass occurrences="1">
+      <code>new ElementNode($name, $data, $options, $token-&gt;getLine(), $this-&gt;getTag())</code>
+    </DeprecatedClass>
     <InternalMethod occurrences="3">
       <code>parseExpression</code>
       <code>parseExpression</code>
       <code>parseExpression</code>
     </InternalMethod>
+  </file>
+  <file src="src/View/TwigView.php">
+    <DeprecatedClass occurrences="2">
+      <code>new TokenParser\CellParser()</code>
+      <code>new TokenParser\ElementParser()</code>
+    </DeprecatedClass>
   </file>
 </files>
