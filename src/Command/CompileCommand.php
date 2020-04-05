@@ -34,6 +34,11 @@ class CompileCommand extends BaseCommand
             'help' => 'The file or plugin you want to compile.',
         ]);
 
+        $parser->addOption('view-class', [
+            'help' => 'The class name of the View used to load and compile.',
+            'default' => TwigView::class,
+        ]);
+
         return $parser;
     }
 
@@ -45,7 +50,9 @@ class CompileCommand extends BaseCommand
         $type = $args->getArgumentAt(0);
 
         // Setup cached TwigView to avoid creating for every file
-        $this->twigView = new TwigView();
+        /** @psalm-var class-string<\Cake\TwigView\View\TwigView> $viewClass */
+        $viewClass = $args->getOption('view-class');
+        $this->twigView = new $viewClass();
 
         // $type is validated by the 'choices' option in buildOptionsParser
         return $this->{"execute{$type}"}($args, $io);
@@ -62,7 +69,7 @@ class CompileCommand extends BaseCommand
     {
         $io->info('Compiling all templates');
 
-        foreach (Scanner::all() as $section => $templates) {
+        foreach (Scanner::all($this->twigView->getExtensions()) as $section => $templates) {
             $io->info("Compiling section {$section}");
             foreach ($templates as $template) {
                 if ($this->compileFile($io, $template) === static::CODE_ERROR) {
@@ -91,7 +98,7 @@ class CompileCommand extends BaseCommand
         }
 
         $io->info("Compiling plugin {$plugin}");
-        foreach (Scanner::plugin($plugin) as $template) {
+        foreach (Scanner::plugin($plugin, $this->twigView->getExtensions()) as $template) {
             if ($this->compileFile($io, $template) === static::CODE_ERROR) {
                 return static::CODE_ERROR;
             }

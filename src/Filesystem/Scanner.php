@@ -20,7 +20,6 @@ namespace Cake\TwigView\Filesystem;
 
 use Cake\Core\App;
 use Cake\Core\Plugin;
-use Cake\TwigView\View\TwigView;
 use FilesystemIterator;
 use Iterator;
 use RecursiveDirectoryIterator;
@@ -37,16 +36,17 @@ final class Scanner
     /**
      * Return all sections (app & plugins) with an Template directory.
      *
+     * @param string[] $extensions Template extensions to search
      * @return array
      */
-    public static function all(): array
+    public static function all(array $extensions): array
     {
         $sections = [];
 
         foreach (App::path('templates') as $path) {
             if (is_dir($path)) {
                 $sections['APP'] = $sections['APP'] ?? [];
-                $sections['APP'] = array_merge($sections['APP'], static::iteratePath($path));
+                $sections['APP'] = array_merge($sections['APP'], static::iteratePath($path, $extensions));
             }
         }
 
@@ -54,7 +54,7 @@ final class Scanner
             $path = Plugin::templatePath($plugin);
             if (is_dir($path)) {
                 $sections[$plugin] = $sections[$plugin] ?? [];
-                $sections[$plugin] = array_merge($sections[$plugin], static::iteratePath($path));
+                $sections[$plugin] = array_merge($sections[$plugin], static::iteratePath($path, $extensions));
             }
         }
 
@@ -65,12 +65,13 @@ final class Scanner
      * Return all templates for a given plugin.
      *
      * @param string $plugin The plugin to find all templates for.
+     * @param string[] $extensions Template extensions to search
      * @return string[]
      */
-    public static function plugin(string $plugin)
+    public static function plugin(string $plugin, array $extensions)
     {
         $path = Plugin::templatePath($plugin);
-        $templates = static::iteratePath($path);
+        $templates = static::iteratePath($path, $extensions);
 
         return $templates;
     }
@@ -116,21 +117,25 @@ final class Scanner
      * Iterage over the given path and return all matching .tpl files in it.
      *
      * @param string $path Path to iterate over.
+     * @param string[] $extensions Template extensions to search
      * @return string[]
      */
-    protected static function iteratePath(string $path): array
+    protected static function iteratePath(string $path, array $extensions): array
     {
-        return static::walkIterator(static::setupIterator($path));
+        return static::walkIterator(static::setupIterator($path, $extensions));
     }
 
     /**
      * Setup iterator for given path.
      *
      * @param string $path Path to setup iterator for.
+     * @param string[] $extensions Template extensions to search
      * @return \Iterator
      */
-    protected static function setupIterator(string $path): Iterator
+    protected static function setupIterator(string $path, array $extensions): Iterator
     {
+        $extPattern = '(?:' . implode('|', array_map('preg_quote', $extensions)) . ')';
+
         return new RegexIterator(new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
                 $path,
@@ -140,7 +145,7 @@ final class Scanner
             ),
             RecursiveIteratorIterator::CHILD_FIRST,
             RecursiveIteratorIterator::CATCH_GET_CHILD
-        ), '/.*?' . TwigView::EXT . '$/', RegexIterator::GET_MATCH);
+        ), '/.+' . $extPattern . '$/', RegexIterator::GET_MATCH);
     }
 
     /**

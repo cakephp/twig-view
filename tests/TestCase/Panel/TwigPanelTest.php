@@ -26,8 +26,11 @@ class TwigPanelTest extends TestCase
 {
     public function testData()
     {
+        $panel = new TwigPanel();
+        $panel->setExtensions(['.twig']);
+
         $this->assertSame([
-            'templates' => TreeScanner::all(),
-        ], (new TwigPanel())->data());
+            'templates' => TreeScanner::all(['.twig']),
+        ], $panel->data());
     }
 }

@@ -81,7 +81,7 @@ class TreeScannerTest extends TestCase
                 ],
             ],
             'TestTwigView' => [
-                3 => 'twig.twig',
+                4 => 'twig.twig',
                 'Controller' => [
                     'Component' => [
                         'magic.twig',
@@ -89,8 +89,13 @@ class TreeScannerTest extends TestCase
                     'index.twig',
                     'view.twig',
                 ],
+                'element' => [
+                    'nested' => [
+                        'plugin_test.twig',
+                    ],
+                ],
             ],
-        ], TreeScanner::all());
+        ], TreeScanner::all(['.twig']));
 
         Configure::write('App.paths.templates', $templatePaths);
     }
@@ -98,7 +103,7 @@ class TreeScannerTest extends TestCase
     public function testPlugin()
     {
         $this->assertSame([
-            3 => 'twig.twig',
+            4 => 'twig.twig',
             'Controller' => [
                 'Component' => [
                     'magic.twig',
@@ -106,6 +111,11 @@ class TreeScannerTest extends TestCase
                 'index.twig',
                 'view.twig',
             ],
-        ], TreeScanner::plugin('TestTwigView'));
+            'element' => [
+                'nested' => [
+                    'plugin_test.twig',
+                ],
+            ],
+        ], TreeScanner::plugin('TestTwigView', ['.twig']));
     }
 }

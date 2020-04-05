@@ -31,23 +31,25 @@ final class RelativeScanner
     /**
      * Return all sections (app & plugins) with an Template directory.
      *
+     * @param string[] $extensions Template extensions to search
      * @return array
      */
-    public static function all(): array
+    public static function all(array $extensions): array
     {
-        return static::strip(Scanner::all());
+        return static::strip(Scanner::all($extensions));
     }
 
     /**
      * Return all templates for a given plugin.
      *
      * @param string $plugin The plugin to find all templates for.
+     * @param string[] $extensions Template extensions to search
      * @return mixed
      */
-    public static function plugin(string $plugin)
+    public static function plugin(string $plugin, array $extensions)
     {
         return static::strip([
-            $plugin => Scanner::plugin($plugin),
+            $plugin => Scanner::plugin($plugin, $extensions),
         ])[$plugin];
     }
 

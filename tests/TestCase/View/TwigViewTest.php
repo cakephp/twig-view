@@ -88,6 +88,16 @@ class TwigViewTest extends TestCase
         $this->assertSame("main content\nextra content", $output);
     }
 
+    public function testRenderWithPluginElement()
+    {
+        $this->loadPlugins(['TestTwigView']);
+
+        $output = $this->view->render('plugin', false);
+        $this->assertSame('from plugin', $output);
+
+        $this->removePlugins(['TestTwigView']);
+    }
+
     /**
      * Tests rendering a cell.
      *

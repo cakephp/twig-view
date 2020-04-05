@@ -78,9 +78,11 @@ class ScannerTest extends TestCase
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'Component' . DS . 'magic.twig',
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'index.twig',
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'view.twig',
+                TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'element' . DS . 'nested' . DS . 'plugin_test.twig',
+                TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'other.other',
                 TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'twig.twig',
             ],
-        ], Scanner::all());
+        ], Scanner::all(['.twig', '.other']));
 
         Configure::write('App.paths.templates', $templatePaths);
     }
@@ -91,7 +93,8 @@ class ScannerTest extends TestCase
             TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'Component' . DS . 'magic.twig',
             TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'index.twig',
             TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'Controller' . DS . 'view.twig',
+            TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'element' . DS . 'nested' . DS . 'plugin_test.twig',
             TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'twig.twig',
-        ], Scanner::plugin('TestTwigView'));
+        ], Scanner::plugin('TestTwigView', ['.twig']));
     }
 }

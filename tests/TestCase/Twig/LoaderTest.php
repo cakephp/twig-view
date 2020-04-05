@@ -52,8 +52,8 @@ class LoaderTest extends TestCase
 
     public function testGetSource()
     {
-        $this->assertSame('TwigView', $this->Loader->getSource('TestTwigView.twig'));
-        $this->assertSame('TwigView', $this->Loader->getSource('TestTwigView.twig.twig'));
+        $source = $this->Loader->getSource(TEST_APP . DS . 'templates' . DS . 'simple.twig');
+        $this->assertSame("{{ 'UnderscoreMe'|underscore }}", $source);
     }
 
     public function testGetSourceNonExistingFile()
@@ -63,23 +63,11 @@ class LoaderTest extends TestCase
         $this->Loader->getSource('TestTwigView.no_twig');
     }
 
-    public function testGetCacheKeyNoPlugin()
+    public function testGetCacheKey()
     {
         $this->assertSame(
             TEST_APP . 'templates/simple.twig',
-            $this->Loader->getCacheKey('simple')
-        );
-    }
-
-    public function testGetCacheKeyPlugin()
-    {
-        $this->assertSame(
-            TEST_APP . 'plugins/TestTwigView/templates/twig.twig',
-            $this->Loader->getCacheKey('TestTwigView.twig')
-        );
-        $this->assertSame(
-            TEST_APP . 'plugins/TestTwigView/templates/twig.twig',
-            $this->Loader->getCacheKey('TestTwigView.twig.twig')
+            $this->Loader->getCacheKey(TEST_APP . 'templates/simple.twig')
         );
     }
 

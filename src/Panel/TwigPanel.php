@@ -24,6 +24,11 @@ use DebugKit\DebugPanel;
 class TwigPanel extends DebugPanel
 {
     /**
+     * @var string[]
+     */
+    protected static $extensions = [];
+
+    /**
      * Plugin name.
      *
      * @var string
@@ -38,7 +43,18 @@ class TwigPanel extends DebugPanel
     public function data(): array
     {
         return [
-            'templates' => TreeScanner::all(),
+            'templates' => TreeScanner::all(static::$extensions),
         ];
+    }
+
+    /**
+     * Sets the template file extensions to search.
+     *
+     * @param string[] $extensions Template extensions to search
+     * @return void
+     */
+    public static function setExtensions(array $extensions): void
+    {
+        static::$extensions = $extensions;
     }
 }

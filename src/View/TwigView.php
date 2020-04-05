@@ -20,6 +20,7 @@ namespace Cake\TwigView\View;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\TwigView\Panel\TwigPanel;
 use Cake\TwigView\Twig\Extension;
 use Cake\TwigView\Twig\Loader;
 use Cake\TwigView\Twig\TokenParser;
@@ -46,8 +47,6 @@ use Twig\RuntimeLoader\RuntimeLoaderInterface;
  */
 class TwigView extends View
 {
-    public const EXT = '.twig';
-
     /**
      * @var \Twig\Environment|null
      */
@@ -113,6 +112,8 @@ class TwigView extends View
                 $this->initializeProfiler();
             }
         }
+
+        TwigPanel::setExtensions($this->extensions);
     }
 
     /**
@@ -137,6 +138,15 @@ class TwigView extends View
     public function getProfile(): ?Profile
     {
         return static::$profile;
+    }
+
+    /** Gets the template file extensions.
+     *
+     * @return string[]
+     */
+    public function getExtensions(): array
+    {
+        return $this->extensions;
     }
 
     /**

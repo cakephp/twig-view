@@ -18,9 +18,6 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig;
 
-use Cake\Core\App;
-use Cake\Core\Plugin;
-use Cake\TwigView\View\TwigView;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 use Twig\Source;
@@ -40,9 +37,7 @@ class Loader implements LoaderInterface
      */
     public function getSource(string $name): string
     {
-        $name = $this->resolveFileName($name);
-
-        return file_get_contents($name);
+        return file_get_contents($this->findTemplate($name));
     }
 
     /**
@@ -54,7 +49,7 @@ class Loader implements LoaderInterface
     public function getSourceContext(string $name): Source
     {
         $code = $this->getSource($name);
-        $path = $this->getFilename($name);
+        $path = $this->findTemplate($name);
 
         return new Source($code, $name, $path);
     }
@@ -67,7 +62,7 @@ class Loader implements LoaderInterface
      */
     public function getCacheKey(string $name): string
     {
-        return $this->resolveFileName($name);
+        return $this->findTemplate($name);
     }
 
     /**
@@ -79,9 +74,9 @@ class Loader implements LoaderInterface
      */
     public function isFresh(string $name, int $time): bool
     {
-        $name = $this->resolveFileName($name);
+        $path = $this->findTemplate($name);
 
-        return filemtime($name) < $time;
+        return filemtime($path) < $time;
     }
 
     /**
@@ -92,74 +87,22 @@ class Loader implements LoaderInterface
      */
     public function exists(string $name): bool
     {
-        $filename = $this->getFilename($name);
-        if ($filename === '') {
-            return false;
-        }
-
-        return true;
+        return file_exists($name);
     }
 
     /**
-     * Resolve template name to filename.
+     * Returns path to template name if exists.
      *
-     * @param string $name Template.
-     * @throws \Twig\Error\LoaderError Thrown when template file isn't found.
+     * @param string $name The name of template to find.
      * @return string
+     * @throws \Twig\Error\LoaderError When template doesn't exist
      */
-    private function resolveFileName(string $name): string
+    protected function findTemplate(string $name): string
     {
-        $filename = $this->getFilename($name);
-        if ($filename === '') {
-            throw new LoaderError(sprintf('Template "%s" is not defined.', $name));
+        if (!$this->exists($name)) {
+            throw new LoaderError("Unable to find template `{$name}`.");
         }
 
-        return $filename;
-    }
-
-    /**
-     * Get template filename.
-     *
-     * @param string $name Template.
-     * @return string
-     */
-    private function getFilename(string $name): string
-    {
-        if (file_exists($name)) {
-            return $name;
-        }
-
-        [$plugin, $file] = pluginSplit($name);
-        foreach ([null, $plugin] as $scope) {
-            $paths = $this->getPaths($scope);
-            foreach ($paths as $path) {
-                $filePath = $path . $file;
-                if (is_file($filePath)) {
-                    return $filePath;
-                }
-
-                $filePath = $path . $file . TwigView::EXT;
-                if (is_file($filePath)) {
-                    return $filePath;
-                }
-            }
-        }
-
-        return '';
-    }
-
-    /**
-     * Check if $plugin is active and return it's template paths or return the aps template paths.
-     *
-     * @param string|null $plugin The plugin in question.
-     * @return array
-     */
-    private function getPaths(?string $plugin): array
-    {
-        if ($plugin === null || !Plugin::isLoaded($plugin)) {
-            return App::path('templates');
-        }
-
-        return [Plugin::templatePath($plugin)];
+        return $name;
     }
 }
