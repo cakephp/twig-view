@@ -20,9 +20,6 @@ namespace Cake\TwigView;
 
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
-use Cake\Core\Configure;
-use Cake\Core\Plugin as CorePlugin;
-use Cake\Core\PluginApplicationInterface;
 use Cake\TwigView\Command\CompileCommand;
 
 /**
@@ -31,26 +28,18 @@ use Cake\TwigView\Command\CompileCommand;
 class Plugin extends BasePlugin
 {
     /**
+     * Do bootstrapping or not
+     *
+     * @var bool
+     */
+    protected $bootstrapEnabled = false;
+
+    /**
      * Load routes or not
      *
      * @var bool
      */
     protected $routesEnabled = false;
-
-    /**
-     * @inheritDoc
-     */
-    public function bootstrap(PluginApplicationInterface $app): void
-    {
-        if (Configure::read('debug') && CorePlugin::isLoaded('DebugKit')) {
-            Configure::write('DebugKit.panels', array_merge(
-                (array)Configure::read('DebugKit.panels'),
-                [
-                    'Cake/TwigView.Twig',
-                ]
-            ));
-        }
-    }
 
     /**
      * @inheritDoc
