@@ -73,7 +73,7 @@ class TwigViewTest extends TestCase
     {
         $output = $this->view->render('Blog/index');
 
-        $this->assertSame("blog_entry", $output);
+        $this->assertSame('<p>blog_entry</p>', $output);
     }
 
     /**
@@ -86,6 +86,39 @@ class TwigViewTest extends TestCase
         $output = $this->view->render('Blog/with_extra_block', 'with_extra_block');
 
         $this->assertSame("main content\nextra content", $output);
+    }
+
+    /**
+     * Tests rendering a cell.
+     *
+     * @return void
+     */
+    public function testRenderCell()
+    {
+        $output = $this->view->render('cell', false);
+        $this->assertSame('<b>10</b>', $output);
+    }
+
+    /**
+     * Tests that rendering a cell doesn't create a new Twig Environment.
+     *
+     * @return void
+     */
+    public function testCellsShareTwig()
+    {
+        $cell = $this->view->cell('Test');
+        $this->assertSame($this->view->getTwig(), $cell->createView(AppView::class)->getTwig());
+    }
+
+    /**
+     * Tests deprecated element and cell tags render.
+     *
+     * @return void
+     */
+    public function testDeprecatedTags()
+    {
+        $output = $this->view->render('deprecated_tags', false);
+        $this->assertSame("<b>10</b>\nblog_entry", $output);
     }
 
     /**
