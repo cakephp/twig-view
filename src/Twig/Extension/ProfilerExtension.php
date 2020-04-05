@@ -36,7 +36,7 @@ class ProfilerExtension extends TwigProfilerExtension
     public function enter(Profile $profile)
     {
         $name = 'Twig Template: ' . substr($profile->getName(), strlen(ROOT) + 1);
-        DebugTimer::start($name, __d('twig_view', $name));
+        DebugTimer::start($name, $name);
 
         parent::enter($profile);
     }
