@@ -132,6 +132,17 @@ class TwigViewTest extends TestCase
     }
 
     /**
+     * Tests missing variables throw exception in debug.
+     *
+     * @return void
+     */
+    public function testMissingVariableThrowsError()
+    {
+        $this->expectException(RuntimeError::class);
+        $this->view->render('missing_variable', false);
+    }
+
+    /**
      * Tests a twig file that throws internal exception throw a Twig exception with message.
      *
      * @return void

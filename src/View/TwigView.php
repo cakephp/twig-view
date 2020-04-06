@@ -173,6 +173,7 @@ class TwigView extends View
             'charset' => Configure::read('App.encoding', 'UTF-8'),
             'debug' => $debug,
             'cache' => $debug ? false : $cachePath,
+            'strict_variables' => $debug,
         ];
 
         if ($config['cache'] === true) {
