@@ -12,7 +12,7 @@ parameters:
 
         -
             message: "#^Constant ROOT not found\\.$#"
-            count: 2
+            count: 1
             path: src/Twig/Extension/ProfilerExtension.php
 
         -

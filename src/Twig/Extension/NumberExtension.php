@@ -56,14 +56,4 @@ class NumberExtension extends AbstractExtension
             new TwigFunction('number_formatter', 'Cake\I18n\Number::formatter'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-number';
-    }
 }

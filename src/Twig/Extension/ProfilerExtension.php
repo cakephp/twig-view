@@ -40,18 +40,4 @@ class ProfilerExtension extends TwigProfilerExtension
 
         parent::enter($profile);
     }
-
-    /**
-     * Leave $profile.
-     *
-     * @param \Twig\Profiler\Profile $profile Profile.
-     * @return void
-     */
-    public function leave(Profile $profile)
-    {
-        parent::leave($profile);
-
-        $name = 'Twig Template: ' . substr($profile->getName(), strlen(ROOT) + 1);
-        DebugTimer::stop($name);
-    }
 }

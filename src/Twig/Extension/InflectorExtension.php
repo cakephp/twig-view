@@ -46,14 +46,4 @@ class InflectorExtension extends AbstractExtension
             new TwigFilter('slug', 'Cake\Utility\Text::slug'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-inflector';
-    }
 }

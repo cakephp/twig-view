@@ -66,13 +66,6 @@ abstract class AbstractExtensionTest extends TestCase
         }
     }
 
-    public function testName()
-    {
-        $name = $this->extension->getName();
-        $this->assertIsString($name);
-        $this->assertTrue(strlen($name) > 0);
-    }
-
     protected function getFilter($name)
     {
         $filters = $this->extension->getFilters();

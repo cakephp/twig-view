@@ -69,14 +69,4 @@ class StringsExtension extends AbstractExtension
             new TwigFunction('sprintf', 'sprintf'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-string';
-    }
 }

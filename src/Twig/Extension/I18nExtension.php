@@ -41,14 +41,4 @@ class I18nExtension extends AbstractExtension
             new TwigFunction('__dn', '__dn'),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-i18n';
-    }
 }

@@ -44,14 +44,4 @@ class UtilsExtension extends AbstractExtension
             }),
         ];
     }
-
-    /**
-     * Get extension name.
-     *
-     * @return string
-     */
-    public function getName(): string
-    {
-        return 'twigview-utils';
-    }
 }
