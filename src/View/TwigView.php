@@ -281,17 +281,17 @@ class TwigView extends View
     /**
      * @inheritDoc
      */
-    protected function _render(string $templateFile, array $data = []): string
+    protected function _evaluate(string $templateFile, array $dataForView): string
     {
         // Set _view for each render because Twig Environment is shared between views.
         $this->getTwig()->addGlobal('_view', $this);
 
-        $data = array_merge(
-            empty($data) ? $this->viewVars : $data,
+        $dataForView = array_merge(
+            $dataForView,
             iterator_to_array($this->helpers()->getIterator())
         );
 
-        return $this->getTwig()->load($templateFile)->render($data);
+        return $this->getTwig()->load($templateFile)->render($dataForView);
     }
 
     /**
