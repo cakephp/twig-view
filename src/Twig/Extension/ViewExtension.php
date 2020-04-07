@@ -48,6 +48,13 @@ class ViewExtension extends AbstractExtension
                 ['needs_context' => true, 'is_safe' => ['all']]
             ),
             new TwigFunction(
+                'fetch',
+                function ($context, string $name, string $default = '') {
+                    return $context['_view']->fetch($name, $default);
+                },
+                ['needs_context' => true, 'is_safe' => ['all']]
+            ),
+            new TwigFunction(
                 'helper_*_*',
                 function ($context, $helper, $method, array $args = []) {
                     return $context['_view']->{$helper}->{$method}(...$args);
