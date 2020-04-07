@@ -113,7 +113,9 @@ class TwigView extends View
             }
         }
 
-        TwigPanel::setExtensions($this->extensions);
+        if (Configure::read('debug') && Plugin::isLoaded('DebugKit')) {
+            TwigPanel::setExtensions($this->extensions);
+        }
     }
 
     /**
