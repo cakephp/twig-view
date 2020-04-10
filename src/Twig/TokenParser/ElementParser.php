@@ -38,6 +38,12 @@ class ElementParser extends IncludeTokenParser
      */
     public function parse(Token $token): Node
     {
+        static $warned = false;
+        if (!$warned) {
+            $warned = true;
+            deprecationWarning('`element` tag is deprecated. Use `element()` function instead.');
+        }
+
         $stream = $this->parser->getStream();
         $name = $this->parser->getExpressionParser()->parseExpression();
 

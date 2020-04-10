@@ -38,6 +38,12 @@ class CellParser extends IncludeTokenParser
      */
     public function parse(Token $token): Node
     {
+        static $warned = false;
+        if (!$warned) {
+            $warned = true;
+            deprecationWarning('`cell` tag is deprecated. Use `cell()` function instead.');
+        }
+
         $stream = $this->parser->getStream();
 
         $variable = null;
