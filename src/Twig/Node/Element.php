@@ -25,6 +25,8 @@ use Twig\Node\Node;
 
 /**
  * Class Element.
+ *
+ * @deprecated 1.0.0 Elements are now rendered using `element()` function instead, provided by `ViewExtension`.
  */
 class Element extends Node
 {
