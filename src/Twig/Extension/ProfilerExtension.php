@@ -35,9 +35,25 @@ class ProfilerExtension extends TwigProfilerExtension
      */
     public function enter(Profile $profile)
     {
-        $name = 'Twig Template: ' . substr($profile->getName(), strlen(ROOT) + 1);
-        DebugTimer::start($name, $name);
-
         parent::enter($profile);
+
+        if ($profile->isTemplate()) {
+            $name = 'Twig: ' . $profile->getTemplate();
+            DebugTimer::start($name, $name);
+        }
+    }
+
+    /**
+     * @param \Twig\Profiler\Profile $profile Profile.
+     * @return void
+     */
+    public function leave(Profile $profile)
+    {
+        if ($profile->isTemplate()) {
+            $name = 'Twig: ' . $profile->getTemplate();
+            DebugTimer::stop($name);
+        }
+
+        parent::leave($profile);
     }
 }
