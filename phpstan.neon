@@ -11,11 +11,6 @@ parameters:
             path: src/Twig/Extension/BasicExtension.php
 
         -
-            message: "#^Constant ROOT not found\\.$#"
-            count: 1
-            path: src/Twig/Extension/ProfilerExtension.php
-
-        -
             message: "#^Constant CACHE not found\\.$#"
             count: 1
             path: src/View/TwigView.php
