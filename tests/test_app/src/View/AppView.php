@@ -30,4 +30,15 @@ class AppView extends \Cake\TwigView\View\TwigView
         parent::initialize();
         $this->loadHelper('TestSecond');
     }
+
+    /**
+     * Clear internal Twig instances for testing.
+     *
+     * @return void
+     */
+    public static function destroyTwig(): void
+    {
+        static::$profile = null;
+        static::$twig = null;
+    }
 }
