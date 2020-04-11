@@ -160,8 +160,10 @@ class TwigViewTest extends TestCase
      */
     public function testDeprecatedTags()
     {
-        $output = $this->view->render('deprecated_tags', false);
-        $this->assertSame("<b>10</b>\nblog_entry", $output);
+        $this->deprecated(function () {
+            $output = $this->view->render('deprecated_tags', false);
+            $this->assertSame("<b>10</b>\nblog_entry", $output);
+        });
     }
 
     /**
