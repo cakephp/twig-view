@@ -1,4 +1,4 @@
-# TwigView plugin for CakePHP #
+# TwigView plugin for CakePHP
 
 [![Build Status](https://img.shields.io/travis/com/cakephp/twig-view?style=flat-square)](https://travis-ci.com/cakephp/twig-view)
 [![Latest Stable Version](https://img.shields.io/github/v/release/cakephp/twig-view?sort=semver&style=flat-square)](https://packagist.org/packages/cakephp/twig-view)
@@ -7,29 +7,67 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
-This plugin allows you to use the [Twig Templating Language](http://twig.sensiolabs.org) for your views.
+This plugin allows you to use the [Twig Templating Language](http://twig.sensiolabs.org/documentation) for your views.
 
-In addition to enabling the use of most of Twig's features, the plugin is tightly integrated with the CakePHP view renderer giving you full access to helpers, objects and elements.
+It provides wrappers for common View opertions and many helpful extensions that expose CakePHP functions and `jasny/twig-extensions` helpers.
 
-## Installation ##
+## Installation
 
-To install via [Composer](http://getcomposer.org/), use the command below.
+To install with [Composer](http://getcomposer.org/), use the command below.
 
 ```bash
 composer require cakephp/twig-view
 ```
 
-## Configuration ##
+Then, [load the `Cake/TwigView` plugin](https://book.cakephp.org/4/en/plugins.html#loading-a-plugin)
+in your `Application` bootstrap just like other Cake plugins.
 
-### Load Plugin
-Run the following CLI command:
+## Configuration
 
-```sh
-bin/cake plugin load Cake/TwigView
+`TwigView` allows you to configure the Twig Environment through `View` options. You can set these through `ViewBuilder`
+in the `Controller` or set them directly in `TwigView`.
+
+```php
+// In controller
+public function initialize(): void
+{
+    $this->viewBuilder()->setOption('environment', ['cache' => false]);
+}
+
+// In your AppView
+public function initialize(): void
+{
+    $this->setConfig('environment', ['cache' => false]);
+
+    // Call parent TwigView initialize
+    parent::initialize();
+}
 ```
 
-### Use View class
-Instead of extending from the `View` let `AppView` extend `TwigView`:
+### Available Options
+
+- `environment`
+
+    [Twig Environment options](https://twig.symfony.com/doc/3.x/api.html#environment-options).
+
+    Defaults to empty.
+
+- `markdown`
+
+    Which markdown engine is used for `markdown_to_html` filter. Set to `default` to use `DefaultMarkdown` or set
+    custom [Twig Markdown extension](https://packagist.org/packages/twig/markdown-extra) `MarkdownInterface` instance.
+
+    If using `default`, require one of:
+        - `erusev/parsedown`
+        - `league/commonmark`
+        - `michelf/php-markdown`
+
+    Defaults to disabled.
+
+## AppView Setup
+
+To start using Twig templates in your application, simply extend `TwigView` in your `AppView`.
+In general, it is safe to add your application's setup in `AppView::initialize()`.
 
 ```php
 namespace App\View;
@@ -38,172 +76,119 @@ use Cake\TwigView\View\TwigView;
 
 class AppView extends TwigView
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        // Add application-specific extensions
+    }
 }
 ```
 
-## Quick Start
+### Customization
 
-TwigView will look for its templates with the extension `.twig`.
+You can override several parts of `TwigView` initialization to create a custom Twig setup.
 
-### Layout
-Replace `templates/layout/default.php` by this `templates/layout/default.twig`
+- File Extensions
 
-``` twig
+    You can specify the file extensions used to search for templates by overriding the
+    `$extensions` property.
+
+    ```php
+    class AppView extends TwigView
+    {
+        protected $extensions = [
+            '.custom',
+        ];
+    }
+    ```
+
+- Twig Loader
+
+    You can override the template loader used by Twig.
+
+    ```php
+    protected function createLoader(): \Twig\Loader\LoaderInterface
+    {
+        // Return a custom Twig template loader
+    }
+    ```
+
+- Twig Extensions
+
+    You can override the Twig Extensions loading. If you want to use the built-in
+    `View` wrappers, make sure you load `Cake\TwigView\Twig\Extensions\ViewExtension`.
+
+    ```php
+    protected function initializeExtensions(): void
+    {
+        // Load only specific extensions
+    }
+
+- Twig Profiler
+
+    You can override the Twig profiler used when `DebugKit` is loaded.
+
+    ```php
+        protected function initializeProfiler(): void
+        {
+            parent::initializeProfiler();
+            // Add custom profiler logging using $this->getProfile()
+        }
+    ```
+
+## Templates
+
+You can create views using Twig templates much like you can with standard CakePHP templates.
+Layouts, elements and cells should work the same as standard templates.
+
+Since Twig provides a completely different `block` system, we recommend that you use Twig blocks and inheritance
+instead of trying to render CakePHP View blocks.
+
+However, you can still use standard blocks like `title`, `css`, `script` and `content`,  in your layouts.
+
+`templates/layout/default.twig`:
+
+```twig
 <!DOCTYPE html>
 <html>
 <head>
-    {{ Html.charset()|raw }}
-
     <title>
-        {{ __('myTwigExample') }}
-        {{ _view.fetch('title')|raw }}
+        {{ fetch('title') }}
     </title>
 
-    {{ Html.meta('icon')|raw }}
-
-    {{ Html.css('default.app.css')|raw }}
-    {{ Html.script('app')|raw }}
-
-    {{ _view.fetch('meta')|raw }}
-    {{ _view.fetch('css')|raw }}
-    {{ _view.fetch('script')|raw }}
+    {{ fetch('meta') }}
+    {{ fetch('css') }}
+    {{ fetch('script') }}
 </head>
 <body>
-    <header>
-        {{ _view.fetch('header')|raw }}
-    </header>
-
-    {{ Flash.render()|raw }}
-
-    <section>
-
-        <h1>{{ _view.fetch('title')|raw }}</h1>
-
-        {{ _view.fetch('content')|raw }}
-    </section>
-
-    <footer>
-        {{ _view.fetch('footer')|raw }}
-    </footer>
+    {{ fetch('content') }}
 </body>
 </html>
 ```
 
-### Template View
-Create a template, for example `templates/Users/index.twig` like this
-```Twig
-{{ _view.assign('title', __("I'm title")) }}
+### Accessing View
 
-{{ _view.start('header') }}
-    <p>I'm header</p>
-{{ _view.end() }}
+You can access the `View` instance using the `_view` global.
 
-{{ _view.start('footer') }}
-    <p>I'm footer</p>
-{{ _view.end() }}
-
-<p>I'm content</p>
-```
-
-## Usage
-
-### Use `$this`
-With twig `$this` is replaced by `_view`
-
-For example, without using Twig writing
-```php
-<?= $this->fetch('content') ?>
-```
-But with Twig
-```twig
-{{ _view.fetch('content')|raw }}
-```
-### Helpers
-
-Any helper can be access by their CamelCase name, for example:
+`TwigView` provides wrappers for `fetch()`, `cell()` and `element()` rendering.
+These do not require escaping.
 
 ```twig
-{{ Html.link('Edit user', {'controller':'Users', 'action': 'edit' ~ '/' ~ user.id}, {'class':'myclass'})|raw }}
+{{ fetch('content')}}
+
+{{ cell('myCell')}}
+{{ element('myElement') }}
 ```
 
-### Elements
-Basic
-```Twig
-{% element 'Element' %}
-```
-With variables or options
-```Twig
-{% element 'Plugin.Element' {
-    dataName: 'dataValue'
-} {
-    optionName: 'optionValue'
-} %}
-```
+`TwigView` also provides wrappers for any loaded helper using a special naming convention - `helper_Name_function()`.
 
-### Cells
-
-Store in context then echo it
 ```twig
-{% cell cellObject = 'Plugin.Cell' {
-    dataName: 'dataValue'
-} {
-    optionName: 'optionValue'
-} %}
-
-{{ cellObject|raw }}
+{{ helper_Text_autoParagraph('some text for a paragarph') }}
 ```
 
-Fetch and directly echo it
-```twig
-{% cell 'Plugin.Cell' {
-    dataName: 'dataValue'
-} {
-    optionName: 'optionValue'
-} %}
-```
+### Extension Filters
 
-### Extends
-If i want extend to `Common/demo.twig`
-```twig
-<div id="sidebar">
-    {% block sidebar %}{% endblock %}
-</div>
-
-<div id="content">
-    {% block body %}{% endblock %}
-</div>
-```
-We can write in a view
-```twig
-{% extends 'Common/demo' %}
-
-{% block sidebar %}
-    <ul>
-        <li>Item 1</li>
-        <li>Item 2</li>
-        <li>Item 3</li>
-    </ul>
-{% endblock %}
-
-{% block body %}
-
-    {{ _view.assign('title', __("I'm title")) }}
-
-    {{ _view.start('header') }}
-        <p>I'm header</p>
-    {{ _view.end() }}
-
-    {{ _view.start('footer') }}
-        <p>I'm footer</p>
-    {{ _view.end() }}
-
-    <p>I'm content</p>
-{% endblock %}
-```
-
-**Note : the block `body` is required, it's equivalent to `<?= $this->fetch('content') ?>`**
-
-### Filters
 * `debug` maps to [`debug`](https://book.cakephp.org/4/en/development/debugging.html#basic-debugging)
 * `pr` maps to `pr`
 * `low` maps to [`strtolower`](http://php.net/strtolower)
@@ -248,7 +233,10 @@ We can write in a view
 * `base64_decode` maps to [`base64_decode`](http://php.net/base64_decode)
 * `string` cast to [`string`](http://php.net/manual/en/language.types.type-juggling.php)
 
-### Functions
+See `jasny/twig-extensions` for the filters they provide.
+
+### Extension Functions
+
 * `in_array` maps to [`in_array`](http://php.net/in_array)
 * `explode` maps to [`explode`](http://php.net/explode)
 * `array` cast to [`array`](http://php.net/manual/en/language.types.type-juggling.php)
@@ -270,18 +258,4 @@ We can write in a view
 * `getVars` maps to `Cake\View\View::getVars`
 * `get` maps to `Cake\View\View::get`
 
-### Twig
-Visite [Twig Documentaion](http://twig.sensiolabs.org/documentation) for more tips
-
-### Extra included extensions
-
-* [jasny/twig-extensions](https://github.com/jasny/twig-extensions)
-* [twig/markdown-extra](https://github.com/twigphp/markdown-extra)
-
-### Profiler ###
-
-![Profiler](/docs/images/profiler.png)
-
-### Templates found ###
-
-![Templates found](/docs/images/templates-found.png)
+See `jasny/twig-extensions` for the functions they provide.
