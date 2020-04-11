@@ -35,6 +35,7 @@ use RuntimeException;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Extension\StringLoaderExtension;
+use Twig\Extra\Markdown\DefaultMarkdown;
 use Twig\Extra\Markdown\MarkdownExtension;
 use Twig\Extra\Markdown\MarkdownInterface;
 use Twig\Extra\Markdown\MarkdownRuntime;
@@ -62,20 +63,18 @@ class TwigView extends View
      *
      * Use ViewBuilder::setOption()/setOptions() in your controller to set these options.
      *
-     * - `environment` - Array of config you would pass into \Twig\Environment to overwrite the default settings,
-     *   see: http://twig.sensiolabs.org/doc/api.html#environment-options
-     * - `markdown` - Config for MarkdownExtension. Array must contain `engine` key which is
-     *   an instance of Twig\Extra\Markdown\MarkdownInterface,
-     *   see https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html
+     * - `environment` - Array of config you would pass into \Twig\Environment to overwrite the default settings.
+     *     See http://twig.sensiolabs.org/doc/api.html#environment-options.
+     * - `markdown` - Set to 'default' to use `DefaultMarkdown` or
+     *     provide custom Twig\Extra\Markdown\MarkdownInterface instance.
+     *     See https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html.
      *
      * @var array
      */
     protected $_defaultConfig = [
         'environment' => [
         ],
-        'markdown' => [
-            'engine' => null,
-        ],
+        'markdown' => null,
     ];
 
     /**
@@ -228,11 +227,12 @@ class TwigView extends View
         $twig->addExtension(new Extension\ViewExtension());
 
         // Markdown extension
-        $markdownEngine = $this->getConfig('markdown.engine');
-        if ($markdownEngine instanceof MarkdownInterface) {
+        $markdown = $this->getConfig('markdown');
+        if ($markdown !== null) {
             $twig->addExtension(new MarkdownExtension());
 
-            $twig->addRuntimeLoader(new class ($markdownEngine) implements RuntimeLoaderInterface {
+            $engine = $markdown === 'default' ? new DefaultMarkdown() : $markdown;
+            $twig->addRuntimeLoader(new class ($engine) implements RuntimeLoaderInterface {
                 /**
                  * @var \Twig\Extra\Markdown\MarkdownInterface
                  */

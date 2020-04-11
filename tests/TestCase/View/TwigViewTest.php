@@ -22,6 +22,7 @@ use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use Twig\Extra\Markdown\DefaultMarkdown;
 
 /**
  * Class TwigViewTest.
@@ -118,6 +119,38 @@ class TwigViewTest extends TestCase
     {
         $cell = $this->view->cell('Test');
         $this->assertSame($this->view->getTwig(), $cell->createView(AppView::class)->getTwig());
+    }
+
+    /**
+     * Tests rendering with markdown.
+     *
+     * @return void;
+     */
+    public function testMarkdownExtensionDefault()
+    {
+        AppView::destroyTwig();
+
+        $view = new AppView(null, null, null, ['markdown' => 'default']);
+        $output = $this->view->render('markdown', false);
+        $this->assertSame("<h1>Title</h1>\n", $output);
+
+        AppView::destroyTwig();
+    }
+
+    /**
+     * Tests rendering with markdown.
+     *
+     * @return void;
+     */
+    public function testMarkdownExtensionCustom()
+    {
+        AppView::destroyTwig();
+
+        $view = new AppView(null, null, null, ['markdown' => new DefaultMarkdown()]);
+        $output = $this->view->render('markdown', false);
+        $this->assertSame("<h1>Title</h1>\n", $output);
+
+        AppView::destroyTwig();
     }
 
     /**
