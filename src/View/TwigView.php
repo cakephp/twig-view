@@ -21,8 +21,8 @@ namespace Cake\TwigView\View;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\TwigView\Panel\TwigPanel;
+use Cake\TwigView\Twig\AbsolutePathLoader;
 use Cake\TwigView\Twig\Extension;
-use Cake\TwigView\Twig\Loader;
 use Cake\TwigView\Twig\TokenParser;
 use Cake\View\Exception\MissingLayoutException;
 use Cake\View\Exception\MissingTemplateException;
@@ -39,6 +39,8 @@ use Twig\Extra\Markdown\DefaultMarkdown;
 use Twig\Extra\Markdown\MarkdownExtension;
 use Twig\Extra\Markdown\MarkdownInterface;
 use Twig\Extra\Markdown\MarkdownRuntime;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
 use Twig\Loader\LoaderInterface;
 use Twig\Profiler\Profile;
 use Twig\RuntimeLoader\RuntimeLoaderInterface;
@@ -157,7 +159,10 @@ class TwigView extends View
      */
     protected function createLoader(): LoaderInterface
     {
-        return new Loader();
+        return new ChainLoader([
+            new AbsolutePathLoader(),
+            new FilesystemLoader(Configure::read('App.paths.templates')),
+        ]);
     }
 
     /**

@@ -23,11 +23,9 @@ use Twig\Loader\LoaderInterface;
 use Twig\Source;
 
 /**
- * Class Loader.
- *
- * @internal
+ * Loads template files with aboslute paths.
  */
-class Loader implements LoaderInterface
+class AbsolutePathLoader implements LoaderInterface
 {
     /**
      * Get the file contents of a template.
