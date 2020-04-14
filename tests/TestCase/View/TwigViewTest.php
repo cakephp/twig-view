@@ -154,6 +154,18 @@ class TwigViewTest extends TestCase
     }
 
     /**
+     * Tests filesystem loader works with .twig files
+     * included by other templates.
+     *
+     * @return void
+     */
+    public function testChainedLoader()
+    {
+        $output = $this->view->render('test_include', false);
+        $this->assertSame('underscore_me', $output);
+    }
+
+    /**
      * Tests deprecated element and cell tags render.
      *
      * @return void

@@ -140,12 +140,16 @@ You can override several parts of `TwigView` initialization to create a custom T
 ## Templates
 
 You can create views using Twig templates much like you can with standard CakePHP templates.
-Layouts, elements and cells should work the same as standard templates.
+
+When using `element()` and `cell()`, the templates are searched and loaded the same as View.
+You do not need to specify the full path or file extension.
+
+When using twig files directly (such as `include()`), TwigView will search the paths in
+`App.paths.templates` for the files. You must include the extension when loading files directly - `my_template.twig`.
 
 Since Twig provides a completely different `block` system, we recommend that you use Twig blocks and inheritance
-instead of trying to render CakePHP View blocks.
-
-However, you can still use standard blocks like `title`, `css`, `script` and `content`,  in your layouts.
+instead of trying to render CakePHP View blocks. However, you can still use standard blocks like
+`title`, `css`, `script` and `content`  in your layouts with the `fetch()` function.
 
 `templates/layout/default.twig`:
 

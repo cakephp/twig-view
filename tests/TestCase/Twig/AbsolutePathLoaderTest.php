@@ -19,16 +19,16 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\TestCase\Twig;
 
 use Cake\TestSuite\TestCase;
-use Cake\TwigView\Twig\Loader;
+use Cake\TwigView\Twig\AbsolutePathLoader;
 use Twig\Error\LoaderError;
 
 /**
- * Class LoaderTest.
+ * Class AbsolutePathLoaderTest.
  */
-class LoaderTest extends TestCase
+class AbsolutePathLoaderTest extends TestCase
 {
     /**
-     * @var Loader
+     * @var Cake\TwigView\Twig\AbsolutePathLoader
      */
     protected $Loader;
 
@@ -38,7 +38,7 @@ class LoaderTest extends TestCase
 
         $this->loadPlugins(['TestTwigView']);
 
-        $this->Loader = new Loader();
+        $this->Loader = new AbsolutePathLoader();
     }
 
     public function tearDown(): void
