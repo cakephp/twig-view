@@ -190,7 +190,7 @@ These do not require escaping.
 ```twig
 {{ helper_Text_autoParagraph('some text for a paragarph') }}
 ```
-To format your templates correctly you may have to modify the tags to [`control white spaces`](https://twig.symfony.com/doc/3.x/templates.html#whitespace-control).
+All wrapper functions are are pre-escaped and do not require using `|raw` filter. However, keep in mind that Twig keeps the whitespace when using `{{ }}` to print. Please read the [Twig documentation]((https://twig.symfony.com/doc/3.x/templates.html#whitespace-control)) on how to remove the extra white space when needed.
 
 ### Extension Filters
 
