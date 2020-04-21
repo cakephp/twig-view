@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\View;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\TwigView\Panel\TwigPanel;
@@ -159,9 +160,14 @@ class TwigView extends View
      */
     protected function createLoader(): LoaderInterface
     {
+        $paths = App::path('templates');
+        if (empty($paths)) {
+            return new AbsolutePathLoader();
+        }
+
         return new ChainLoader([
             new AbsolutePathLoader(),
-            new FilesystemLoader(Configure::read('App.paths.templates')),
+            new FilesystemLoader($paths),
         ]);
     }
 

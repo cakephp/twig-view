@@ -18,8 +18,10 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase;
 
+use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
+use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Extra\Markdown\DefaultMarkdown;
@@ -163,6 +165,26 @@ class TwigViewTest extends TestCase
     {
         $output = $this->view->render('test_include', false);
         $this->assertSame('underscore_me', $output);
+    }
+
+    /**
+     * Tests filesystem loader is skipped if App.paths.templates
+     * configuration is empty.
+     *
+     * @return void
+     */
+    public function testMissingPathsConfig()
+    {
+        AppView::destroyTwig();
+        $paths = Configure::read('App.paths.templates');
+        Configure::write('App.paths.templates', []);
+
+        $view = new AppView();
+        $this->expectException(LoaderError::class);
+        $this->view->getTwig()->render('simple.twig');
+
+        AppView::destroyTwig();
+        Configure::write('App.paths.templates', $paths);
     }
 
     /**
