@@ -141,15 +141,18 @@ You can override several parts of `TwigView` initialization to create a custom T
 
 You can create views using Twig templates much like you can with standard CakePHP templates.
 
-When using `element()` and `cell()`, the templates are searched and loaded the same as View.
-You do not need to specify the full path or file extension.
+Templates are loaded the same way wherever they are used and follow the `View` path conventions.
 
-When using twig files directly (such as `include()`), TwigView will search the paths in
-`App.paths.templates` for the files. You must include the extension when loading files directly - `my_template.twig`.
+```twig
+{% extends 'Common/base' %}
+{{ include('Common/helper') }}
+```
 
-Since Twig provides a completely different `block` system, we recommend that you use Twig blocks and inheritance
-instead of trying to render CakePHP View blocks. However, you can still use standard blocks like
-`title`, `css`, `script` and `content`  in your layouts with the `fetch()` function.
+- Template names are always relative to `App.path.templates` not the current file.
+- File extensions are automatically generated. Defaults to '.twig'.
+- Templates can be loaded from plugins the same as `View` templates.
+
+Layout templates are supported and loaded the same way as `View` layouts.
 
 `templates/layout/default.twig`:
 
@@ -176,7 +179,8 @@ instead of trying to render CakePHP View blocks. However, you can still use stan
 You can access the `View` instance using the `_view` global.
 
 `TwigView` provides wrappers for `fetch()`, `cell()` and `element()` rendering.
-These do not require escaping.
+Cell and element templates are always loaded from **cell/** and **element/** sub-directories
+the same as `View` templates.
 
 ```twig
 {{ fetch('content')}}
@@ -190,6 +194,7 @@ These do not require escaping.
 ```twig
 {{ helper_Text_autoParagraph('some text for a paragarph') }}
 ```
+
 All wrapper functions are pre-escaped and do not require using `|raw` filter. However, keep in mind that Twig keeps the whitespace when using `{{ }}` to print. Please read the [Twig documentation]((https://twig.symfony.com/doc/3.x/templates.html#whitespace-control)) on how to remove the extra white space when needed.
 
 ### Extension Filters
