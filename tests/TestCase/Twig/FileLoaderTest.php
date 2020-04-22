@@ -19,18 +19,19 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\TestCase\Twig;
 
 use Cake\TestSuite\TestCase;
-use Cake\TwigView\Twig\AbsolutePathLoader;
+use Cake\TwigView\Twig\FileLoader;
+use Cake\TwigView\View\TwigView;
 use Twig\Error\LoaderError;
 
 /**
- * Class AbsolutePathLoaderTest.
+ * Class FileLoaderTest.
  */
-class AbsolutePathLoaderTest extends TestCase
+class FileLoaderTest extends TestCase
 {
     /**
-     * @var Cake\TwigView\Twig\AbsolutePathLoader
+     * @var Cake\TwigView\Twig\FileLoader
      */
-    protected $Loader;
+    protected $loader;
 
     public function setUp(): void
     {
@@ -38,12 +39,12 @@ class AbsolutePathLoaderTest extends TestCase
 
         $this->loadPlugins(['TestTwigView']);
 
-        $this->Loader = new AbsolutePathLoader();
+        $this->loader = new FileLoader(new TwigView());
     }
 
     public function tearDown(): void
     {
-        unset($this->Loader);
+        unset($this->loader);
 
         $this->removePlugins(['TestTwigView']);
 
@@ -52,22 +53,22 @@ class AbsolutePathLoaderTest extends TestCase
 
     public function testGetSource()
     {
-        $source = $this->Loader->getSource(TEST_APP . DS . 'templates' . DS . 'simple.twig');
-        $this->assertSame("{{ 'UnderscoreMe'|underscore }}", $source);
+        $source = $this->loader->getSourceContext(TEST_APP . DS . 'templates' . DS . 'simple.twig');
+        $this->assertSame("{{ 'UnderscoreMe'|underscore }}", $source->getCode());
     }
 
     public function testGetSourceNonExistingFile()
     {
         $this->expectException(LoaderError::class);
 
-        $this->Loader->getSource('TestTwigView.no_twig');
+        $this->loader->getSourceContext('TestTwigView.no_twig');
     }
 
     public function testGetCacheKey()
     {
         $this->assertSame(
             TEST_APP . 'templates/simple.twig',
-            $this->Loader->getCacheKey(TEST_APP . 'templates/simple.twig')
+            $this->loader->getCacheKey(TEST_APP . 'templates/simple.twig')
         );
     }
 
@@ -75,7 +76,7 @@ class AbsolutePathLoaderTest extends TestCase
     {
         $this->expectException(LoaderError::class);
 
-        $this->Loader->getCacheKey('TestTwigView.twog');
+        $this->loader->getCacheKey('TestTwigView.twog');
     }
 
     public function testIsFresh()
@@ -83,8 +84,8 @@ class AbsolutePathLoaderTest extends TestCase
         file_put_contents(TMP . 'TwigViewIsFreshTest', 'TwigViewIsFreshTest');
         $time = filemtime(TMP . 'TwigViewIsFreshTest');
 
-        $this->assertTrue($this->Loader->isFresh(TMP . 'TwigViewIsFreshTest', $time + 5));
-        $this->assertTrue(!$this->Loader->isFresh(TMP . 'TwigViewIsFreshTest', $time - 5));
+        $this->assertTrue($this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time + 5));
+        $this->assertTrue(!$this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time - 5));
 
         unlink(TMP . 'TwigViewIsFreshTest');
     }
@@ -93,6 +94,6 @@ class AbsolutePathLoaderTest extends TestCase
     {
         $this->expectException(LoaderError::class);
 
-        $this->Loader->isFresh(TMP . 'foobar' . time(), time());
+        $this->loader->isFresh(TMP . 'foobar' . time(), time());
     }
 }

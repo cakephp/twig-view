@@ -89,7 +89,7 @@ class CompileCommandTest extends TestCase
         $this->exec('twig-view compile plugin TestTwigView');
         $this->assertExitSuccess();
         $this->assertOutputContains('Compiled');
-        $this->assertOutputContains(TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'twig.twig');
+        $this->assertOutputContains(TEST_APP . 'plugins' . DS . 'TestTwigView' . DS . 'templates' . DS . 'base.twig');
 
         $this->removePlugins(['TestTwigView']);
     }

@@ -154,15 +154,19 @@ class TwigViewTest extends TestCase
     }
 
     /**
-     * Tests filesystem loader works with .twig files
-     * included by other templates.
+     * Tests templates loaded from Twig functions like
+     * extends and include() work.
      *
      * @return void
      */
-    public function testChainedLoader()
+    public function testTwigInclude()
     {
+        $this->loadPlugins(['TestTwigView']);
+
         $output = $this->view->render('test_include', false);
-        $this->assertSame('underscore_me', $output);
+        $this->assertSame("underscore_me", $output);
+
+        $this->removePlugins(['TestTwigView']);
     }
 
     /**
