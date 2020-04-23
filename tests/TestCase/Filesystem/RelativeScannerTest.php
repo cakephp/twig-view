@@ -79,8 +79,8 @@ class RelativeScannerTest extends TestCase
                 'Controller/Component/magic.twig',
                 'Controller/index.twig',
                 'Controller/view.twig',
+                'base.twig',
                 'element/nested/plugin_test.twig',
-                'twig.twig',
             ],
         ];
 
@@ -95,8 +95,8 @@ class RelativeScannerTest extends TestCase
             'Controller/Component/magic.twig',
             'Controller/index.twig',
             'Controller/view.twig',
+            'base.twig',
             'element/nested/plugin_test.twig',
-            'twig.twig',
         ], RelativeScanner::plugin('TestTwigView', ['.twig']));
     }
 }

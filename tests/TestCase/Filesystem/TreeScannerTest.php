@@ -81,7 +81,7 @@ class TreeScannerTest extends TestCase
                 ],
             ],
             'TestTwigView' => [
-                4 => 'twig.twig',
+                3 => 'base.twig',
                 'Controller' => [
                     'Component' => [
                         'magic.twig',
@@ -103,7 +103,7 @@ class TreeScannerTest extends TestCase
     public function testPlugin()
     {
         $this->assertSame([
-            4 => 'twig.twig',
+            3 => 'base.twig',
             'Controller' => [
                 'Component' => [
                     'magic.twig',
