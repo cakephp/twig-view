@@ -151,25 +151,13 @@ class TwigView extends View
     }
 
     /**
-     * Gets the full path for template.
-     *
-     * @param string $name Template name
-     * @return string
-     * @throws \Cake\View\Exception\MissingTemplateException When template is not found
-     */
-    public function resolveTemplatePath(string $name): string
-    {
-        return $this->_getTemplateFileName($name);
-    }
-
-    /**
      * Creates the Twig LoaderInterface instance.
      *
      * @return \Twig\Loader\LoaderInterface
      */
     protected function createLoader(): LoaderInterface
     {
-        return new FileLoader($this);
+        return new FileLoader($this->extensions);
     }
 
     /**

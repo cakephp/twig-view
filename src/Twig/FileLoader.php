@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig;
 
-use Cake\TwigView\View\TwigView;
-use Cake\View\Exception\MissingTemplateException;
+use Cake\Core\App;
+use Cake\Core\Plugin;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 use Twig\Source;
@@ -32,16 +32,16 @@ use Twig\Source;
 class FileLoader implements LoaderInterface
 {
     /**
-     * @var \Cake\TwigView\View\TwigView
+     * @var string[]
      */
-    protected $twigView;
+    protected $extensions;
 
     /**
-     * @param \Cake\TwigView\View\TwigView $twigView TwigView instance.
+     * @param string[] $extensions Template file extensions
      */
-    public function __construct(TwigView $twigView)
+    public function __construct(array $extensions)
     {
-        $this->twigView = $twigView;
+        $this->extensions = $extensions;
     }
 
     /**
@@ -79,7 +79,7 @@ class FileLoader implements LoaderInterface
     {
         try {
             $this->findTemplate($name);
-        } catch (MissingTemplateException $e) {
+        } catch (LoaderError $e) {
             return false;
         }
 
@@ -96,12 +96,48 @@ class FileLoader implements LoaderInterface
             return $name;
         }
 
-        try {
-            $path = $this->twigView->resolveTemplatePath($name);
-        } catch (MissingTemplateException $e) {
-            throw new LoaderError($e->getMessage());
+        [$plugin, $name] = pluginSplit($name);
+        $name = str_replace('/', DIRECTORY_SEPARATOR, $name);
+
+        if ($plugin !== null) {
+            $path = $this->checkExtensions(Plugin::templatePath($plugin) . $name);
+            if ($path !== null) {
+                return $path;
+            }
+
+            throw new LoaderError("Could not find template `{$name}` in plugin `{$plugin}`.");
         }
 
-        return $path;
+        foreach (App::path('templates') as $templatePath) {
+            $path = $this->checkExtensions($templatePath . $name);
+            if ($path !== null) {
+                return $path;
+            }
+        }
+
+        $error = "Could not find template `{$name}`.\nThese paths were searched:\n\n";
+        foreach (App::path('templates') as $templatePath) {
+            $error .= "- `{$templatePath}`\n";
+        }
+        throw new LoaderError($error);
+    }
+
+    /**
+     * Check partial path with all template file extensions to see
+     * which file exists.
+     *
+     * @param string $partial Template path excluding extension
+     * @return string|null
+     */
+    public function checkExtensions(string $partial): ?string
+    {
+        foreach ($this->extensions as $extension) {
+            $path = $partial . $extension;
+            if (file_exists($path)) {
+                return $path;
+            }
+        }
+
+        return null;
     }
 }
