@@ -100,12 +100,15 @@ class FileLoader implements LoaderInterface
         $name = str_replace('/', DIRECTORY_SEPARATOR, $name);
 
         if ($plugin !== null) {
-            $path = $this->checkExtensions(Plugin::templatePath($plugin) . $name);
+            $templatePath = Plugin::templatePath($plugin);
+            $path = $this->checkExtensions($templatePath . $name);
             if ($path !== null) {
                 return $path;
             }
 
-            throw new LoaderError("Could not find template `{$name}` in plugin `{$plugin}`.");
+            $error = "Could not find template `{$name}` in plugin `{$plugin}` in these paths:\n\n"
+                . "- `{$templatePath}`\n";
+            throw new LoaderError($error);
         }
 
         foreach (App::path('templates') as $templatePath) {
@@ -115,7 +118,7 @@ class FileLoader implements LoaderInterface
             }
         }
 
-        $error = "Could not find template `{$name}`.\nThese paths were searched:\n\n";
+        $error = "Could not find template `{$name}` in these paths:\n\n";
         foreach (App::path('templates') as $templatePath) {
             $error .= "- `{$templatePath}`\n";
         }
