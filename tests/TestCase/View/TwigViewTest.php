@@ -170,6 +170,18 @@ class TwigViewTest extends TestCase
     }
 
     /**
+     * Tests extends loads templates from root templates paths.
+     *
+     * @return void
+     */
+    public function testTwigExtendsRootPath()
+    {
+        $view = new AppView(null, null, null, ['templatePath' => 'Blog']);
+        $output = $view->render('blog_with_extends');
+        $this->assertSame('base from subdir/base', $output);
+    }
+
+    /**
      * Tests deprecated element and cell tags render.
      *
      * @return void

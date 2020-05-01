@@ -20,7 +20,6 @@ namespace Cake\TwigView\Test\TestCase\Twig;
 
 use Cake\TestSuite\TestCase;
 use Cake\TwigView\Twig\FileLoader;
-use Cake\TwigView\View\TwigView;
 use Twig\Error\LoaderError;
 
 /**
@@ -39,7 +38,7 @@ class FileLoaderTest extends TestCase
 
         $this->loadPlugins(['TestTwigView']);
 
-        $this->loader = new FileLoader(new TwigView());
+        $this->loader = new FileLoader(['.twig']);
     }
 
     public function tearDown(): void
@@ -60,8 +59,9 @@ class FileLoaderTest extends TestCase
     public function testGetSourceNonExistingFile()
     {
         $this->expectException(LoaderError::class);
+        $this->expectExceptionMessage("Could not find template `missing` in plugin `TestTwigView`");
 
-        $this->loader->getSourceContext('TestTwigView.no_twig');
+        $this->loader->getSourceContext('TestTwigView.missing');
     }
 
     public function testGetCacheKey()
@@ -93,7 +93,12 @@ class FileLoaderTest extends TestCase
     public function testIsFreshNonExistingFile()
     {
         $this->expectException(LoaderError::class);
-
         $this->loader->isFresh(TMP . 'foobar' . time(), time());
+    }
+
+    public function testExistsNonExistingFile()
+    {
+        $exists = $this->loader->exists(TMP . 'foobar' . time(), time());
+        $this->assertSame(false, $exists);
     }
 }
