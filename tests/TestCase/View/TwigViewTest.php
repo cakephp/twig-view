@@ -164,7 +164,7 @@ class TwigViewTest extends TestCase
         $this->loadPlugins(['TestTwigView']);
 
         $output = $this->view->render('test_include', false);
-        $this->assertSame("underscore_me", $output);
+        $this->assertSame('underscore_me', $output);
 
         $this->removePlugins(['TestTwigView']);
     }

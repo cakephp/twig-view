@@ -59,7 +59,7 @@ class FileLoaderTest extends TestCase
     public function testGetSourceNonExistingFile()
     {
         $this->expectException(LoaderError::class);
-        $this->expectExceptionMessage("Could not find template `missing` in plugin `TestTwigView`");
+        $this->expectExceptionMessage('Could not find template `missing` in plugin `TestTwigView`');
 
         $this->loader->getSourceContext('TestTwigView.missing');
     }
