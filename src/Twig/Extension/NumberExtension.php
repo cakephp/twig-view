@@ -40,7 +40,6 @@ class NumberExtension extends AbstractExtension
             new TwigFilter('number_format', 'Cake\I18n\Number::format'),
             new TwigFilter('formatDelta', 'Cake\I18n\Number::formatDelta'),
             new TwigFilter('currency', 'Cake\I18n\Number::currency'),
-            new TwigFilter('format', 'Cake\I18n\Number::format'),
         ];
     }
 
