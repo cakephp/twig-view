@@ -6,11 +6,6 @@ parameters:
         - src/Shell/Task/TwigTemplateTask.php
     ignoreErrors:
         -
-            message: "#^Parameter \\#2 \\$callable of class Twig\\\\TwigFilter constructor expects \\(callable\\(\\)\\: mixed\\)\\|null, 'debug' given\\.$#"
-            count: 1
-            path: src/Twig/Extension/BasicExtension.php
-
-        -
             message: "#^Constant CACHE not found\\.$#"
             count: 1
             path: src/View/TwigView.php

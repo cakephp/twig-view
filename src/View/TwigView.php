@@ -212,7 +212,10 @@ class TwigView extends View
 
         // Twig core extensions
         $twig->addExtension(new StringLoaderExtension());
-        $twig->addExtension(new DebugExtension());
+
+        if (Configure::read('debug', false)) {
+            $twig->addExtension(new DebugExtension());
+        }
 
         // CakePHP bridging extensions
         $twig->addExtension(new Extension\ArraysExtension());
