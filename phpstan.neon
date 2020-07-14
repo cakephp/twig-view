@@ -4,8 +4,3 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     bootstrapFiles:
         - tests/bootstrap.php
-    ignoreErrors:
-        -
-            message: "#^Constant CACHE not found\\.$#"
-            count: 1
-            path: src/View/TwigView.php
