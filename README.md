@@ -199,12 +199,9 @@ All wrapper functions are pre-escaped and do not require using `|raw` filter. Ho
 
 ### Extension Filters
 
-* `debug` maps to [`debug`](https://book.cakephp.org/4/en/development/debugging.html#basic-debugging)
-* `pr` maps to `pr`
 * `low` maps to [`strtolower`](http://php.net/strtolower)
 * `up` maps to [`strtoupper`](http://php.net/strtoupper)
 * `env` maps to [`env`](https://book.cakephp.org/4/en/core-libraries/global-constants-and-functions.html#global-functions)
-* `count` maps to [`count`](http://php.net/count)
 * `pluralize` maps to [`Cake\Utility\Inflector::pluralize`](https://book.cakephp.org/4/en/core-libraries/inflector.html#Cake\\Utility\\Inflector::pluralize)
 * `singularize` maps to [`Cake\Utility\Inflector::singularize`](https://book.cakephp.org/4/en/core-libraries/inflector.html#Cake\\Utility\\Inflector::singularize)
 * `camelize` maps to [`Cake\Utility\Inflector::camelize`](https://book.cakephp.org/4/en/core-libraries/inflector.html#Cake\\Utility\\Inflector::camelize)
@@ -216,7 +213,7 @@ All wrapper functions are pre-escaped and do not require using `|raw` filter. Ho
 * `slug` maps to [`Cake\Utility\Inflector::slug`](https://book.cakephp.org/4/en/core-libraries/inflector.html#Cake\\Utility\\Inflector::slug)
 * `toReadableSize` maps to [`Cake\I18n\Number::toReadableSize`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::toReadableSize)
 * `toPercentage` maps to [`Cake\I18n\Number::toPercentage`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::toPercentage)
-* `number_format` maps to [`Cake\I18n\Number::format`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::format)
+* `cake_number_format` maps to [`Cake\I18n\Number::format`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::format)
 * `formatDelta` maps to [`Cake\I18n\Number::formatDelta`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::formatDelta)
 * `currency` maps to [`Cake\I18n\Number::currency`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::currency)
 * `substr` maps to [`substr`](http://php.net/substr)
@@ -259,8 +256,7 @@ See `jasny/twig-extensions` for the filters they provide.
 * `__n` maps to [`__n`](https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html)
 * `__x` maps to [`__x`](https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html)
 * `__dn` maps to [`__dn`](https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html)
-* `defaultCurrency` maps to [`Cake\I18n\Number::defaultCurrency`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::defaultCurrency)
-* `number_formatter` maps to [`Cake\I18n\Number::formatter`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::formatter)
+* `defaultCurrency` maps to [`Cake\I18n\Number::getDefaultCurrency`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::getDefaultCurrency)
 * `uuid` maps to [`Cake\Utility\Text::uuid`](https://book.cakephp.org/4/en/core-libraries/text.html#generating-uuids)
 * `time` passed the first and optional second argument into [`new \Cake\I18n\Time()`](https://book.cakephp.org/4/en/core-libraries/time.html#creating-time-instances)
 * `timezones` maps to `Cake\I18n\Time::listTimezones`
