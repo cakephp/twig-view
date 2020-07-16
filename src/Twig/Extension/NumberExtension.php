@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\I18n\Number;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -37,7 +38,7 @@ class NumberExtension extends AbstractExtension
         return [
             new TwigFilter('toReadableSize', 'Cake\I18n\Number::toReadableSize'),
             new TwigFilter('toPercentage', 'Cake\I18n\Number::toPercentage'),
-            new TwigFilter('number_format', 'Cake\I18n\Number::format'),
+            new TwigFilter('cake_number_format', 'Cake\I18n\Number::format'),
             new TwigFilter('formatDelta', 'Cake\I18n\Number::formatDelta'),
             new TwigFilter('currency', 'Cake\I18n\Number::currency'),
         ];
@@ -51,8 +52,18 @@ class NumberExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('defaultCurrency', 'Cake\I18n\Number::defaultCurrency'),
-            new TwigFunction('number_formatter', 'Cake\I18n\Number::formatter'),
+            new TwigFunction('defaultCurrency', 'Cake\I18n\Number::getDefaultCurrency'),
+            new TwigFunction('number_formatter', function () {
+                static $logged = false;
+                if (!$logged) {
+                    $logged = true;
+                    deprecationWarning(
+                        '`number_formatter()` function is deprecated, use `cake_number_format` filter instead.'
+                    );
+                }
+
+                return Number::formatter(...func_get_args());
+            }),
         ];
     }
 }

@@ -28,40 +28,37 @@ class BasicExtensionTest extends AbstractExtensionTest
         parent::setUp();
     }
 
-    public function testFilterDebug()
+    public function testDeprecatedDebug()
     {
-        $string = 'abc';
         $callable = $this->getFilter('debug')->getCallable();
-        ob_start();
-        $result = call_user_func_array($callable, [$string, null, false]);
-        $output = ob_get_clean();
-        $this->assertSame('abc', $result);
-        $this->assertSame('
-########## DEBUG ##########
-\'abc\'
-###########################
-', $output);
+
+        $this->expectDeprecation();
+        call_user_func_array($callable, ['test']);
     }
 
-    public function testFilterPr()
+    public function testDeprecatedPr()
     {
-        $string = 'abc';
         $callable = $this->getFilter('pr')->getCallable();
-        ob_start();
-        $result = call_user_func_array($callable, [$string]);
-        $output = ob_get_clean();
-        $this->assertSame('abc', $result);
-        $this->assertSame('
-abc
 
-', $output);
+        $this->expectDeprecation();
+        call_user_func_array($callable, ['test']);
     }
 
-    public function testFilterCount()
+    public function testDeprecatedCount()
     {
-        $array = ['a', 'b', 'c'];
         $callable = $this->getFilter('count')->getCallable();
-        $result = call_user_func_array($callable, [$array]);
-        $this->assertSame(3, $result);
+
+        $this->expectDeprecation();
+        call_user_func_array($callable, ['test']);
+    }
+
+    public function testCount()
+    {
+        $this->deprecated(function () {
+            $array = ['a', 'b', 'c'];
+            $callable = $this->getFilter('count')->getCallable();
+            $result = call_user_func_array($callable, [$array]);
+            $this->assertSame(3, $result);
+        });
     }
 }
