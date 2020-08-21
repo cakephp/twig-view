@@ -16,7 +16,7 @@ declare(strict_types=1);
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Cake\TwigView\Test\TestCase;
+namespace Cake\TwigView\Test\TestCase\View;
 
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
