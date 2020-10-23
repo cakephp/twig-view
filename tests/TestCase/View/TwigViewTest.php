@@ -236,9 +236,29 @@ class TwigViewTest extends TestCase
             'viewVars' => ['elementVar' => 'var echoed inside element'],
         ]);
 
-        $output = $view->render('helper_test', false);
+        $output = $view->render('helper', false);
 
         $expected = "var echoed inside element\n<p>I love CakePHP</p>\n";
         $this->assertSame($expected, $output);
+    }
+
+    public function testPluginHelperFunction()
+    {
+        $this->loadPlugins(['TestTwigView']);
+
+        $view = new AppView(null, null, null, [
+            'helpers' => ['TestTwigView.Output'],
+        ]);
+
+        $expected = "from OutputHelper\nfrom OutputHelper";
+        $this->assertSame($expected, $view->render('plugin_helper', false));
+
+        $view = new AppView();
+        $view->helpers()->load('TestTwigView.Output');
+
+        $expected = "from OutputHelper\nfrom OutputHelper";
+        $this->assertSame($expected, $view->render('plugin_helper', false));
+
+        $this->clearPlugins();
     }
 }
