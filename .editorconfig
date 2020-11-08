@@ -19,3 +19,6 @@ indent_size = 2
 [*.twig]
 insert_final_newline = false
 trim_trailing_whitespace = false
+
+[*.neon]
+indent_style = tab
