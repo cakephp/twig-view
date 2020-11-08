@@ -44,7 +44,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}
+        key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}-${{ matrix.prefer-lowest }}
 
     - name: Composer Install
       run: |
@@ -85,7 +85,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '7.2'
-        extensions: mbstring, intl, apcu
+        extensions: mbstring, intl
         coverage: none
 
     - name: Get composer cache directory
@@ -100,7 +100,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}
+        key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}-${{ matrix.prefer-lowest }}
 
     - name: composer install
       run: composer stan-setup

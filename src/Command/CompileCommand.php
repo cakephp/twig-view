@@ -49,9 +49,10 @@ class CompileCommand extends BaseCommand
     {
         $type = $args->getArgumentAt(0);
 
-        // Setup cached TwigView to avoid creating for every file
         /** @psalm-var class-string<\Cake\TwigView\View\TwigView> $viewClass */
         $viewClass = $args->getOption('view-class');
+
+        // Setup cached TwigView to avoid creating for every file
         $this->twigView = new $viewClass();
 
         // $type is validated by the 'choices' option in buildOptionsParser
