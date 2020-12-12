@@ -52,8 +52,24 @@ class BasicExtension extends AbstractExtension
 
                 return pr(...func_get_args());
             }),
-            new TwigFilter('low', 'strtolower'),
-            new TwigFilter('up', 'strtoupper'),
+            new TwigFilter('low', function () {
+                static $logged = false;
+                if (!$logged) {
+                    $logged = true;
+                    deprecationWarning('`low` filter is deprecated, use lower` instead.');
+                }
+
+                return strtolower(...func_get_args());
+            }),
+            new TwigFilter('up', function () {
+                static $logged = false;
+                if (!$logged) {
+                    $logged = true;
+                    deprecationWarning('`up` filter is deprecated, use `upper` instead.');
+                }
+
+                return strtoupper(...func_get_args());
+            }),
             new TwigFilter('env', 'env'),
             new TwigFilter('count', function () {
                 static $logged = false;
