@@ -195,6 +195,7 @@ class TwigView extends View
      */
     protected function initializeTokenParser(): void
     {
+        $this->getTwig()->addTokenParser(new TokenParser\LayoutParser());
         $this->getTwig()->addTokenParser(new TokenParser\CellParser());
         $this->getTwig()->addTokenParser(new TokenParser\ElementParser());
     }
