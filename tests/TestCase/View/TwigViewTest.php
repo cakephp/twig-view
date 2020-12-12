@@ -78,7 +78,7 @@ class TwigViewTest extends TestCase
     }
 
     /**
-     * Test rendering template with view block assignment
+     * Test rendering template with view block assignment.
      *
      * @return void
      */
@@ -87,6 +87,18 @@ class TwigViewTest extends TestCase
         $output = $this->view->render('Blog/with_extra_block', 'with_extra_block');
 
         $this->assertSame("main content\nextra content", $output);
+    }
+
+    /**
+     * Tests setting layout from template.
+     *
+     * @return void
+     */
+    public function testLayoutFromTemplate()
+    {
+        $output = $this->view->render('set_layout');
+
+        $this->assertSame("custom\nset layout", $output);
     }
 
     public function testRenderWithPluginElement()
