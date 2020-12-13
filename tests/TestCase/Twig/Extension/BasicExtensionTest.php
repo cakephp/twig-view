@@ -44,6 +44,22 @@ class BasicExtensionTest extends AbstractExtensionTest
         call_user_func_array($callable, ['test']);
     }
 
+    public function testDeprecatedLow()
+    {
+        $this->deprecated(function () {
+            $callable = $this->getFilter('low')->getCallable();
+            $this->assertSame('test', call_user_func_array($callable, ['TEST']));
+        });
+    }
+
+    public function testDeprecatedUp()
+    {
+        $this->deprecated(function () {
+            $callable = $this->getFilter('up')->getCallable();
+            $this->assertSame('TEST', call_user_func_array($callable, ['test']));
+        });
+    }
+
     public function testDeprecatedCount()
     {
         $callable = $this->getFilter('count')->getCallable();
