@@ -56,7 +56,7 @@ class BasicExtension extends AbstractExtension
                 static $logged = false;
                 if (!$logged) {
                     $logged = true;
-                    deprecationWarning('`low` filter is deprecated, use lower` instead.');
+                    deprecationWarning('`low` filter is deprecated, use `lower` instead.');
                 }
 
                 return strtolower(...func_get_args());
