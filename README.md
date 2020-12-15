@@ -174,6 +174,12 @@ Layout templates are supported and loaded the same way as `View` layouts.
 </html>
 ```
 
+The layout can be set from the template using the `layout` tag.
+
+```twig
+{% layout 'Error' %}
+```
+
 ### Accessing View
 
 You can access the `View` instance using the `_view` global.
