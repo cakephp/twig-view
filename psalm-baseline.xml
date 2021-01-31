@@ -4,6 +4,9 @@
     <DeprecatedClass occurrences="1">
       <code>new CellNode($assign, $variable, $name, $data, $options, $token-&gt;getLine(), $this-&gt;getTag())</code>
     </DeprecatedClass>
+    <InternalClass occurrences="1">
+      <code>IncludeTokenParser</code>
+    </InternalClass>
     <InternalMethod occurrences="3">
       <code>parseExpression</code>
       <code>parseExpression</code>
@@ -14,6 +17,9 @@
     <DeprecatedClass occurrences="1">
       <code>new ElementNode($name, $data, $options, $token-&gt;getLine(), $this-&gt;getTag())</code>
     </DeprecatedClass>
+    <InternalClass occurrences="1">
+      <code>IncludeTokenParser</code>
+    </InternalClass>
     <InternalMethod occurrences="3">
       <code>parseExpression</code>
       <code>parseExpression</code>
