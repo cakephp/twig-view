@@ -69,7 +69,7 @@ class TwigView extends View
      *     provide custom Twig\Extra\Markdown\MarkdownInterface instance.
      *     See https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $_defaultConfig = [
         'environment' => [
