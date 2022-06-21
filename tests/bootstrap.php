@@ -73,3 +73,8 @@ $cache = [
 ];
 
 Cache::setConfig($cache);
+
+Configure::write(
+    'Error.ignoredDeprecationPaths',
+    ['vendor/cakephp/cakephp/src/TestSuite/Fixture/FixtureInjector.php']
+);
