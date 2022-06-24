@@ -31,7 +31,7 @@ final class RelativeScanner
     /**
      * Return all sections (app & plugins) with an Template directory.
      *
-     * @param string[] $extensions Template extensions to search
+     * @param array<string> $extensions Template extensions to search
      * @return array
      */
     public static function all(array $extensions): array
@@ -43,10 +43,10 @@ final class RelativeScanner
      * Return all templates for a given plugin.
      *
      * @param string $plugin The plugin to find all templates for.
-     * @param string[] $extensions Template extensions to search
+     * @param array<string> $extensions Template extensions to search
      * @return mixed
      */
-    public static function plugin(string $plugin, array $extensions)
+    public static function plugin(string $plugin, array $extensions): mixed
     {
         return static::strip([
             $plugin => Scanner::plugin($plugin, $extensions),
@@ -84,7 +84,7 @@ final class RelativeScanner
         }
 
         foreach ($allPaths as $templatesPath) {
-            array_walk($paths, function (&$path) use ($templatesPath) {
+            array_walk($paths, function (&$path) use ($templatesPath): void {
                 if (substr($path, 0, strlen($templatesPath)) === $templatesPath) {
                     $path = substr($path, strlen($templatesPath));
                 }

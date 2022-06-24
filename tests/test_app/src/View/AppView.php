@@ -18,7 +18,9 @@ declare(strict_types=1);
 
 namespace TestApp\View;
 
-class AppView extends \Cake\TwigView\View\TwigView
+use Cake\TwigView\View\TwigView;
+
+class AppView extends TwigView
 {
     /**
      * Initialization hook method.

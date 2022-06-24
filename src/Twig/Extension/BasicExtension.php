@@ -29,57 +29,12 @@ class BasicExtension extends AbstractExtension
     /**
      * Get declared filters.
      *
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {
         return [
-            new TwigFilter('debug', function () {
-                static $logged = false;
-                if (!$logged) {
-                    $logged = true;
-                    deprecationWarning('`debug` filter is deprecated, use `dump()` instead.');
-                }
-
-                return debug(...func_get_args());
-            }),
-            new TwigFilter('pr', function () {
-                static $logged = false;
-                if (!$logged) {
-                    $logged = true;
-                    deprecationWarning('`pr` filter is deprecated, use `dump()` instead.');
-                }
-
-                return pr(...func_get_args());
-            }),
-            new TwigFilter('low', function () {
-                static $logged = false;
-                if (!$logged) {
-                    $logged = true;
-                    deprecationWarning('`low` filter is deprecated, use `lower` instead.');
-                }
-
-                return strtolower(...func_get_args());
-            }),
-            new TwigFilter('up', function () {
-                static $logged = false;
-                if (!$logged) {
-                    $logged = true;
-                    deprecationWarning('`up` filter is deprecated, use `upper` instead.');
-                }
-
-                return strtoupper(...func_get_args());
-            }),
             new TwigFilter('env', 'env'),
-            new TwigFilter('count', function () {
-                static $logged = false;
-                if (!$logged) {
-                    $logged = true;
-                    deprecationWarning('`count` filter is deprecated, use `length` instead.');
-                }
-
-                return count(...func_get_args());
-            }),
             new TwigFilter('h', 'h'),
             new TwigFilter('null', function () {
                 return '';

@@ -25,21 +25,21 @@ use Cake\TwigView\Command\CompileCommand;
 /**
  * Plugin class for Cake\TwigView.
  */
-class Plugin extends BasePlugin
+class TwigViewPlugin extends BasePlugin
 {
     /**
      * Do bootstrapping or not
      *
      * @var bool
      */
-    protected $bootstrapEnabled = false;
+    protected bool $bootstrapEnabled = false;
 
     /**
      * Load routes or not
      *
      * @var bool
      */
-    protected $routesEnabled = false;
+    protected bool $routesEnabled = false;
 
     /**
      * @inheritDoc

@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace TestApp\Exception;
 
-use Cake\Core\Exception\Exception;
+use Cake\Core\Exception\CakeException;
 
-class MissingSomethingException extends Exception
+class MissingSomethingException extends CakeException
 {
 }

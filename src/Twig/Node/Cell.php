@@ -36,7 +36,7 @@ class Cell extends Node implements NodeOutputInterface
      *
      * @var bool
      */
-    protected $assign = false;
+    protected bool $assign = false;
 
     /**
      * Constructor.
@@ -51,7 +51,7 @@ class Cell extends Node implements NodeOutputInterface
      */
     public function __construct(
         bool $assign,
-        $variable,
+        mixed $variable,
         AbstractExpression $name,
         ?AbstractExpression $data = null,
         ?AbstractExpression $options = null,
@@ -88,7 +88,7 @@ class Cell extends Node implements NodeOutputInterface
      * @param \Twig\Compiler $compiler Compiler.
      * @return void
      */
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler->addDebugInfo($this);
 

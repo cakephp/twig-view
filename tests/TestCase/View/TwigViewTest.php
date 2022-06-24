@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase\View;
 
+use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
 use Twig\Error\RuntimeError;
@@ -37,6 +38,8 @@ class TwigViewTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        Configure::write('App.encoding', 'UTF-8');
 
         $this->view = new AppView();
     }
@@ -191,19 +194,6 @@ class TwigViewTest extends TestCase
         $view = new AppView(null, null, null, ['templatePath' => 'Blog']);
         $output = $view->render('blog_with_extends');
         $this->assertSame('base from subdir/base', $output);
-    }
-
-    /**
-     * Tests deprecated element and cell tags render.
-     *
-     * @return void
-     */
-    public function testDeprecatedTags()
-    {
-        $this->deprecated(function () {
-            $output = $this->view->render('deprecated_tags', false);
-            $this->assertSame("<b>10</b>\nblog_entry", $output);
-        });
     }
 
     /**

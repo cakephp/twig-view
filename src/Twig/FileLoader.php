@@ -32,12 +32,12 @@ use Twig\Source;
 class FileLoader implements LoaderInterface
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
-    protected $extensions;
+    protected array $extensions;
 
     /**
-     * @param string[] $extensions Template file extensions
+     * @param array<string> $extensions Template file extensions
      */
     public function __construct(array $extensions)
     {

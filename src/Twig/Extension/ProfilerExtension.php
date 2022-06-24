@@ -33,7 +33,7 @@ class ProfilerExtension extends TwigProfilerExtension
      * @param \Twig\Profiler\Profile $profile Profile.
      * @return void
      */
-    public function enter(Profile $profile)
+    public function enter(Profile $profile): void
     {
         parent::enter($profile);
 
@@ -47,7 +47,7 @@ class ProfilerExtension extends TwigProfilerExtension
      * @param \Twig\Profiler\Profile $profile Profile.
      * @return void
      */
-    public function leave(Profile $profile)
+    public function leave(Profile $profile): void
     {
         if ($profile->isTemplate()) {
             $name = 'Twig: ' . $profile->getTemplate();
