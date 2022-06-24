@@ -24,16 +24,16 @@ use DebugKit\DebugPanel;
 class TwigPanel extends DebugPanel
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
-    protected static $extensions = [];
+    protected static array $extensions = [];
 
     /**
      * Plugin name.
      *
      * @var string
      */
-    public $plugin = 'Cake/TwigView';
+    public string $plugin = 'Cake/TwigView';
 
     /**
      * Get the data for the twig panel.
@@ -50,7 +50,7 @@ class TwigPanel extends DebugPanel
     /**
      * Sets the template file extensions to search.
      *
-     * @param string[] $extensions Template extensions to search
+     * @param array<string> $extensions Template extensions to search
      * @return void
      */
     public static function setExtensions(array $extensions): void

@@ -39,7 +39,7 @@ class LayoutParser extends AbstractTokenParser
         $stream = $parser->getStream();
 
         $layout = $parser->getExpressionParser()->parseExpression();
-        $stream->expect(\Twig\Token::BLOCK_END_TYPE);
+        $stream->expect(Token::BLOCK_END_TYPE);
 
         return new LayoutNode($layout, $token->getLine(), $this->getTag());
     }

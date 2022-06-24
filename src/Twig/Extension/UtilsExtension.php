@@ -29,7 +29,7 @@ class UtilsExtension extends AbstractExtension
     /**
      * Get declared filters.
      *
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {

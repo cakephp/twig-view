@@ -16,7 +16,7 @@ class CompileCommand extends BaseCommand
     /**
      * @var \Cake\TwigView\View\TwigView
      */
-    protected $twigView;
+    protected TwigView $twigView;
 
     /**
      * @inheritDoc

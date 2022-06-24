@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
-use Cake\I18n\FrozenTime;
+use Cake\I18n\DateTime;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -30,15 +30,15 @@ class TimeExtension extends AbstractExtension
     /**
      * Get declared functions.
      *
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {
         return [
             new TwigFunction('time', function ($time = null, $timezone = null) {
-                return new FrozenTime($time, $timezone);
+                return new DateTime($time, $timezone);
             }),
-            new TwigFunction('timezones', 'Cake\I18n\FrozenTime::listTimezones'),
+            new TwigFunction('timezones', 'Cake\I18n\DateTime::listTimezones'),
         ];
     }
 }

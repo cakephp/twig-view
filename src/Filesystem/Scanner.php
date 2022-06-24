@@ -36,7 +36,7 @@ final class Scanner
     /**
      * Return all sections (app & plugins) with an Template directory.
      *
-     * @param string[] $extensions Template extensions to search
+     * @param array<string> $extensions Template extensions to search
      * @return array
      */
     public static function all(array $extensions): array
@@ -65,15 +65,14 @@ final class Scanner
      * Return all templates for a given plugin.
      *
      * @param string $plugin The plugin to find all templates for.
-     * @param string[] $extensions Template extensions to search
-     * @return string[]
+     * @param array<string> $extensions Template extensions to search
+     * @return array<string>
      */
-    public static function plugin(string $plugin, array $extensions)
+    public static function plugin(string $plugin, array $extensions): array
     {
         $path = Plugin::templatePath($plugin);
-        $templates = static::iteratePath($path, $extensions);
 
-        return $templates;
+        return static::iteratePath($path, $extensions);
     }
 
     /**
@@ -84,7 +83,7 @@ final class Scanner
      */
     protected static function clearEmptySections(array $sections): array
     {
-        array_walk($sections, function ($templates, $index) use (&$sections) {
+        array_walk($sections, function ($templates, $index) use (&$sections): void {
             if (count($templates) === 0) {
                 unset($sections[$index]);
             }
@@ -102,7 +101,7 @@ final class Scanner
     {
         $plugins = Plugin::loaded();
 
-        array_walk($plugins, function ($plugin, $index) use (&$plugins) {
+        array_walk($plugins, function ($plugin, $index) use (&$plugins): void {
             $path = Plugin::templatePath($plugin);
 
             if (!is_dir($path)) {
@@ -117,8 +116,8 @@ final class Scanner
      * Iterage over the given path and return all matching .tpl files in it.
      *
      * @param string $path Path to iterate over.
-     * @param string[] $extensions Template extensions to search
-     * @return string[]
+     * @param array<string> $extensions Template extensions to search
+     * @return array<string>
      */
     protected static function iteratePath(string $path, array $extensions): array
     {
@@ -129,7 +128,7 @@ final class Scanner
      * Setup iterator for given path.
      *
      * @param string $path Path to setup iterator for.
-     * @param string[] $extensions Template extensions to search
+     * @param array<string> $extensions Template extensions to search
      * @return \Iterator
      */
     protected static function setupIterator(string $path, array $extensions): Iterator
@@ -152,7 +151,7 @@ final class Scanner
      * Walk over the iterator and compile all templates.
      *
      * @param \Iterator $iterator Iterator to walk.
-     * @return string[]
+     * @return array<string>
      */
     protected static function walkIterator(Iterator $iterator): array
     {

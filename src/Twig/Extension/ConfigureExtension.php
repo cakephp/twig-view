@@ -31,9 +31,9 @@ class ConfigureExtension extends AbstractExtension
     /**
      * Get declared functions.
      *
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('config', 'Cake\Core\Configure::read'),

@@ -45,7 +45,7 @@ class LayoutNode extends Node implements NodeOutputInterface
      * @param \Twig\Compiler $compiler Compiler.
      * @return void
      */
-    public function compile(Compiler $compiler)
+    public function compile(Compiler $compiler): void
     {
         $compiler
             ->addDebugInfo($this)

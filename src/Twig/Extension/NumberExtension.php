@@ -18,7 +18,6 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
-use Cake\I18n\Number;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -31,7 +30,7 @@ class NumberExtension extends AbstractExtension
     /**
      * Get declared functions.
      *
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {
@@ -47,23 +46,12 @@ class NumberExtension extends AbstractExtension
     /**
      * Get declared functions.
      *
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {
         return [
             new TwigFunction('defaultCurrency', 'Cake\I18n\Number::getDefaultCurrency'),
-            new TwigFunction('number_formatter', function () {
-                static $logged = false;
-                if (!$logged) {
-                    $logged = true;
-                    deprecationWarning(
-                        '`number_formatter()` function is deprecated, use `cake_number_format` filter instead.'
-                    );
-                }
-
-                return Number::formatter(...func_get_args());
-            }),
         ];
     }
 }

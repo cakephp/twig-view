@@ -51,12 +51,12 @@ class TwigView extends View
     /**
      * @var \Twig\Environment|null
      */
-    protected static $twig;
+    protected static ?Environment $twig = null;
 
     /**
      * @var \Twig\Profiler\Profile|null
      */
-    protected static $profile;
+    protected static ?Profile $profile = null;
 
     /**
      * Default config options.
@@ -71,7 +71,7 @@ class TwigView extends View
      *
      * @var array<string, mixed>
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'environment' => [
         ],
         'markdown' => null,
@@ -80,14 +80,14 @@ class TwigView extends View
     /**
      * @inheritDoc
      */
-    protected $_ext = '.twig';
+    protected string $_ext = '.twig';
 
     /**
      * List of extensions searched when loading templates.
      *
-     * @var string[]
+     * @var array<string>
      */
-    protected $extensions = [
+    protected array $extensions = [
         '.twig',
     ];
 
@@ -143,7 +143,7 @@ class TwigView extends View
 
     /** Gets the template file extensions.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getExtensions(): array
     {
@@ -196,8 +196,6 @@ class TwigView extends View
     protected function initializeTokenParser(): void
     {
         $this->getTwig()->addTokenParser(new TokenParser\LayoutParser());
-        $this->getTwig()->addTokenParser(new TokenParser\CellParser());
-        $this->getTwig()->addTokenParser(new TokenParser\ElementParser());
     }
 
     // phpcs:disable CakePHP.Commenting.FunctionComment.InvalidReturnVoid
@@ -240,7 +238,7 @@ class TwigView extends View
                 /**
                  * @var \Twig\Extra\Markdown\MarkdownInterface
                  */
-                private $engine;
+                private MarkdownInterface $engine;
 
                 /**
                  * @param \Twig\Extra\Markdown\MarkdownInterface $engine MarkdownInterface instance
@@ -254,7 +252,7 @@ class TwigView extends View
                  * @param string $class FQCN
                  * @return object|null
                  */
-                public function load($class)
+                public function load(string $class): ?object
                 {
                     if ($class === MarkdownRuntime::class) {
                         return new MarkdownRuntime($this->engine);
@@ -338,7 +336,7 @@ class TwigView extends View
     /**
      * @inheritDoc
      */
-    protected function _getElementFileName(string $name, bool $pluginCheck = true)
+    protected function _getElementFileName(string $name, bool $pluginCheck = true): string|false
     {
         foreach ($this->extensions as $extension) {
             $this->_ext = $extension;
