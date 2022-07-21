@@ -7,7 +7,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
-This plugin allows you to use the [Twig Templating Language](http://twig.sensiolabs.org/documentation) for your views.
+This plugin allows you to use the [Twig Templating Language](https://twig.symfony.com/doc) for your views.
 
 It provides wrappers for common View opertions and many helpful extensions that expose CakePHP functions and `jasny/twig-extensions` helpers.
 
