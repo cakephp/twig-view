@@ -50,7 +50,7 @@ class CompileCommandTest extends TestCase
     {
         $this->exec('twig-view compile nonsense');
         $this->assertExitError();
-        $this->assertErrorContains('is not a valid value for type');
+        $this->assertErrorContains('is not a valid value for `type`');
     }
 
     /**
