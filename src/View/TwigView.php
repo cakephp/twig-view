@@ -64,7 +64,7 @@ class TwigView extends View
      * Use ViewBuilder::setOption()/setOptions() in your controller to set these options.
      *
      * - `environment` - Array of config you would pass into \Twig\Environment to overwrite the default settings.
-     *     See http://twig.sensiolabs.org/doc/api.html#environment-options.
+     *     See https://twig.symfony.com/doc/3.x/api.html#environment-options.
      * - `markdown` - Set to 'default' to use `DefaultMarkdown` or
      *     provide custom Twig\Extra\Markdown\MarkdownInterface instance.
      *     See https://twig.symfony.com/doc/3.x/filters/markdown_to_html.html.
