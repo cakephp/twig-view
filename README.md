@@ -7,13 +7,13 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
-This plugin allows you to use the [Twig Templating Language](http://twig.sensiolabs.org/documentation) for your views.
+This plugin allows you to use the [Twig Templating Language](https://twig.symfony.com/doc/) for your views.
 
 It provides wrappers for common View opertions and many helpful extensions that expose CakePHP functions and `jasny/twig-extensions` helpers.
 
 ## Installation
 
-To install with [Composer](http://getcomposer.org/), use the command below.
+To install with [Composer](https://getcomposer.org/), use the command below.
 
 ```bash
 composer require cakephp/twig-view
@@ -205,8 +205,8 @@ All wrapper functions are pre-escaped and do not require using `|raw` filter. Ho
 
 ### Extension Filters
 
-* `low` maps to [`strtolower`](http://php.net/strtolower)
-* `up` maps to [`strtoupper`](http://php.net/strtoupper)
+* `low` maps to [`strtolower`](https://php.net/strtolower)
+* `up` maps to [`strtoupper`](https://php.net/strtoupper)
 * `env` maps to [`env`](https://book.cakephp.org/4/en/core-libraries/global-constants-and-functions.html#global-functions)
 * `pluralize` maps to [`Cake\Utility\Inflector::pluralize`](https://book.cakephp.org/4/en/core-libraries/inflector.html#Cake\\Utility\\Inflector::pluralize)
 * `singularize` maps to [`Cake\Utility\Inflector::singularize`](https://book.cakephp.org/4/en/core-libraries/inflector.html#Cake\\Utility\\Inflector::singularize)
@@ -222,7 +222,7 @@ All wrapper functions are pre-escaped and do not require using `|raw` filter. Ho
 * `cake_number_format` maps to [`Cake\I18n\Number::format`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::format)
 * `formatDelta` maps to [`Cake\I18n\Number::formatDelta`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::formatDelta)
 * `currency` maps to [`Cake\I18n\Number::currency`](https://book.cakephp.org/4/en/core-libraries/number.html#Cake\\I18n\\Number::currency)
-* `substr` maps to [`substr`](http://php.net/substr)
+* `substr` maps to [`substr`](https://php.net/substr)
 * `tokenize` maps to [`Cake\Utility\Text::tokenize`](https://book.cakephp.org/4/en/core-libraries/text.html#simple-string-parsing)
 * `insert` maps to [`Cake\Utility\Text::insert`](https://book.cakephp.org/4/en/core-libraries/text.html#formatting-strings)
 * `cleanInsert` maps to [`Cake\Utility\Text::cleanInsert`](https://book.cakephp.org/4/en/core-libraries/text.html#formatting-strings)
@@ -239,24 +239,24 @@ All wrapper functions are pre-escaped and do not require using `|raw` filter. Ho
 * `utf8` maps to `Cake\Utility\Text::utf8`
 * `ascii` maps to `Cake\Utility\Text::ascii`
 * `parseFileSize` maps to [`Cake\Utility\Text::parseFileSize`](https://book.cakephp.org/4/en/core-libraries/text.html#simple-string-parsing)
-* `serialize` maps to [`serialize`](http://php.net/serialize)
-* `unserialize` maps to [`unserialize`](http://php.net/unserialize)
-* `md5` maps to [`md5`](http://php.net/md5)
-* `base64_encode` maps to [`base64_encode`](http://php.net/base64_encode)
-* `base64_decode` maps to [`base64_decode`](http://php.net/base64_decode)
-* `string` cast to [`string`](http://php.net/manual/en/language.types.type-juggling.php)
+* `serialize` maps to [`serialize`](https://php.net/serialize)
+* `unserialize` maps to [`unserialize`](https://php.net/unserialize)
+* `md5` maps to [`md5`](https://php.net/md5)
+* `base64_encode` maps to [`base64_encode`](https://php.net/base64_encode)
+* `base64_decode` maps to [`base64_decode`](https://php.net/base64_decode)
+* `string` cast to [`string`](https://php.net/manual/en/language.types.type-juggling.php)
 
 See `jasny/twig-extensions` for the filters they provide.
 
 ### Extension Functions
 
-* `in_array` maps to [`in_array`](http://php.net/in_array)
-* `explode` maps to [`explode`](http://php.net/explode)
-* `array` cast to [`array`](http://php.net/manual/en/language.types.type-juggling.php)
-* `array_push` maps to [`push`](http://php.net/array_push)
-* `array_prev` maps to [`prev`](http://php.net/prev)
-* `array_next` maps to [`next`](http://php.net/next)
-* `array_current` maps to [`current`](http://php.net/current)
+* `in_array` maps to [`in_array`](https://php.net/in_array)
+* `explode` maps to [`explode`](https://php.net/explode)
+* `array` cast to [`array`](https://php.net/manual/en/language.types.type-juggling.php)
+* `array_push` maps to [`push`](https://php.net/array_push)
+* `array_prev` maps to [`prev`](https://php.net/prev)
+* `array_next` maps to [`next`](https://php.net/next)
+* `array_current` maps to [`current`](https://php.net/current)
 * `__` maps to [`__`](https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html)
 * `__d` maps to [`__d`](https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html)
 * `__n` maps to [`__n`](https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html)
