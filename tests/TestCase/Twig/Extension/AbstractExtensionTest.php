@@ -19,10 +19,11 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
 use Cake\TestSuite\TestCase;
+use Cake\TwigView\Twig\Extension\BasicExtension;
 use Twig\TokenParser\TokenParserInterface;
 use Twig\TwigFilter;
 
-abstract class AbstractExtensionTest extends TestCase
+class AbstractExtensionTest extends TestCase
 {
     /**
      * @var \Twig\Extension\AbstractExtensionInterface
@@ -32,6 +33,9 @@ abstract class AbstractExtensionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        if (!$this->extension) {
+            $this->extension = new BasicExtension();
+        }
     }
 
     public function tearDown(): void

@@ -24,8 +24,8 @@ class StringsExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {
-        $this->extension = new StringsExtension();
         parent::setUp();
+        $this->extension = new StringsExtension();
     }
 
     public function testFilterSubstr()

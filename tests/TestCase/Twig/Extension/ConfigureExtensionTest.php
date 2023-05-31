@@ -24,8 +24,8 @@ class ConfigureExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {
-        $this->extension = new ConfigureExtension();
         parent::setUp();
+        $this->extension = new ConfigureExtension();
     }
 
     public function testFunctionConfig()

@@ -23,6 +23,7 @@ use Cake\Core\Plugin;
 use Twig\Error\LoaderError;
 use Twig\Loader\LoaderInterface;
 use Twig\Source;
+use function Cake\Core\pluginSplit;
 
 /**
  * Template file loader.

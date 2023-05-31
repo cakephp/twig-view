@@ -145,7 +145,7 @@ class TwigViewTest extends TestCase
     {
         AppView::destroyTwig();
 
-        $view = new AppView(null, null, null, ['markdown' => 'default']);
+        new AppView(null, null, null, ['markdown' => 'default']);
         $output = $this->view->render('markdown', false);
         $this->assertSame("<h1>Title</h1>\n", $output);
 
@@ -161,7 +161,7 @@ class TwigViewTest extends TestCase
     {
         AppView::destroyTwig();
 
-        $view = new AppView(null, null, null, ['markdown' => new DefaultMarkdown()]);
+        new AppView(null, null, null, ['markdown' => new DefaultMarkdown()]);
         $output = $this->view->render('markdown', false);
         $this->assertSame("<h1>Title</h1>\n", $output);
 
