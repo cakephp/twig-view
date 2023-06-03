@@ -27,7 +27,6 @@ use Cake\Datasource\ConnectionManager;
 use Cake\TwigView\TwigViewPlugin;
 
 require dirname(__DIR__) . '/vendor/autoload.php';
-require dirname(__DIR__) . '/vendor/cakephp/cakephp/src/basics.php';
 
 define('ROOT', dirname(__DIR__));
 define('CORE_PATH', ROOT . DS . 'vendor/cakephp/cakephp');

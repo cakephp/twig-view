@@ -24,7 +24,7 @@ class BasicExtensionTest extends AbstractExtensionTest
 {
     public function setUp(): void
     {
-        $this->extension = new BasicExtension();
         parent::setUp();
+        $this->extension = new BasicExtension();
     }
 }

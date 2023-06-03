@@ -34,11 +34,11 @@ class I18nExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('__', '__'),
-            new TwigFunction('__d', '__d'),
-            new TwigFunction('__n', '__n'),
-            new TwigFunction('__x', '__x'),
-            new TwigFunction('__dn', '__dn'),
+            new TwigFunction('__', 'Cake\I18n\__'),
+            new TwigFunction('__d', 'Cake\I18n\__d'),
+            new TwigFunction('__n', 'Cake\I18n\__n'),
+            new TwigFunction('__x', 'Cake\I18n\__x'),
+            new TwigFunction('__dn', 'Cake\I18n\__dn'),
         ];
     }
 }

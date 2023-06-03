@@ -34,8 +34,8 @@ class BasicExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('env', 'env'),
-            new TwigFilter('h', 'h'),
+            new TwigFilter('env', 'Cake\Core\env'),
+            new TwigFilter('h', 'Cake\Core\h'),
             new TwigFilter('null', function () {
                 return '';
             }),
