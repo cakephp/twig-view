@@ -35,10 +35,13 @@ class I18nExtension extends AbstractExtension
     {
         return [
             new TwigFunction('__', '__'),
-            new TwigFunction('__d', '__d'),
             new TwigFunction('__n', '__n'),
-            new TwigFunction('__x', '__x'),
+            new TwigFunction('__d', '__d'),
             new TwigFunction('__dn', '__dn'),
+            new TwigFunction('__x', '__x'),
+            new TwigFunction('__xn', '__xn'),
+            new TwigFunction('__dx', '__dx'),
+            new TwigFunction('__dxn', '__dxn'),
         ];
     }
 }
