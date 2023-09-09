@@ -22,14 +22,14 @@
         "source": "https://github.com/cakephp/twig-view"
     },
     "require": {
-        "cakephp/cakephp": "5.x-dev",
+        "cakephp/cakephp": "^5.0.0",
         "jasny/twig-extensions": "^1.3",
         "twig/markdown-extra": "^3.0",
         "twig/twig": "^3.4"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^5.0",
-        "cakephp/debug_kit": "5.x-dev",
+        "cakephp/debug_kit": "^5.0.0",
         "cakephp/plugin-installer": "^1.3",
         "michelf/php-markdown": "^1.9",
         "mikey179/vfsstream": "^1.6.10",
@@ -70,7 +70,5 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "cakephp/plugin-installer": true
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
