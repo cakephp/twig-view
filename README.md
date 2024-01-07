@@ -1,6 +1,6 @@
 # TwigView plugin for CakePHP
 
-![Build Status](https://github.com/cakephp/twig-view/actions/workflows/ci.yml/badge.svg?branch=master)
+[![CI](https://github.com/cakephp/twig-view/actions/workflows/ci.yml/badge.svg)](https://github.com/cakephp/twig-view/actions/workflows/ci.yml)
 [![Latest Stable Version](https://img.shields.io/github/v/release/cakephp/twig-view?sort=semver&style=flat-square)](https://packagist.org/packages/cakephp/twig-view)
 [![Total Downloads](https://img.shields.io/packagist/dt/cakephp/twig-view?style=flat-square)](https://packagist.org/packages/cakephp/twig-view/stats)
 [![Code Coverage](https://img.shields.io/coveralls/cakephp/twig-view/master.svg?style=flat-square)](https://coveralls.io/r/cakephp/twig-view?branch=master)
