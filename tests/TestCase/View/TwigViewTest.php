@@ -19,6 +19,8 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\TestCase\View;
 
 use Cake\Core\Configure;
+use Cake\I18n\Date;
+use Cake\I18n\DateTime;
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
 use Twig\Error\RuntimeError;
@@ -134,6 +136,23 @@ class TwigViewTest extends TestCase
     {
         $cell = $this->view->cell('Test');
         $this->assertSame($this->view->getTwig(), $cell->createView(AppView::class)->getTwig());
+    }
+
+
+    /**
+     * Test that Cake date/time objects are formatted correctly
+     */
+    public function testTwigDateFormat()
+    {
+        $this->view->set('date', new Date('2024-06-24'));
+        $this->view->set('datetime', new DateTime('2024-06-24 12:13:14'));
+
+        $output = $this->view->render('date_format', false);
+        $expected = <<<TEXT
+Date: 2024/06/24
+Datetime: 2024/06/24 12:13:14
+TEXT;
+        $this->assertSame($expected, $output);
     }
 
     /**
