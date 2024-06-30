@@ -21,6 +21,7 @@ namespace Cake\TwigView\Test\TestCase\View;
 use Cake\Core\Configure;
 use Cake\I18n\Date;
 use Cake\I18n\DateTime;
+use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
 use Twig\Error\RuntimeError;
@@ -144,10 +145,15 @@ class TwigViewTest extends TestCase
      */
     public function testTwigDateFormat()
     {
+        $restore = I18n::getLocale();
+        I18n::setLocale('fr');
+
         $this->view->set('date', new Date('2024-06-24'));
         $this->view->set('datetime', new DateTime('2024-06-24 12:13:14'));
 
         $output = $this->view->render('date_format', false);
+        I18n::setLocale($restore);
+
         $expected = <<<TEXT
 Date: 2024/06/24
 Datetime: 2024/06/24 12:13:14
