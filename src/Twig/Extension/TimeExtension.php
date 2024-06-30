@@ -83,7 +83,7 @@ class TimeExtension extends AbstractExtension
             $this->coreExt = new CoreExtension();
         }
         if ($date instanceof ChronosDate) {
-            $date = $date->toDateTimeImmutable();
+            $date = $date->toDateString();
         }
 
         return $this->coreExt->formatDate($date, $format, $timezone);
