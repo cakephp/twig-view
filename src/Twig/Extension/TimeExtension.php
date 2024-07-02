@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosDate;
 use Cake\I18n\DateTime;
 use DateInterval;
@@ -70,12 +71,12 @@ class TimeExtension extends AbstractExtension
      *
      * Includes shims for \Chronos\ChronosDate as Twig doesn't.
      *
-     * @param \Chronos\ChronosDate|\DateTimeInterface|\DateInterval|string $date The date to format.
+     * @param mixed $date The date to format.
      * @param ?string $format The format to use, null to use the default.
      * @param \DateTimeZone|string|false|null $timezone The target timezone, null to use system.
      */
     public function formatDate(
-        ChronosDate|DateTimeInterface|DateInterval|string $date,
+        mixed $date,
         ?string $format = null,
         DateTimeZone|string|false|null $timezone = null
     ): string {
@@ -84,6 +85,9 @@ class TimeExtension extends AbstractExtension
         }
         if ($date instanceof ChronosDate) {
             $date = $date->toDateString();
+        }
+        if ($date instanceof Chronos) {
+            $date = $date->toIso8601String();
         }
 
         return $this->coreExt->formatDate($date, $format, $timezone);
