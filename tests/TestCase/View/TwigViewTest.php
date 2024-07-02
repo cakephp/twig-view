@@ -139,7 +139,6 @@ class TwigViewTest extends TestCase
         $this->assertSame($this->view->getTwig(), $cell->createView(AppView::class)->getTwig());
     }
 
-
     /**
      * Test that Cake date/time objects are formatted correctly
      */

@@ -21,8 +21,6 @@ namespace Cake\TwigView\Twig\Extension;
 use Cake\Chronos\Chronos;
 use Cake\Chronos\ChronosDate;
 use Cake\I18n\DateTime;
-use DateInterval;
-use DateTimeInterface;
 use DateTimeZone;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\CoreExtension;
