@@ -20,6 +20,7 @@ namespace TestApp;
 
 use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
+use Cake\TwigView\TwigViewPlugin;
 
 class Application extends BaseApplication
 {
@@ -29,6 +30,8 @@ class Application extends BaseApplication
     public function bootstrap(): void
     {
         parent::bootstrap();
+
+        $this->addPlugin(TwigViewPlugin::class);
     }
 
     /**

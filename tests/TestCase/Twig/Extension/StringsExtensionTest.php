@@ -98,7 +98,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('tail')->getCallable();
         $result = call_user_func_array($callable, [$input, 7]);
-        $this->assertSame('...old.', $result);
+        $this->assertSame('…s old.', $result);
     }
 
     public function testFilterTruncate()
@@ -106,7 +106,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('truncate')->getCallable();
         $result = call_user_func_array($callable, [$input, 7]);
-        $this->assertSame('Bob ...', $result);
+        $this->assertSame('Bob is…', $result);
     }
 
     public function testFilterExcerpt()
@@ -114,7 +114,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('excerpt')->getCallable();
         $result = call_user_func_array($callable, [$input, '65', 4]);
-        $this->assertSame('... is 65 yea...', $result);
+        $this->assertSame('… is 65 yea…', $result);
     }
 
     public function testFilterToList()
