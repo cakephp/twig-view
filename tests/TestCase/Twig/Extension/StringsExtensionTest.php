@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Cake\TwigView\Test\TestCase\Twig\Extension;
 
 use Cake\TwigView\Twig\Extension\StringsExtension;
+use Cake\Utility\Text;
 
 class StringsExtensionTest extends AbstractExtensionTest
 {
@@ -98,7 +99,9 @@ class StringsExtensionTest extends AbstractExtensionTest
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('tail')->getCallable();
         $result = call_user_func_array($callable, [$input, 7]);
-        $this->assertSame('...old.', $result);
+        // Cake >= 5.1 '…s old.'
+        // Cake < 5.1 '...old.'
+        $this->assertSame(Text::tail($input, 7), $result);
     }
 
     public function testFilterTruncate()
@@ -106,7 +109,9 @@ class StringsExtensionTest extends AbstractExtensionTest
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('truncate')->getCallable();
         $result = call_user_func_array($callable, [$input, 7]);
-        $this->assertSame('Bob ...', $result);
+        // Cake >= 5.1 'Bob is…'
+        // Cake < 5.1 'Bob ...'
+        $this->assertSame(Text::truncate($input, 7), $result);
     }
 
     public function testFilterExcerpt()
@@ -114,7 +119,9 @@ class StringsExtensionTest extends AbstractExtensionTest
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('excerpt')->getCallable();
         $result = call_user_func_array($callable, [$input, '65', 4]);
-        $this->assertSame('... is 65 yea...', $result);
+        // Cake >= 5.1 '… is 65 yea…'
+        // Cake < 5.1 '... is 65 yea...'
+        $this->assertSame(Text::excerpt($input, '65', 4), $result);
     }
 
     public function testFilterToList()
