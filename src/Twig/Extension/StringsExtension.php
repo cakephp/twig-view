@@ -52,7 +52,7 @@ class StringsExtension extends AbstractExtension
             new TwigFilter('ascii', 'Cake\Utility\Text::ascii'),
             new TwigFilter('parseFileSize', 'Cake\Utility\Text::parseFileSize'),
             new TwigFilter('none', function ($string) {
-                return;
+                return '';
             }),
         ];
     }
