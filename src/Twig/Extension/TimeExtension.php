@@ -32,7 +32,7 @@ use Twig\TwigFunction;
  */
 class TimeExtension extends AbstractExtension
 {
-    private ?CoreExtension $coreExt;
+    private ?CoreExtension $coreExt = null;
 
     /**
      * Get declared filters.
