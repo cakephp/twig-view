@@ -53,13 +53,8 @@
         "cs-check": "phpcs --colors --parallel=16 -p src/ tests/",
         "cs-fix": "phpcbf --colors --parallel=16 -p src/ tests/",
         "phpstan": "tools/phpstan analyse",
-        "psalm": "tools/psalm --show-info=false",
-        "stan": [
-            "@phpstan",
-            "@psalm"
-        ],
+        "stan": "@phpstan",
         "phpstan-baseline": "tools/phpstan --generate-baseline",
-        "psalm-baseline": "tools/psalm --set-baseline=psalm-baseline.xml",
         "stan-setup": "phive install",
         "test": "phpunit"
     },

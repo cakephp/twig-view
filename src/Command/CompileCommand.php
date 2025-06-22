@@ -49,7 +49,7 @@ class CompileCommand extends BaseCommand
     {
         $type = $args->getArgumentAt(0);
 
-        /** @psalm-var class-string<\Cake\TwigView\View\TwigView> $viewClass */
+        /** @phpstan-var class-string<\Cake\TwigView\View\TwigView> $viewClass */
         $viewClass = $args->getOption('view-class');
 
         // Setup cached TwigView to avoid creating for every file
