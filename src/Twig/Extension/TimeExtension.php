@@ -76,7 +76,7 @@ class TimeExtension extends AbstractExtension
     public function formatDate(
         mixed $date,
         ?string $format = null,
-        DateTimeZone|string|false|null $timezone = null
+        DateTimeZone|string|false|null $timezone = null,
     ): string {
         if (!isset($this->coreExt)) {
             $this->coreExt = new CoreExtension();
