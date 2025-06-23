@@ -293,7 +293,7 @@ class TwigView extends View
 
         $dataForView = array_merge(
             $dataForView,
-            iterator_to_array($this->helpers()->getIterator())
+            iterator_to_array($this->helpers()->getIterator()),
         );
 
         return $this->getTwig()->load($templateFile)->render($dataForView);
