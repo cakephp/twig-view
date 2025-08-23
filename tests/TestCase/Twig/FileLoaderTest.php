@@ -68,7 +68,7 @@ class FileLoaderTest extends TestCase
     {
         $this->assertSame(
             TEST_APP . 'templates/simple.twig',
-            $this->loader->getCacheKey(TEST_APP . 'templates/simple.twig')
+            $this->loader->getCacheKey(TEST_APP . 'templates/simple.twig'),
         );
     }
 

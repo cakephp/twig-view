@@ -32,7 +32,7 @@ use Twig\TwigFunction;
  */
 class TimeExtension extends AbstractExtension
 {
-    private ?CoreExtension $coreExt;
+    private ?CoreExtension $coreExt = null;
 
     /**
      * Get declared filters.
@@ -76,7 +76,7 @@ class TimeExtension extends AbstractExtension
     public function formatDate(
         mixed $date,
         ?string $format = null,
-        DateTimeZone|string|false|null $timezone = null
+        DateTimeZone|string|false|null $timezone = null,
     ): string {
         if (!isset($this->coreExt)) {
             $this->coreExt = new CoreExtension();

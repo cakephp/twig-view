@@ -140,10 +140,10 @@ final class Scanner
                 $path,
                 FilesystemIterator::KEY_AS_PATHNAME |
                 FilesystemIterator::CURRENT_AS_FILEINFO |
-                FilesystemIterator::SKIP_DOTS
+                FilesystemIterator::SKIP_DOTS,
             ),
             RecursiveIteratorIterator::CHILD_FIRST,
-            RecursiveIteratorIterator::CATCH_GET_CHILD
+            RecursiveIteratorIterator::CATCH_GET_CHILD,
         ), '/.+' . $extPattern . '$/', RegexIterator::GET_MATCH);
     }
 

@@ -38,28 +38,28 @@ class ViewExtension extends AbstractExtension
                 function ($context, string $name, array $data = [], array $options = []) {
                     return $context['_view']->cell($name, $data, $options);
                 },
-                ['needs_context' => true, 'is_safe' => ['all']]
+                ['needs_context' => true, 'is_safe' => ['all']],
             ),
             new TwigFunction(
                 'element',
                 function ($context, string $name, array $data = [], array $options = []) {
                     return $context['_view']->element($name, $data, $options);
                 },
-                ['needs_context' => true, 'is_safe' => ['all']]
+                ['needs_context' => true, 'is_safe' => ['all']],
             ),
             new TwigFunction(
                 'fetch',
                 function ($context, string $name, string $default = '') {
                     return $context['_view']->fetch($name, $default);
                 },
-                ['needs_context' => true, 'is_safe' => ['all']]
+                ['needs_context' => true, 'is_safe' => ['all']],
             ),
             new TwigFunction(
                 'helper_*_*',
                 function ($context, $helper, $method, array $args = []) {
                     return $context['_view']->{$helper}->{$method}(...$args);
                 },
-                ['needs_context' => true, 'is_variadic' => true, 'is_safe' => ['all']]
+                ['needs_context' => true, 'is_variadic' => true, 'is_safe' => ['all']],
             ),
         ];
     }

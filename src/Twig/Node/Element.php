@@ -44,7 +44,7 @@ class Element extends Node
         ?AbstractExpression $data = null,
         ?AbstractExpression $options = null,
         int $lineno = 0,
-        ?string $tag = null
+        ?string $tag = null,
     ) {
         if ($data === null) {
             $data = new ArrayExpression([], $lineno);
@@ -62,7 +62,7 @@ class Element extends Node
             ],
             [],
             $lineno,
-            $tag
+            $tag,
         );
     }
 
