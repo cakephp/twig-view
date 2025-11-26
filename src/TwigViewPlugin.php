@@ -20,6 +20,7 @@ namespace Cake\TwigView;
 
 use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
+use Cake\Core\Configure;
 use Cake\TwigView\Command\CompileCommand;
 
 /**
@@ -46,7 +47,12 @@ class TwigViewPlugin extends BasePlugin
      */
     public function console(CommandCollection $commands): CommandCollection
     {
-        $commands->add('twig-view compile', CompileCommand::class);
+        if (Configure::read('TwigView.useUnderscoreCommands')) {
+            $commands->add('twig_view compile', CompileCommand::class);
+        } else {
+            // Deprecated: use `'TwigView.useUnderscoreCommands' => true` to switch to `twig_view compile`
+            $commands->add('twig-view compile', CompileCommand::class);
+        }
 
         return $commands;
     }
