@@ -39,8 +39,6 @@ class CompileCommandTest extends TestCase
 
         Router::reload();
         Configure::write('App.encoding', 'UTF-8');
-
-        $this->loadPlugins(['Cake/TwigView']);
     }
 
     /**
@@ -87,7 +85,7 @@ class CompileCommandTest extends TestCase
      */
     public function testPlugin()
     {
-        $this->loadPlugins(['Cake/TwigView', 'TestTwigView']);
+        $this->loadPlugins(['TestTwigView']);
 
         $this->exec('twig-view compile plugin TestTwigView');
         $this->assertExitSuccess();
