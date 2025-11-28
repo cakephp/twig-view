@@ -52,7 +52,7 @@ class FileLoader implements LoaderInterface
     {
         $path = $this->findTemplate($name);
 
-        return new Source(file_get_contents($path), $name, $path);
+        return new Source((string)file_get_contents($path), $name, $path);
     }
 
     /**

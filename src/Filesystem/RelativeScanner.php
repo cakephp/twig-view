@@ -56,7 +56,7 @@ final class RelativeScanner
     /**
      * Strip the absolute path of template's paths for all given sections.
      *
-     * @param array $sections Sections to iterate over.
+     * @param array<string, array> $sections Sections to iterate over.
      * @return array
      */
     protected static function strip(array $sections): array
