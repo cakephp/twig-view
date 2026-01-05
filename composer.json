@@ -32,7 +32,7 @@
         "cakephp/debug_kit": "^5.0",
         "michelf/php-markdown": "^1.9",
         "mikey179/vfsstream": "^1.6.10",
-        "phpunit/phpunit": "^10.5.5 || ^11.1.3"
+        "phpunit/phpunit": "^11.5.3 | ^12.1.3"
     },
     "conflict": {
         "wyrihaximus/twig-view": "*"
