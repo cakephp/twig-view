@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Test\TestCase\Twig;
 
+use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\TwigView\Twig\FileLoader;
 use Twig\Error\LoaderError;
@@ -36,6 +37,7 @@ class FileLoaderTest extends TestCase
     {
         parent::setUp();
 
+        Router::reload();
         $this->loadPlugins(['TestTwigView']);
 
         $this->loader = new FileLoader(['.twig']);
@@ -81,7 +83,7 @@ class FileLoaderTest extends TestCase
 
     public function testIsFresh()
     {
-        file_put_contents(TMP . 'TwigViewIsFreshTest', 'TwigViewIsFreshTest');
+        file_put_contents(TMP . 'TwigViewIsFreshTest', 'is fresh test');
         $time = filemtime(TMP . 'TwigViewIsFreshTest');
 
         $this->assertTrue($this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time + 5));
