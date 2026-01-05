@@ -19,6 +19,14 @@ class CompileCommand extends BaseCommand
     protected TwigView $twigView;
 
     /**
+     * @return string
+     */
+    public static function getDescription(): string
+    {
+        return 'Compile Twig templates for caching.';
+    }
+
+    /**
      * @inheritDoc
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser

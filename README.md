@@ -9,7 +9,7 @@
 
 This plugin allows you to use the [Twig Templating Language](https://twig.symfony.com/doc/) for your views.
 
-It provides wrappers for common View opertions and many helpful extensions that expose CakePHP functions and `jasny/twig-extensions` helpers.
+It provides wrappers for common View operations and many helpful extensions that expose CakePHP functions and `jasny/twig-extensions` helpers.
 
 ## Installation
 
