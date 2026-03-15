@@ -1,6 +1,7 @@
 /.DS_Store
 /.phpunit.cache
 /.phpunit.result.cache
+/.phpcs.cache
 /composer.lock
 /phpunit.xml
 /Thumbs.db
