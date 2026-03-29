@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\Core\Configure;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -36,7 +37,7 @@ class ConfigureExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('config', 'Cake\Core\Configure::read'),
+            new TwigFunction('config', Configure::class . '::read'),
         ];
     }
 }

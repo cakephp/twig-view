@@ -22,7 +22,7 @@ use Cake\View\Cell;
 
 class TestCell extends Cell
 {
-    public function display($number)
+    public function display($number): void
     {
         $this->set('testNumber', $number);
     }

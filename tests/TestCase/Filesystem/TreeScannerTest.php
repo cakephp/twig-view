@@ -29,7 +29,7 @@ use org\bovigo\vfs\vfsStream;
  */
 class TreeScannerTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,14 +37,14 @@ class TreeScannerTest extends TestCase
         $this->loadPlugins(['TestTwigView']);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->removePlugins(['TestTwigView']);
 
         parent::tearDown();
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         vfsStream::setup('root');
         $structure = [
@@ -100,7 +100,7 @@ class TreeScannerTest extends TestCase
         Configure::write('App.paths.templates', $templatePaths);
     }
 
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $this->assertSame([
             3 => 'base.twig',

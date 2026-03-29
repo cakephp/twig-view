@@ -24,7 +24,7 @@ use Cake\TwigView\Panel\TwigPanel;
 
 class TwigPanelTest extends TestCase
 {
-    public function testData()
+    public function testData(): void
     {
         $panel = new TwigPanel();
         $panel->setExtensions(['.twig']);

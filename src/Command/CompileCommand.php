@@ -13,9 +13,6 @@ use Exception;
 
 class CompileCommand extends BaseCommand
 {
-    /**
-     * @var \Cake\TwigView\View\TwigView
-     */
     protected TwigView $twigView;
 
     /**
@@ -64,7 +61,7 @@ class CompileCommand extends BaseCommand
         $this->twigView = new $viewClass();
 
         // $type is validated by the 'choices' option in buildOptionsParser
-        return $this->{"execute{$type}"}($args, $io);
+        return $this->{'execute' . $type}($args, $io);
     }
 
     /**
@@ -79,7 +76,7 @@ class CompileCommand extends BaseCommand
         $io->info('Compiling all templates');
 
         foreach (Scanner::all($this->twigView->getExtensions()) as $section => $templates) {
-            $io->info("Compiling section {$section}");
+            $io->info('Compiling section ' . $section);
             foreach ($templates as $template) {
                 if ($this->compileFile($io, $template) === static::CODE_ERROR) {
                     return static::CODE_ERROR;
@@ -106,7 +103,7 @@ class CompileCommand extends BaseCommand
             return static::CODE_ERROR;
         }
 
-        $io->info("Compiling plugin {$plugin}");
+        $io->info('Compiling plugin ' . $plugin);
         foreach (Scanner::plugin($plugin, $this->twigView->getExtensions()) as $template) {
             if ($this->compileFile($io, $template) === static::CODE_ERROR) {
                 return static::CODE_ERROR;
@@ -146,9 +143,9 @@ class CompileCommand extends BaseCommand
     {
         try {
             $this->twigView->getTwig()->load($filename);
-            $io->success("Compiled {$filename}.");
+            $io->success(sprintf('Compiled %s.', $filename));
         } catch (Exception $exception) {
-            $io->error("Unable to compile {$filename}.");
+            $io->error(sprintf('Unable to compile %s.', $filename));
             $io->error($exception->getMessage());
 
             return static::CODE_ERROR;

@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\I18n\Number;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -35,11 +36,11 @@ class NumberExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('toReadableSize', 'Cake\I18n\Number::toReadableSize'),
-            new TwigFilter('toPercentage', 'Cake\I18n\Number::toPercentage'),
-            new TwigFilter('cake_number_format', 'Cake\I18n\Number::format'),
-            new TwigFilter('formatDelta', 'Cake\I18n\Number::formatDelta'),
-            new TwigFilter('currency', 'Cake\I18n\Number::currency'),
+            new TwigFilter('toReadableSize', Number::class . '::toReadableSize'),
+            new TwigFilter('toPercentage', Number::class . '::toPercentage'),
+            new TwigFilter('cake_number_format', Number::class . '::format'),
+            new TwigFilter('formatDelta', Number::class . '::formatDelta'),
+            new TwigFilter('currency', Number::class . '::currency'),
         ];
     }
 
@@ -51,7 +52,7 @@ class NumberExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('defaultCurrency', 'Cake\I18n\Number::getDefaultCurrency'),
+            new TwigFunction('defaultCurrency', Number::class . '::getDefaultCurrency'),
         ];
     }
 }

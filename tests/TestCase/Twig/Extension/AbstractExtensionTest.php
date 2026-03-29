@@ -30,7 +30,7 @@ class AbstractExtensionTest extends TestCase
      */
     protected $extension;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         if (!$this->extension) {
@@ -38,12 +38,12 @@ class AbstractExtensionTest extends TestCase
         }
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
     }
 
-    public function testGetTokenParsers()
+    public function testGetTokenParsers(): void
     {
         $tokenParsers = $this->extension->getTokenParsers();
         $this->assertIsArray($tokenParsers);
@@ -52,7 +52,7 @@ class AbstractExtensionTest extends TestCase
         }
     }
 
-    public function testGetNodeVisitors()
+    public function testGetNodeVisitors(): void
     {
         $nodeVisitors = $this->extension->getNodeVisitors();
         $this->assertIsArray($nodeVisitors);
@@ -61,7 +61,7 @@ class AbstractExtensionTest extends TestCase
         }
     }
 
-    public function testGetFilters()
+    public function testGetFilters(): void
     {
         $filters = $this->extension->getFilters();
         $this->assertIsArray($filters);
