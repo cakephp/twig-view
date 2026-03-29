@@ -58,6 +58,13 @@ $cache = [
     'default' => [
         'engine' => 'File',
     ],
+    '_cake_core_' => [
+        'className' => 'File',
+        'prefix' => '_cake_translations_',
+        'path' => CACHE . 'persistent/',
+        'serialize' => true,
+        'duration' => '+10 seconds',
+    ],
     '_cake_translations_' => [
         'className' => 'File',
         'prefix' => '_cake_translations_',
