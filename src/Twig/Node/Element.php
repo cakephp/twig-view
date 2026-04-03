@@ -46,11 +46,11 @@ class Element extends Node
         int $lineno = 0,
         ?string $tag = null,
     ) {
-        if ($data === null) {
+        if (!$data instanceof AbstractExpression) {
             $data = new ArrayExpression([], $lineno);
         }
 
-        if ($options === null) {
+        if (!$options instanceof AbstractExpression) {
             $options = new ArrayExpression([], $lineno);
         }
 

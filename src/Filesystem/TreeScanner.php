@@ -90,7 +90,7 @@ final class TreeScanner
      */
     protected static function convertPathToTree(array &$paths, mixed $index, string $path): void
     {
-        if (strpos($path, DIRECTORY_SEPARATOR) !== false) {
+        if (str_contains($path, DIRECTORY_SEPARATOR)) {
             $chunks = explode(DIRECTORY_SEPARATOR, $path);
             $paths = static::branch($paths, $chunks);
             unset($paths[$index]);
@@ -107,7 +107,7 @@ final class TreeScanner
     protected static function branch(array $paths, array $branches): array
     {
         $twig = array_shift($branches);
-        if (count($branches) === 0) {
+        if ($branches === []) {
             $paths[] = $twig;
 
             return $paths;

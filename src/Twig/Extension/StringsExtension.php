@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\Utility\Text;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -36,21 +37,21 @@ class StringsExtension extends AbstractExtension
     {
         return [
             new TwigFilter('substr', 'substr'),
-            new TwigFilter('tokenize', 'Cake\Utility\Text::tokenize'),
-            new TwigFilter('insert', 'Cake\Utility\Text::insert'),
-            new TwigFilter('cleanInsert', 'Cake\Utility\Text::cleanInsert'),
-            new TwigFilter('wrap', 'Cake\Utility\Text::wrap'),
-            new TwigFilter('wrapBlock', 'Cake\Utility\Text::wrapBlock'),
-            new TwigFilter('wordWrap', 'Cake\Utility\Text::wordWrap'),
-            new TwigFilter('highlight', 'Cake\Utility\Text::highlight'),
-            new TwigFilter('tail', 'Cake\Utility\Text::tail'),
-            new TwigFilter('truncate', 'Cake\Utility\Text::truncate'),
-            new TwigFilter('excerpt', 'Cake\Utility\Text::excerpt'),
-            new TwigFilter('toList', 'Cake\Utility\Text::toList'),
-            new TwigFilter('isMultibyte', 'Cake\Utility\Text::isMultibyte'),
-            new TwigFilter('utf8', 'Cake\Utility\Text::utf8'),
-            new TwigFilter('ascii', 'Cake\Utility\Text::ascii'),
-            new TwigFilter('parseFileSize', 'Cake\Utility\Text::parseFileSize'),
+            new TwigFilter('tokenize', Text::class . '::tokenize'),
+            new TwigFilter('insert', Text::class . '::insert'),
+            new TwigFilter('cleanInsert', Text::class . '::cleanInsert'),
+            new TwigFilter('wrap', Text::class . '::wrap'),
+            new TwigFilter('wrapBlock', Text::class . '::wrapBlock'),
+            new TwigFilter('wordWrap', Text::class . '::wordWrap'),
+            new TwigFilter('highlight', Text::class . '::highlight'),
+            new TwigFilter('tail', Text::class . '::tail'),
+            new TwigFilter('truncate', Text::class . '::truncate'),
+            new TwigFilter('excerpt', Text::class . '::excerpt'),
+            new TwigFilter('toList', Text::class . '::toList'),
+            new TwigFilter('isMultibyte', Text::class . '::isMultibyte'),
+            new TwigFilter('utf8', Text::class . '::utf8'),
+            new TwigFilter('ascii', Text::class . '::ascii'),
+            new TwigFilter('parseFileSize', Text::class . '::parseFileSize'),
             new TwigFilter('none', function (): void {
             }),
         ];
@@ -64,7 +65,7 @@ class StringsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('uuid', 'Cake\Utility\Text::uuid'),
+            new TwigFunction('uuid', Text::class . '::uuid'),
             new TwigFunction('sprintf', 'sprintf'),
         ];
     }

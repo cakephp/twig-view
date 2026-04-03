@@ -23,13 +23,13 @@ use Cake\Utility\Text;
 
 class StringsExtensionTest extends AbstractExtensionTest
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new StringsExtension();
     }
 
-    public function testFilterSubstr()
+    public function testFilterSubstr(): void
     {
         $string = 'abc';
         $callable = $this->getFilter('substr')->getCallable();
@@ -37,7 +37,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame('c', $result);
     }
 
-    public function testFilterTokenize()
+    public function testFilterTokenize(): void
     {
         $string = 'a,b,c';
         $callable = $this->getFilter('tokenize')->getCallable();
@@ -45,7 +45,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(['a', 'b', 'c'], $result);
     }
 
-    public function testFilterInsert()
+    public function testFilterInsert(): void
     {
         $string = ':name is :age years old.';
         $keyValues = ['name' => 'Bob', 'age' => '65'];
@@ -54,7 +54,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame('Bob is 65 years old.', $result);
     }
 
-    public function testFilterCleanInsert()
+    public function testFilterCleanInsert(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('cleanInsert')->getCallable();
@@ -62,7 +62,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame('Bob is 65 years old.', $result);
     }
 
-    public function testFilterWrap()
+    public function testFilterWrap(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('wrap')->getCallable();
@@ -70,7 +70,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame("Bob\nis\n65\nyears\nold.", $result);
     }
 
-    public function testFilterWrapBlock()
+    public function testFilterWrapBlock(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('wrapBlock')->getCallable();
@@ -78,7 +78,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame("Bob\nis\n65\nyears\nold.", $result);
     }
 
-    public function testFilterWordWrap()
+    public function testFilterWordWrap(): void
     {
         $input = "Bob is\n65 years old.";
         $callable = $this->getFilter('wordWrap')->getCallable();
@@ -86,7 +86,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame("Bob\nis\n65\nyears\nold.", $result);
     }
 
-    public function testFilterHighlight()
+    public function testFilterHighlight(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('highlight')->getCallable();
@@ -94,7 +94,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame('<span class="highlight">Bob</span> is 65 years old.', $result);
     }
 
-    public function testFilterTail()
+    public function testFilterTail(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('tail')->getCallable();
@@ -104,7 +104,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(Text::tail($input, 7), $result);
     }
 
-    public function testFilterTruncate()
+    public function testFilterTruncate(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('truncate')->getCallable();
@@ -114,7 +114,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(Text::truncate($input, 7), $result);
     }
 
-    public function testFilterExcerpt()
+    public function testFilterExcerpt(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('excerpt')->getCallable();
@@ -124,7 +124,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(Text::excerpt($input, '65', 4), $result);
     }
 
-    public function testFilterToList()
+    public function testFilterToList(): void
     {
         $input = ['a', 'b', 'c'];
         $callable = $this->getFilter('toList')->getCallable();
@@ -132,7 +132,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame('a, b and c', $result);
     }
 
-    public function testFilterIsMultibyte()
+    public function testFilterIsMultibyte(): void
     {
         $input = chr(133);
         $callable = $this->getFilter('isMultibyte')->getCallable();
@@ -140,7 +140,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(true, $result);
     }
 
-    public function testFilterUtf8()
+    public function testFilterUtf8(): void
     {
         $input = 'É';
         $callable = $this->getFilter('utf8')->getCallable();
@@ -148,7 +148,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame([201], $result);
     }
 
-    public function testFilterAscii()
+    public function testFilterAscii(): void
     {
         $input = [201];
         $callable = $this->getFilter('ascii')->getCallable();
@@ -156,7 +156,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame('É', $result);
     }
 
-    public function testParseFileSize()
+    public function testParseFileSize(): void
     {
         $input = '133.780486GB';
         $callable = $this->getFilter('parseFileSize')->getCallable();
@@ -164,7 +164,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(143645703053, $result);
     }
 
-    public function testFilterNone()
+    public function testFilterNone(): void
     {
         $input = 'Bob is 65 years old.';
         $callable = $this->getFilter('none')->getCallable();
@@ -172,7 +172,7 @@ class StringsExtensionTest extends AbstractExtensionTest
         $this->assertSame(null, $result);
     }
 
-    public function testFunctionUuid()
+    public function testFunctionUuid(): void
     {
         $callable = $this->getFunction('uuid')->getCallable();
         $result = call_user_func($callable);

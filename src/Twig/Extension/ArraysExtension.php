@@ -36,7 +36,7 @@ class ArraysExtension extends AbstractExtension
         return [
             new TwigFunction('in_array', 'in_array'),
             new TwigFunction('explode', 'explode'),
-            new TwigFunction('array', function ($array) {
+            new TwigFunction('array', function ($array): array {
                 return (array)$array;
             }),
             new TwigFunction('array_push', 'array_push'),

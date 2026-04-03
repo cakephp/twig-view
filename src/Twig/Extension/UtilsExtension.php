@@ -39,7 +39,7 @@ class UtilsExtension extends AbstractExtension
             new TwigFilter('md5', 'md5'),
             new TwigFilter('base64_encode', 'base64_encode'),
             new TwigFilter('base64_decode', 'base64_decode'),
-            new TwigFilter('string', function ($str) {
+            new TwigFilter('string', function ($str): string {
                 return (string)$str;
             }),
         ];

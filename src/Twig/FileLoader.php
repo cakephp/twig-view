@@ -80,7 +80,7 @@ class FileLoader implements LoaderInterface
     {
         try {
             $this->findTemplate($name);
-        } catch (LoaderError $e) {
+        } catch (LoaderError) {
             return false;
         }
 

@@ -22,13 +22,13 @@ use Cake\TwigView\Twig\Extension\ConfigureExtension;
 
 class ConfigureExtensionTest extends AbstractExtensionTest
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new ConfigureExtension();
     }
 
-    public function testFunctionConfig()
+    public function testFunctionConfig(): void
     {
         $callable = $this->getFunction('config')->getCallable();
 

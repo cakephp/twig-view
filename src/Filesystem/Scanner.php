@@ -45,7 +45,7 @@ final class Scanner
 
         foreach (App::path('templates') as $path) {
             if (is_dir($path)) {
-                $sections['APP'] = $sections['APP'] ?? [];
+                $sections['APP'] ??= [];
                 $sections['APP'] = array_merge($sections['APP'], static::iteratePath($path, $extensions));
             }
         }
@@ -53,7 +53,7 @@ final class Scanner
         foreach (static::pluginsWithTemplates() as $plugin) {
             $path = Plugin::templatePath($plugin);
             if (is_dir($path)) {
-                $sections[$plugin] = $sections[$plugin] ?? [];
+                $sections[$plugin] ??= [];
                 $sections[$plugin] = array_merge($sections[$plugin], static::iteratePath($path, $extensions));
             }
         }
@@ -101,7 +101,7 @@ final class Scanner
     {
         $plugins = Plugin::loaded();
 
-        array_walk($plugins, function ($plugin, $index) use (&$plugins): void {
+        array_walk($plugins, function (string $plugin, $index) use (&$plugins): void {
             $path = Plugin::templatePath($plugin);
 
             if (!is_dir($path)) {
@@ -133,7 +133,7 @@ final class Scanner
      */
     protected static function setupIterator(string $path, array $extensions): Iterator
     {
-        $extPattern = '(?:' . implode('|', array_map('preg_quote', $extensions)) . ')';
+        $extPattern = '(?:' . implode('|', array_map(preg_quote(...), $extensions)) . ')';
 
         return new RegexIterator(new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator(
@@ -158,12 +158,8 @@ final class Scanner
         $items = [];
 
         $array = iterator_to_array($iterator);
-        uasort($array, function ($a, $b) {
-            if ($a == $b) {
-                return 0;
-            }
-
-            return $a < $b ? -1 : 1;
+        uasort($array, function ($a, $b): int {
+            return $a <=> $b;
         });
 
         foreach ($array as $paths) {
