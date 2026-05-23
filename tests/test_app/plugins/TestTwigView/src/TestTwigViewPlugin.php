@@ -5,6 +5,6 @@ namespace TestTwigView;
 
 use Cake\Core\BasePlugin;
 
-class Plugin extends BasePlugin
+class TestTwigViewPlugin extends BasePlugin
 {
 }
