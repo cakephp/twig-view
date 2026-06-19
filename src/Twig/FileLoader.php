@@ -92,8 +92,26 @@ class FileLoader implements LoaderInterface
      */
     public function findTemplate(string $name): string
     {
+        $templatePaths = App::path('templates');
         if (file_exists($name)) {
-            return $name;
+            $name = str_replace('//', '/', $name);
+            // Check both app template paths and all plugins,
+            // as template from element() end up here too.
+            // We also need to protect against `{% include var_name %}`
+            // where var_name is request data.
+            foreach ($templatePaths as $templatePath) {
+                if (str_starts_with($name, $templatePath)) {
+                    return $name;
+                }
+            }
+            foreach (Plugin::loaded() as $pluginName) {
+                $pluginPath = Plugin::templatePath($pluginName);
+                if (str_starts_with($name, $pluginPath)) {
+                    return $name;
+                }
+            }
+
+            throw $this->loaderError($name, $templatePaths);
         }
 
         [$plugin, $name] = pluginSplit($name);
@@ -105,24 +123,35 @@ class FileLoader implements LoaderInterface
             if ($path !== null) {
                 return $path;
             }
-
             $error = "Could not find template `{$name}` in plugin `{$plugin}` in these paths:\n\n"
                 . "- `{$templatePath}`\n";
             throw new LoaderError($error);
         }
 
-        foreach (App::path('templates') as $templatePath) {
+        foreach ($templatePaths as $templatePath) {
             $path = $this->checkExtensions($templatePath . $name);
             if ($path !== null) {
                 return $path;
             }
         }
+        throw $this->loaderError($name, $templatePaths);
+    }
 
+    /**
+     * Create a LoaderError with template path list in the message.
+     *
+     * @param string $name The name of the template that could not be found.
+     * @param array $templatePaths List of template paths that were searched
+     * @return \Twig\Error\LoaderError
+     */
+    protected function loaderError(string $name, array $templatePaths): LoaderError
+    {
         $error = "Could not find template `{$name}` in these paths:\n\n";
-        foreach (App::path('templates') as $templatePath) {
+        foreach ($templatePaths as $templatePath) {
             $error .= "- `{$templatePath}`\n";
         }
-        throw new LoaderError($error);
+
+        return new LoaderError($error);
     }
 
     /**
