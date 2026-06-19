@@ -24,6 +24,7 @@ use Cake\I18n\DateTime;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
+use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Extra\Markdown\DefaultMarkdown;
@@ -254,6 +255,17 @@ TEXT;
         $this->expectException(SyntaxError::class);
 
         $this->view->render('syntaxerror', false);
+    }
+
+    public function testTemplatePathRestriction(): void
+    {
+        $path = TMP . 'secret.txt';
+        file_put_contents($path, 'SECRET DATA from /tmp/secret.txt');
+        $view = new AppView();
+        $view->set('item', $path);
+        $this->expectException(LoaderError::class);
+        $this->expectExceptionMessage('Could not find template');
+        $view->render('template_path_restriction');
     }
 
     public function testHelperFunction(): void
