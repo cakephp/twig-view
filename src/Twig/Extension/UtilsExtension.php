@@ -20,6 +20,7 @@ namespace Cake\TwigView\Twig\Extension;
 
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use function Cake\Core\deprecationWarning;
 
 /**
  * Class UtilsExtension.
@@ -34,8 +35,16 @@ class UtilsExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('serialize', 'serialize'),
-            new TwigFilter('unserialize', 'unserialize'),
+            new TwigFilter('serialize', function (string $value): mixed {
+                deprecationWarning('5.0.2', 'Usage of serialize in templates deprecated.');
+
+                return serialize($value);
+            }),
+            new TwigFilter('unserialize', function (string $value): mixed {
+                deprecationWarning('5.0.2', 'unserialize is deprecated. Its usage creates arbitrary object deserialization issues');
+
+                return unserialize($value, ['allowed_classes' => false]);
+            }),
             new TwigFilter('md5', 'md5'),
             new TwigFilter('base64_encode', 'base64_encode'),
             new TwigFilter('base64_decode', 'base64_decode'),
