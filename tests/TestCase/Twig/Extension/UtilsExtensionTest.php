@@ -42,7 +42,7 @@ class UtilsExtensionTest extends AbstractExtensionTest
 
         // 1) Object payload: does a gadget's magic method run?
         GadgetMarker::$woken = false;
-        $this->deprecated(function () use ($twig) {
+        $this->deprecated(function () use ($twig): void {
             $twig->render('object', ['payload' => serialize(new GadgetMarker())]);
             $this->assertFalse(GadgetMarker::$woken, 'Should not have modified GadgetMarker');
 
