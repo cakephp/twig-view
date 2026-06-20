@@ -33,7 +33,7 @@ class UtilsExtensionTest extends AbstractExtensionTest
 
     public function testUnserializePreventObject(): void
     {
-        $this->skipIf(version_compare(PHP_VERSION, '8.3.0', '<'), 'Requires PHP8.3 or higher');
+        $this->skipIf(PHP_VERSION_ID < 80300, 'Requires PHP8.3 or higher');
 
         $twig = new Environment(new ArrayLoader([
             // {% set %} so we exercise the filter without stringifying the result.
