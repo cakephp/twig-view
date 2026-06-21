@@ -25,7 +25,7 @@ use Twig\Loader\ArrayLoader;
 
 class UtilsExtensionTest extends AbstractExtensionTest
 {
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
         $this->extension = new UtilsExtension();
