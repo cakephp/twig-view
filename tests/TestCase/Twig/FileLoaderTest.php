@@ -81,13 +81,14 @@ class FileLoaderTest extends TestCase
 
     public function testIsFresh()
     {
-        file_put_contents(TMP . 'TwigViewIsFreshTest', 'TwigViewIsFreshTest');
-        $time = filemtime(TMP . 'TwigViewIsFreshTest');
+        $path = TEST_APP . 'templates/test_is_fresh.twig';
+        file_put_contents($path, 'is fresh test');
+        $time = filemtime($path);
 
-        $this->assertTrue($this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time + 5));
-        $this->assertTrue(!$this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time - 5));
+        $this->assertTrue($this->loader->isFresh($path, $time + 5));
+        $this->assertTrue(!$this->loader->isFresh($path, $time - 5));
 
-        unlink(TMP . 'TwigViewIsFreshTest');
+        unlink($path);
     }
 
     public function testIsFreshNonExistingFile()
