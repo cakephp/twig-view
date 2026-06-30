@@ -22,7 +22,7 @@ use Cake\TwigView\Twig\Extension\BasicExtension;
 
 class BasicExtensionTest extends AbstractExtensionTest
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new BasicExtension();

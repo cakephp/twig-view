@@ -23,12 +23,12 @@ use TestApp\Exception\MissingSomethingException;
 
 class TestSecondHelper extends Helper
 {
-    public function bogus()
+    public function bogus(): never
     {
         throw new MissingSomethingException('Something is missing');
     }
 
-    public function useElement()
+    public function useElement(): string
     {
         return $this->_View->element('element_with_var');
     }

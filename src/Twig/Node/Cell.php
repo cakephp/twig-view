@@ -33,8 +33,6 @@ class Cell extends Node implements NodeOutputInterface
 {
     /**
      * Whether to assign the data or not.
-     *
-     * @var bool
      */
     protected bool $assign = false;
 
@@ -58,11 +56,11 @@ class Cell extends Node implements NodeOutputInterface
         int $lineno = 0,
         ?string $tag = null,
     ) {
-        if ($data === null) {
+        if (!$data instanceof AbstractExpression) {
             $data = new ArrayExpression([], $lineno);
         }
 
-        if ($options === null) {
+        if (!$options instanceof AbstractExpression) {
             $options = new ArrayExpression([], $lineno);
         }
 
@@ -93,7 +91,7 @@ class Cell extends Node implements NodeOutputInterface
         $compiler->addDebugInfo($this);
 
         if ($this->assign) {
-            $compiler->raw('$context[\'' . $this->getAttribute('variable') . '\'] = ');
+            $compiler->raw('$context[\'' . $this->getAttribute('variable') . "'] = ");
         } else {
             $compiler->raw('echo ');
         }

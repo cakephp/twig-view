@@ -24,6 +24,7 @@ use Cake\I18n\DateTime;
 use Cake\I18n\I18n;
 use Cake\TestSuite\TestCase;
 use TestApp\View\AppView;
+use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Extra\Markdown\DefaultMarkdown;
@@ -38,7 +39,7 @@ class TwigViewTest extends TestCase
      */
     protected $view;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -52,7 +53,7 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testRenderSimpleTemplate()
+    public function testRenderSimpleTemplate(): void
     {
         $output = $this->view->render('simple', false);
 
@@ -64,7 +65,7 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testRenderSimpleTemplateWithLayout()
+    public function testRenderSimpleTemplateWithLayout(): void
     {
         $output = $this->view->render('simple');
 
@@ -76,7 +77,7 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testRenderLayoutWithElements()
+    public function testRenderLayoutWithElements(): void
     {
         $output = $this->view->render('Blog/index');
 
@@ -88,7 +89,7 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testRenderLayoutWithViewBlockAssignment()
+    public function testRenderLayoutWithViewBlockAssignment(): void
     {
         $output = $this->view->render('Blog/with_extra_block', 'with_extra_block');
 
@@ -100,14 +101,14 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testLayoutFromTemplate()
+    public function testLayoutFromTemplate(): void
     {
         $output = $this->view->render('set_layout');
 
         $this->assertSame("custom\nset layout", $output);
     }
 
-    public function testRenderWithPluginElement()
+    public function testRenderWithPluginElement(): void
     {
         $this->loadPlugins(['TestTwigView']);
 
@@ -122,7 +123,7 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testRenderCell()
+    public function testRenderCell(): void
     {
         $output = $this->view->render('cell', false);
         $this->assertSame('<b>10</b>', $output);
@@ -133,7 +134,7 @@ class TwigViewTest extends TestCase
      *
      * @return void
      */
-    public function testCellsShareTwig()
+    public function testCellsShareTwig(): void
     {
         $cell = $this->view->cell('Test');
         $this->assertSame($this->view->getTwig(), $cell->createView(AppView::class)->getTwig());
@@ -142,7 +143,7 @@ class TwigViewTest extends TestCase
     /**
      * Test that Cake date/time objects are formatted correctly
      */
-    public function testTwigDateFormat()
+    public function testTwigDateFormat(): void
     {
         $restore = I18n::getLocale();
         I18n::setLocale('fr');
@@ -165,7 +166,7 @@ TEXT;
      *
      * @return void;
      */
-    public function testMarkdownExtensionDefault()
+    public function testMarkdownExtensionDefault(): void
     {
         AppView::destroyTwig();
 
@@ -181,7 +182,7 @@ TEXT;
      *
      * @return void;
      */
-    public function testMarkdownExtensionCustom()
+    public function testMarkdownExtensionCustom(): void
     {
         AppView::destroyTwig();
 
@@ -198,7 +199,7 @@ TEXT;
      *
      * @return void
      */
-    public function testTwigInclude()
+    public function testTwigInclude(): void
     {
         $this->loadPlugins(['TestTwigView']);
 
@@ -213,7 +214,7 @@ TEXT;
      *
      * @return void
      */
-    public function testTwigExtendsRootPath()
+    public function testTwigExtendsRootPath(): void
     {
         $view = new AppView(null, null, null, ['templatePath' => 'Blog']);
         $output = $view->render('blog_with_extends');
@@ -225,7 +226,7 @@ TEXT;
      *
      * @return void
      */
-    public function testMissingVariableThrowsError()
+    public function testMissingVariableThrowsError(): void
     {
         $this->expectException(RuntimeError::class);
         $this->view->render('missing_variable', false);
@@ -236,7 +237,7 @@ TEXT;
      *
      * @return void
      */
-    public function testThrowWrappedException()
+    public function testThrowWrappedException(): void
     {
         $this->expectException(RuntimeError::class);
         $this->expectExceptionMessage('Something is missing');
@@ -249,14 +250,25 @@ TEXT;
      *
      * @return void
      */
-    public function testThrowSyntaxError()
+    public function testThrowSyntaxError(): void
     {
         $this->expectException(SyntaxError::class);
 
         $this->view->render('syntaxerror', false);
     }
 
-    public function testHelperFunction()
+    public function testTemplatePathRestriction(): void
+    {
+        $path = TMP . 'secret.txt';
+        file_put_contents($path, 'SECRET DATA from /tmp/secret.txt');
+        $view = new AppView();
+        $view->set('item', $path);
+        $this->expectException(LoaderError::class);
+        $this->expectExceptionMessage('Could not find template');
+        $view->render('template_path_restriction');
+    }
+
+    public function testHelperFunction(): void
     {
         $view = new AppView(null, null, null, [
             'viewVars' => ['elementVar' => 'var echoed inside element'],
@@ -268,7 +280,7 @@ TEXT;
         $this->assertSame($expected, $output);
     }
 
-    public function testPluginHelperFunction()
+    public function testPluginHelperFunction(): void
     {
         $this->loadPlugins(['TestTwigView']);
 

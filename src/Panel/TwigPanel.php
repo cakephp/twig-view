@@ -30,8 +30,6 @@ class TwigPanel extends DebugPanel
 
     /**
      * Plugin name.
-     *
-     * @var string
      */
     public string $plugin = 'Cake/TwigView';
 

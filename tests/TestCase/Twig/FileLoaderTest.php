@@ -33,7 +33,7 @@ class FileLoaderTest extends TestCase
      */
     protected $loader;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +43,7 @@ class FileLoaderTest extends TestCase
         $this->loader = new FileLoader(['.twig']);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($this->loader);
 
@@ -52,13 +52,13 @@ class FileLoaderTest extends TestCase
         parent::tearDown();
     }
 
-    public function testGetSource()
+    public function testGetSource(): void
     {
         $source = $this->loader->getSourceContext(TEST_APP . DS . 'templates' . DS . 'simple.twig');
         $this->assertSame("{{ 'UnderscoreMe'|underscore }}", $source->getCode());
     }
 
-    public function testGetSourceNonExistingFile()
+    public function testGetSourceNonExistingFile(): void
     {
         $this->expectException(LoaderError::class);
         $this->expectExceptionMessage('Could not find template `missing` in plugin `TestTwigView`');
@@ -66,7 +66,7 @@ class FileLoaderTest extends TestCase
         $this->loader->getSourceContext('TestTwigView.missing');
     }
 
-    public function testGetCacheKey()
+    public function testGetCacheKey(): void
     {
         $this->assertSame(
             TEST_APP . 'templates/simple.twig',
@@ -74,31 +74,32 @@ class FileLoaderTest extends TestCase
         );
     }
 
-    public function testGetCacheKeyPluginNonExistingFile()
+    public function testGetCacheKeyPluginNonExistingFile(): void
     {
         $this->expectException(LoaderError::class);
 
         $this->loader->getCacheKey('TestTwigView.twog');
     }
 
-    public function testIsFresh()
+    public function testIsFresh(): void
     {
-        file_put_contents(TMP . 'TwigViewIsFreshTest', 'is fresh test');
-        $time = filemtime(TMP . 'TwigViewIsFreshTest');
+        $path = TEST_APP . 'templates/test_is_fresh.twig';
+        file_put_contents($path, 'is fresh test');
+        $time = filemtime($path);
 
-        $this->assertTrue($this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time + 5));
-        $this->assertTrue(!$this->loader->isFresh(TMP . 'TwigViewIsFreshTest', $time - 5));
+        $this->assertTrue($this->loader->isFresh($path, $time + 5));
+        $this->assertTrue(!$this->loader->isFresh($path, $time - 5));
 
-        unlink(TMP . 'TwigViewIsFreshTest');
+        unlink($path);
     }
 
-    public function testIsFreshNonExistingFile()
+    public function testIsFreshNonExistingFile(): void
     {
         $this->expectException(LoaderError::class);
         $this->loader->isFresh(TMP . 'foobar' . time(), time());
     }
 
-    public function testExistsNonExistingFile()
+    public function testExistsNonExistingFile(): void
     {
         $exists = $this->loader->exists(TMP . 'foobar' . time(), time());
         $this->assertSame(false, $exists);

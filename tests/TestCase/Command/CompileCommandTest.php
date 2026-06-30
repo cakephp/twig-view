@@ -33,7 +33,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -46,7 +46,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function testMissingType()
+    public function testMissingType(): void
     {
         $this->exec('twig-view compile nonsense');
         $this->assertExitError();
@@ -58,7 +58,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function testFileNoArgument()
+    public function testFileNoArgument(): void
     {
         $this->exec('twig-view compile file');
         $this->assertExitError();
@@ -70,7 +70,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function testFile()
+    public function testFile(): void
     {
         $this->exec('twig-view compile file ' . TEST_APP . DS . 'templates' . DS . 'simple.twig');
         $this->assertExitSuccess();
@@ -83,7 +83,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $this->loadPlugins(['TestTwigView']);
 
@@ -100,7 +100,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function testAll()
+    public function testAll(): void
     {
         $templates = Configure::read('App.paths.templates');
         Configure::write('App.paths.templates', TEST_APP . 'templates' . DS . 'Blog' . DS);
@@ -118,7 +118,7 @@ class CompileCommandTest extends TestCase
      *
      * @return void
      */
-    public function testViewOption()
+    public function testViewOption(): void
     {
         $path = TEST_APP . DS . 'templates' . DS . 'simple.twig';
         $this->exec('twig-view compile file --view-class TestApp\View\AppView ' . $path);

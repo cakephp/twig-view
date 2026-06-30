@@ -29,7 +29,7 @@ use org\bovigo\vfs\vfsStream;
  */
 class RelativeScannerTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,14 +37,14 @@ class RelativeScannerTest extends TestCase
         $this->loadPlugins(['TestTwigView']);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->removePlugins(['TestTwigView']);
 
         parent::tearDown();
     }
 
-    public function testAll()
+    public function testAll(): void
     {
         vfsStream::setup('root');
 
@@ -89,7 +89,7 @@ class RelativeScannerTest extends TestCase
         Configure::write('App.paths.templates', $templatePaths);
     }
 
-    public function testPlugin()
+    public function testPlugin(): void
     {
         $this->assertSame([
             'Controller/Component/magic.twig',

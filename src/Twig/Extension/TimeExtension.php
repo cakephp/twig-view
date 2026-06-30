@@ -42,7 +42,7 @@ class TimeExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('date', [$this, 'formatDate']),
+            new TwigFilter('date', $this->formatDate(...)),
         ];
     }
 
@@ -54,13 +54,13 @@ class TimeExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('date', function ($time = null, $timezone = null) {
+            new TwigFunction('date', function ($time = null, $timezone = null): DateTime {
                 return new DateTime($time, $timezone);
             }),
-            new TwigFunction('time', function ($time = null, $timezone = null) {
+            new TwigFunction('time', function ($time = null, $timezone = null): DateTime {
                 return new DateTime($time, $timezone);
             }),
-            new TwigFunction('timezones', 'Cake\I18n\DateTime::listTimezones'),
+            new TwigFunction('timezones', DateTime::class . '::listTimezones'),
         ];
     }
 
@@ -78,7 +78,7 @@ class TimeExtension extends AbstractExtension
         ?string $format = null,
         DateTimeZone|string|false|null $timezone = null,
     ): string {
-        if (!isset($this->coreExt)) {
+        if (!$this->coreExt instanceof CoreExtension) {
             $this->coreExt = new CoreExtension();
         }
         if ($date instanceof ChronosDate) {

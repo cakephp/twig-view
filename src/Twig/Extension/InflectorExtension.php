@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Twig\Extension;
 
+use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -34,16 +36,16 @@ class InflectorExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('pluralize', 'Cake\Utility\Inflector::pluralize'),
-            new TwigFilter('singularize', 'Cake\Utility\Inflector::singularize'),
-            new TwigFilter('camelize', 'Cake\Utility\Inflector::camelize'),
-            new TwigFilter('underscore', 'Cake\Utility\Inflector::underscore'),
-            new TwigFilter('humanize', 'Cake\Utility\Inflector::humanize'),
-            new TwigFilter('tableize', 'Cake\Utility\Inflector::tableize'),
-            new TwigFilter('classify', 'Cake\Utility\Inflector::classify'),
-            new TwigFilter('variable', 'Cake\Utility\Inflector::variable'),
-            new TwigFilter('dasherize', 'Cake\Utility\Inflector::dasherize'),
-            new TwigFilter('slug', 'Cake\Utility\Text::slug'),
+            new TwigFilter('pluralize', Inflector::class . '::pluralize'),
+            new TwigFilter('singularize', Inflector::class . '::singularize'),
+            new TwigFilter('camelize', Inflector::class . '::camelize'),
+            new TwigFilter('underscore', Inflector::class . '::underscore'),
+            new TwigFilter('humanize', Inflector::class . '::humanize'),
+            new TwigFilter('tableize', Inflector::class . '::tableize'),
+            new TwigFilter('classify', Inflector::class . '::classify'),
+            new TwigFilter('variable', Inflector::class . '::variable'),
+            new TwigFilter('dasherize', Inflector::class . '::dasherize'),
+            new TwigFilter('slug', Text::class . '::slug'),
         ];
     }
 }

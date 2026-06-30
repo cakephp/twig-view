@@ -77,15 +77,11 @@ final class RelativeScanner
      */
     protected static function stripAbsolutePath(array $paths, ?string $plugin = null): array
     {
-        if ($plugin === null) {
-            $allPaths = App::path('templates');
-        } else {
-            $allPaths = [Plugin::templatePath($plugin)];
-        }
+        $allPaths = $plugin === null ? App::path('templates') : [Plugin::templatePath($plugin)];
 
         foreach ($allPaths as $templatesPath) {
             array_walk($paths, function (&$path) use ($templatesPath): void {
-                if (substr($path, 0, strlen($templatesPath)) === $templatesPath) {
+                if (str_starts_with($path, $templatesPath)) {
                     $path = substr($path, strlen($templatesPath));
                 }
             });

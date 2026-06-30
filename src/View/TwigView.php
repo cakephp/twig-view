@@ -48,14 +48,8 @@ use Twig\RuntimeLoader\RuntimeLoaderInterface;
  */
 class TwigView extends View
 {
-    /**
-     * @var \Twig\Environment|null
-     */
     protected static ?Environment $twig = null;
 
-    /**
-     * @var \Twig\Profiler\Profile|null
-     */
     protected static ?Profile $profile = null;
 
     /**
@@ -100,7 +94,7 @@ class TwigView extends View
     {
         parent::initialize();
 
-        if (static::$twig === null) {
+        if (!static::$twig instanceof Environment) {
             // Cache instance to avoid re-creating when rendering Cells
             static::$twig = $this->createEnvironment();
 
@@ -124,7 +118,7 @@ class TwigView extends View
      */
     public function getTwig(): Environment
     {
-        if (static::$twig === null) {
+        if (!static::$twig instanceof Environment) {
             throw new RuntimeException('Twig Environment instance not created.');
         }
 
@@ -235,10 +229,7 @@ class TwigView extends View
 
             $engine = $markdown === 'default' ? new DefaultMarkdown() : $markdown;
             $twig->addRuntimeLoader(new class ($engine) implements RuntimeLoaderInterface {
-                /**
-                 * @var \Twig\Extra\Markdown\MarkdownInterface
-                 */
-                private MarkdownInterface $engine;
+                private readonly MarkdownInterface $engine;
 
                 /**
                  * @param \Twig\Extra\Markdown\MarkdownInterface $engine MarkdownInterface instance
