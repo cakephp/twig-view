@@ -22,6 +22,7 @@ use Cake\Console\CommandCollection;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
 use Cake\TwigView\Command\CompileCommand;
+use Cake\TwigView\Command\TwigExtractCommand;
 
 /**
  * Plugin class for Cake\TwigView.
@@ -49,6 +50,7 @@ class TwigViewPlugin extends BasePlugin
             // Deprecated: use `'TwigView.useUnderscoreCommands' => true` to switch to `twig_view compile`
             $commands->add('twig-view compile', CompileCommand::class);
         }
+        $commands->add('i18n extract', TwigExtractCommand::class);
 
         return $commands;
     }

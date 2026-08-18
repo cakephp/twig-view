@@ -1,0 +1,79 @@
+{{ __('no_domain') }}
+{{ __('no_domain_with_{var}', {var: 'var'}) }}
+{{ __n('no_domain_singular', 'no_domain_plural', 2) }}
+{{ __n('no_domain_singular_with_{var}', 'no_domain_plural_with_{var}', 2, {var: 'var'}) }}
+{{ __x('Context', 'no_domain_with_context') }}
+{{ __x('Context', 'no_domain_with_context_with_{var}') }}
+{{ __xn('Context','no_domain_singular_with_context', 'no_domain_plural_with_context', 2) }}
+{{ __xn('Context','no_domain_singular_with_context_with_{var}', 'no_domain_plural_with_context_with_{var}', 2, {var: 'var'}) }}
+{# test_domain #}
+{{ __d('test', 'test_domain') }}
+{{ __d('test', 'test_domain_with_{var}', {var: 'var'}) }}
+{{ __dn('test', 'test_domain_singular', 'test_domain_plural', 2) }}
+{{ __dn('test',
+    'test_domain_singular_with_{var}',
+    'test_domain_plural_with_{var}', 2, {var: 'var'},
+) }}
+{{ __dx('test', 'Context', 'test_domain_with_context') }}
+{{ __dx('test', 'Context', 'test_domain_with_context_with_{var}', {var: 'var'}) }}
+{{ __dxn('test', 'Context',
+    'test_domain_singular_with_context',
+    'test_domain_plural_with_context', 2) }}
+{{ __dxn('test', 'Context',
+    'test_domain_singular_with_context_with_{var}',
+    'test_domain_plural_with_context_with_{var}',
+    2,
+    {var: 'var'},
+) }}
+
+{# multiline #}
+{{ __('no_domain' ~
+    '_multiline') }}
+{{ __('no_domain' ~
+    '_multiline_with_{var}', {var: 'var'}) }}
+{{ __n('no_domain' ~
+    '_multiline_singular', 'no_domain' ~
+    '_multiline_plural', 2) }}
+{{ __n('no_domain' ~
+    '_multiline_singular_with_{var}', 'no_domain' ~
+    '_multiline_plural_with_{var}', 2, {var: 'var'}) }}
+{{ __x('Context', 'no_domain' ~
+    '_multiline_with_context') }}
+{{ __x('Context', 'no_domain' ~
+    '_multiline_with_context_with_{var}') }}
+{{ __xn('Context', 'no_domain' ~
+    '_multiline_singular', 'no_domain' ~
+    '_multiline_plural', 2) }}
+{{ __xn('Context', 'no_domain' ~
+    '_multiline_singular_with_{var}', 'no_domain' ~
+    '_multiline_plural_with_{var}', 2, {var: 'var'}) }}
+{# multiline test_domain #}
+{{ __d('test', 'test_domain' ~
+    '_multiline') }}
+{{ __d('test', 'test_domain' ~
+    '_multiline_with_{var}', {var: 'var'}) }}
+{{ __dn('test', 'test_domain' ~
+    '_multiline_singular', 'test_domain' ~
+    '_multiline_plural', 2) }}
+{{ __dn('test',
+    'test_domain' ~
+    '_multiline _singular_with_{var}',
+    'test_domain' ~
+    '_multiline_plural_with_{var}', 2, {var: 'var'},
+) }}
+{{ __dx('test', 'Context', 'test_domain' ~
+    '_multiline_with_context') }}
+{{ __dx('test', 'Context', 'test_domain' ~
+    '_multiline_with_context_with_context_with_{var}', {var: 'var'}) }}
+{{ __dxn('test', 'Context', 'test_domain' ~
+    '_multiline_with_context_singular', 'test_domain' ~
+    '_multiline_with_context_plural', 2) }}
+{{ __dxn('test', 'Context', 'test_domain' ~
+    '_multiline_singular_with_context_with_{var}', 'test_domain' ~
+    '_multiline_plural_with_context_with_{var}', 2, {var: 'var'}) }}
+{# Contains quotes #}
+{{ __('double "quoted"')}}
+{{ __("single 'quoted'")}}
+{# Contains quotes #}
+{{ __d('test', 'double "quoted"')}}
+{{ __d('test', "single 'quoted'")}}
