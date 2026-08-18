@@ -302,11 +302,7 @@ class TwigExtractCommand extends I18nExtractCommand
      */
     protected function _isTwigUsable(): bool
     {
-        if (!class_exists('Twig\Environment')) {
-            return false;
-        }
-
-        return true;
+        return class_exists(\Twig\Environment::class);
     }
 
     /**
@@ -338,9 +334,6 @@ class TwigExtractCommand extends I18nExtractCommand
     protected function _tokenizeAsTwig(string $code, string $file): void
     {
         $twig = new \Twig\Environment(new \Twig\Loader\ArrayLoader());
-        /**
-         * @var \Twig\TokenStream $stream
-         */
         $stream = $twig->tokenize(new \Twig\Source(code: $code, name: $file, path: $file));
         $this->_tokens = [];
         while (!$stream->isEOF()) {
