@@ -110,6 +110,9 @@ class TwigExtractCommand extends I18nExtractCommand
                     }
                 }
             }
+            if ($_parser === 'php') {
+                $this->extractFileReflection($file, $code);
+            }
 
             if (!$isVerbose) {
                 $progress->increment(1);

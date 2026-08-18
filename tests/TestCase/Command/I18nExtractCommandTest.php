@@ -22,6 +22,7 @@ use Cake\Core\Configure;
 use Cake\Routing\Router;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Filesystem;
+use function is_string;
 
 /**
  * I18nExtractCommandTest
@@ -74,11 +75,8 @@ class I18nExtractCommandTest extends TestCase
             'i18n extract ' .
                 '--merge=no ' .
                 '--extract-core=no ' .
-                '--paths=' . TEST_APP . 'templates' . DS . 'i18n ' . DS .
+                '--paths=' . TEST_APP . 'templates' . DS . 'i18n ' .
                 '--output=' . $this->path . DS,
-            [
-                $this->path,
-            ],
         );
         $this->assertExitSuccess();
         $this->assertFileExists($this->path . DS . 'default.pot');
@@ -238,5 +236,209 @@ class I18nExtractCommandTest extends TestCase
 
         $pattern = '/\#: .*default\.php:\d+\n/';
         $this->assertDoesNotMatchRegularExpression($pattern, $result);
+    }
+
+    /**
+     * testExtractWithoutLocations method
+     */
+    public function testExtractWithoutLocations(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--extract-core=no ' .
+            '--no-location=true ' .
+            '--exclude=Pages,Layout ' .
+            '--paths=' . TEST_APP . 'templates' . DS . ' ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+        $this->assertFileExists($this->path . DS . 'default.pot');
+
+        $result = file_get_contents($this->path . DS . 'default.pot');
+
+        $pattern = '/\n\#: .*\n/';
+        $this->assertDoesNotMatchRegularExpression($pattern, $result);
+    }
+
+    /**
+     * test extract can read more than one path.
+     */
+    public function testExtractMultiplePaths(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--extract-core=no ' .
+            '--exclude=Pages,Layout ' .
+            '--paths=' . TEST_APP . 'templates/Pages,' .
+                TEST_APP . 'templates/Posts,' .
+                TEST_APP . 'templates/i18n ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+        $result = file_get_contents($this->path . DS . 'default.pot');
+
+        $pattern = '/msgid "Add User"/';
+        $this->assertMatchesRegularExpression($pattern, $result);
+    }
+
+    /**
+     * Test that the extract shell overwrites existing files with the overwrite parameter
+     */
+    public function testExtractOverwrite(): void
+    {
+        file_put_contents($this->path . DS . 'default.pot', 'will be overwritten');
+        $this->assertFileExists($this->path . DS . 'default.pot');
+        $original = file_get_contents($this->path . DS . 'default.pot');
+
+        $this->exec(
+            'i18n extract ' .
+            '--extract-core=no ' .
+            '--overwrite ' .
+            '--paths=' . TEST_APP . 'templates/ ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+
+        $result = file_get_contents($this->path . DS . 'default.pot');
+        $this->assertNotEquals($original, $result);
+    }
+
+    /**
+     *  Test that the extract shell scans the core libs
+     */
+    public function testExtractCore(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--extract-core=yes ' .
+            '--paths=' . TEST_APP . '/ ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertNotNull($this->_err);
+        $this->assertEmpty($this->_err->messages(), 'Should not have output to stderr');
+        $this->assertExitSuccess();
+
+        $this->assertFileExists($this->path . DS . 'cake.pot');
+        $result = file_get_contents($this->path . DS . 'cake.pot');
+        $this->assertTrue(is_string($result));
+
+        $pattern = '/#: Console\/Templates\//';
+        $this->assertDoesNotMatchRegularExpression($pattern, $result);
+
+        $pattern = '/#: Test\//';
+        $this->assertDoesNotMatchRegularExpression($pattern, $result);
+    }
+
+    /**
+     * Test when marker-error option is set
+     * When marker-error is unset, it's already test
+     * with other functions like testExecute that not detects error because err never called
+     */
+    public function testMarkerErrorSets(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--marker-error ' .
+            '--merge=no ' .
+            '--extract-core=no ' .
+            '--paths=' . TEST_APP . 'templates/Pages ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+        $this->assertErrorContains('Invalid marker content in');
+        $this->assertErrorContains('extract.php');
+    }
+
+    /**
+     * Test extraction of Label attribute strings from enum cases.
+     */
+    public function testExtractLabelAttributes(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--merge=no ' .
+            '--extract-core=no ' .
+            '--paths=' . TEST_APP . 'src/Model/Enum ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+        $this->assertFileExists($this->path . DS . 'default.pot');
+        $result = file_get_contents($this->path . DS . 'default.pot');
+
+        $this->assertStringContainsString('msgid "Published"', $result);
+        $this->assertStringContainsString('msgid "Unpublished"', $result);
+
+        $pattern = '/msgctxt "article_status"\nmsgid "Archived"/';
+        $this->assertMatchesRegularExpression($pattern, $result);
+    }
+
+    /**
+     * test relative-paths option
+     */
+    public function testExtractWithRelativePaths(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--extract-core=no ' .
+            '--paths=' . TEST_APP . 'templates ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+        $this->assertFileExists($this->path . DS . 'default.pot');
+        $result = file_get_contents($this->path . DS . 'default.pot');
+
+        $expected = '#: ./tests/test_app/templates/Pages/extract.php:';
+        $this->assertStringContainsString($expected, $result);
+    }
+
+    /**
+     * test invalid path options
+     */
+    public function testExtractWithInvalidPaths(): void
+    {
+        $this->exec(
+            'i18n extract ' .
+            '--extract-core=no ' .
+            '--paths=' . TEST_APP . 'templates,' . TEST_APP . 'unknown ' .
+            '--output=' . $this->path . DS,
+        );
+        $this->assertExitSuccess();
+        $this->assertFileExists($this->path . DS . 'default.pot');
+        $result = file_get_contents($this->path . DS . 'default.pot');
+
+        $expected = '#: ./tests/test_app/templates/Pages/extract.php:';
+        $this->assertStringContainsString($expected, $result);
+    }
+
+    /**
+     * Test with associative arrays in App.path.locales and App.path.templates.
+     */
+    public function testExtractWithAssociativePaths(): void
+    {
+        Configure::write('App.paths', [
+            'plugins' => ['customKey' => TEST_APP . 'plugins' . DS],
+            'templates' => ['customKey' => TEST_APP . 'templates' . DS],
+            'locales' => ['customKey' => TEST_APP . 'resources' . DS . 'locales' . DS],
+        ]);
+
+        $this->exec(
+            'i18n extract ' .
+            '--merge=no ' .
+            '--extract-core=no ',
+            [
+                // Sending two empty inputs so \Cake\Command\I18nExtractCommand::_getPaths()
+                // loops through all paths
+                $this->path,
+                '',
+                'D',
+                $this->path . DS,
+            ],
+        );
+        $this->assertExitSuccess();
+        $this->assertFileExists($this->path . DS . 'default.pot');
+        $result = file_get_contents($this->path . DS . 'default.pot');
+
+        $expected = '#: ./tests/test_app/templates/Pages/extract.php:';
+        $this->assertStringContainsString($expected, $result);
     }
 }
