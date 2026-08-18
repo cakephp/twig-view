@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -75,7 +74,7 @@ class I18nExtractCommandTest extends TestCase
             'i18n extract ' .
                 '--merge=no ' .
                 '--extract-core=no ' .
-                '--paths=' . TEST_APP . 'templates' . DS . 'i18n ' . DS.
+                '--paths=' . TEST_APP . 'templates' . DS . 'i18n ' . DS .
                 '--output=' . $this->path . DS,
             [
                 $this->path,
@@ -128,7 +127,6 @@ class I18nExtractCommandTest extends TestCase
         $pattern .= 'msgctxt "Context"\n';
         $pattern .= 'msgid "no_domain_singular_with_context_with_\{var\}"\nmsgid_plural "no_domain_plural_with_context_with_\{var\}"@';
         $this->assertMatchesRegularExpression($pattern, $result, 'No duplicate msgid');
-
 
         $this->assertStringContainsString('msgid "double \\"quoted\\""', $result, 'Strings with quotes not handled correctly');
         $this->assertStringContainsString("msgid \"single 'quoted'\"", $result, 'Strings with quotes not handled correctly');
@@ -187,7 +185,7 @@ class I18nExtractCommandTest extends TestCase
             'i18n extract ' .
                 '--merge=no ' .
                 '--extract-core=no ' .
-                '--paths=' . TEST_APP . 'templates' . DS . 'i18n ' ,
+                '--paths=' . TEST_APP . 'templates' . DS . 'i18n ',
             [
                 $this->path,
                 TEST_APP . 'templates' . DS . 'i18n' . DS,
@@ -211,7 +209,7 @@ class I18nExtractCommandTest extends TestCase
                 '--output=' . $this->path . DS,
             [
                 $this->path,
-            ]
+            ],
         );
         $this->assertExitSuccess();
         $this->assertFileExists($this->path . DS . 'default.pot');

@@ -17,15 +17,18 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Command;
 
-use Cake\Command\I18nExtractCommand;
 use Cake\Command\Helper\ProgressHelper;
+use Cake\Command\I18nExtractCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Utility\Filesystem;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\Source;
 use Twig\Token;
 use function count; // Imports the global function
-use function is_array; // Imports the global function
 use function in_array; // Imports the global function
+use function is_array; // Imports the global function
 
 /**
  * Language string extractor
@@ -126,7 +129,7 @@ class TwigExtractCommand extends I18nExtractCommand
     protected function _parseAsPHP(ConsoleIo $io, string $functionName, array $map): void
     {
         $count = 0;
-        $tokenCount = \count($this->_tokens);
+        $tokenCount = count($this->_tokens);
 
         while ($tokenCount - $count > 1) {
             $countToken = $this->_tokens[$count];
@@ -302,7 +305,7 @@ class TwigExtractCommand extends I18nExtractCommand
      */
     protected function _isTwigUsable(): bool
     {
-        return class_exists(\Twig\Environment::class);
+        return class_exists(Environment::class);
     }
 
     /**
@@ -333,20 +336,31 @@ class TwigExtractCommand extends I18nExtractCommand
      */
     protected function _tokenizeAsTwig(string $code, string $file): void
     {
-        $twig = new \Twig\Environment(new \Twig\Loader\ArrayLoader());
-        $stream = $twig->tokenize(new \Twig\Source(code: $code, name: $file, path: $file));
+        $twig = new Environment(new ArrayLoader());
+        $stream = $twig->tokenize(new Source(code: $code, name: $file, path: $file));
         $this->_tokens = [];
         while (!$stream->isEOF()) {
             $token = $stream->next();
-            if (! $token->test(\Twig\Token::TEXT_TYPE) && ! $token->test(\Twig\Token::BLOCK_END_TYPE)) {
+            if (! $token->test(Token::TEXT_TYPE) && ! $token->test(Token::BLOCK_END_TYPE)) {
                 $this->_tokens[] = $token;
             }
         }
         unset($stream);
     }
 
-    protected function _getStringFromToken(int $position, int $offset):string {
+    /**
+     * Return the string represented by a token and offset
+     *
+     * It also escapes double quotes with backslash: " -> \"
+     *
+     * @param int $position The position of the token in $this->_tokens
+     * @param int $offset The offset from that position.
+     * @return string The escaped string
+     */
+    protected function _getStringFromToken(int $position, int $offset): string
+    {
         $string = $this->_tokens[$position + $offset]->getValue();
+
         return str_replace('"', '\"', $string);
     }
 }
