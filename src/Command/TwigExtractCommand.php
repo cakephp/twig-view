@@ -17,10 +17,10 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Command;
 
-use Cake\Console\Helper\ProgressHelper;
 use Cake\Command\I18nExtractCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
+use Cake\Console\Helper\ProgressHelper;
 use Cake\Utility\Filesystem;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
