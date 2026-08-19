@@ -127,8 +127,6 @@ class TwigView extends View
 
     /**
      * Gets Twig Profile if profiler enabled.
-     *
-     * @return \Twig\Profiler\Profile|null
      */
     public function getProfile(): ?Profile
     {
@@ -241,7 +239,6 @@ class TwigView extends View
 
                 /**
                  * @param string $class FQCN
-                 * @return object|null
                  */
                 public function load(string $class): ?object
                 {

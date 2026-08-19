@@ -25,11 +25,7 @@ endif;
 <?php endif; ?>
 
 <p>
-<?php if (version_compare(PHP_VERSION, '5.4.3', '>=')): ?>
     <span class="notice success">Your version of PHP is 5.4.3 or higher</span>
-<?php else: ?>
-    <span class="notice">Your version of PHP is too low. You need PHP 5.4.3 or higher to use CakePHP.</span>
-<?php endif; ?>
 </p>
 
 <p>
