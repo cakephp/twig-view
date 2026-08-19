@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Command;
 
-use Cake\Command\Helper\ProgressHelper;
+use Cake\Console\Helper\ProgressHelper;
 use Cake\Command\I18nExtractCommand;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
@@ -60,7 +60,7 @@ class TwigExtractCommand extends I18nExtractCommand
      */
     protected function _extractTokens(Arguments $args, ConsoleIo $io): void
     {
-        $progress = $io->helper('progress');
+        $progress = $io->helper('Progress');
         assert($progress instanceof ProgressHelper);
         $progress->init(['total' => count($this->_files)]);
         $isVerbose = $args->getOption('verbose');
@@ -197,6 +197,7 @@ class TwigExtractCommand extends I18nExtractCommand
         /** @var \Twig\Token $token */
         foreach ($this->_tokens as $count => $token) {
             if ($token->test(Token::NAME_TYPE, $functionName)) {
+                $singular = '';
                 switch ($functionName) {
                     case '__':
                         $singular = $this->_getStringFromToken($count, 2);
@@ -245,7 +246,7 @@ class TwigExtractCommand extends I18nExtractCommand
                     if (isset($plural)) {
                         $details['msgid_plural'] = $plural;
                     } else {
-                        $this->_markerError($io, $this->_file, $token->getLine(), $functionName, $token->getOffset());
+                        $this->_markerError($io, $this->_file, $token->getLine(), $functionName, $token->getOffset() ?? 0);
                         continue;
                     }
                 }
@@ -254,7 +255,7 @@ class TwigExtractCommand extends I18nExtractCommand
                     if (isset($context)) {
                         $details['msgctxt'] = $context;
                     } else {
-                        $this->_markerError($io, $this->_file, $token->getLine(), $functionName, $token->getOffset());
+                        $this->_markerError($io, $this->_file, $token->getLine(), $functionName, $token->getOffset() ?? 0);
                         continue;
                     }
                 }
@@ -365,5 +366,15 @@ class TwigExtractCommand extends I18nExtractCommand
         $string = $this->_tokens[$position + $offset]->getValue();
 
         return str_replace('"', '\"', $string);
+    }
+
+    /**
+     * Adding this here to fix a PHP 8.2 error in the tests
+     *
+     * @return void
+     */
+    protected function extractFileReflection(string $file, string $code): void
+    {
+        parent::extractFileReflection($file, $code);
     }
 }
