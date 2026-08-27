@@ -61,7 +61,7 @@ class TwigExtractCommand extends I18nExtractCommand
     protected function _extractTokens(Arguments $args, ConsoleIo $io): void
     {
         $progress = $io->helper('Progress');
-        assert($progress instanceof \Cake\Console\Helper\ProgressHelper);
+        assert($progress instanceof ProgressHelper);
         $progress->init(['total' => count($this->_files)]);
         $isVerbose = $args->getOption('verbose');
 
