@@ -160,7 +160,6 @@ class FileLoader implements LoaderInterface
      * which file exists.
      *
      * @param string $partial Template path excluding extension
-     * @return string|null
      */
     public function checkExtensions(string $partial): ?string
     {

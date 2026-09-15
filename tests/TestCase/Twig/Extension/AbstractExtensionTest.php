@@ -38,11 +38,6 @@ class AbstractExtensionTest extends TestCase
         }
     }
 
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
     public function testGetTokenParsers(): void
     {
         $tokenParsers = $this->extension->getTokenParsers();

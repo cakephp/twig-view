@@ -29,7 +29,9 @@ use Cake\TwigView\TwigViewPlugin;
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 define('ROOT', dirname(__DIR__));
-define('CORE_PATH', ROOT . DS . 'vendor/cakephp/cakephp');
+define('CAKE_CORE_INCLUDE_PATH', ROOT);
+define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
+define('CAKE', CORE_PATH . 'src' . DS);
 define('APP', sys_get_temp_dir());
 define('TMP', sys_get_temp_dir() . '/TwigViewTmp/');
 define('CACHE', sys_get_temp_dir() . '/TwigViewTmp/cache/');

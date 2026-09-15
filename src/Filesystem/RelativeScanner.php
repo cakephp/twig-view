@@ -44,7 +44,6 @@ final class RelativeScanner
      *
      * @param string $plugin The plugin to find all templates for.
      * @param array<string> $extensions Template extensions to search
-     * @return mixed
      */
     public static function plugin(string $plugin, array $extensions): mixed
     {
