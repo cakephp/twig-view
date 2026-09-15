@@ -11,7 +11,7 @@ declare(strict_types=1);
  *
  * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  * @link          https://cakephp.org CakePHP(tm) Project
- * @since         1.2.0
+ * @since         2.2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
@@ -26,9 +26,9 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Source;
 use Twig\Token;
-use function count; // Imports the global function
-use function in_array; // Imports the global function
-use function is_array; // Imports the global function
+use function count;
+use function in_array;
+use function is_array;
 
 /**
  * Language string extractor
@@ -60,8 +60,10 @@ class TwigExtractCommand extends I18nExtractCommand
      */
     protected function _extractTokens(Arguments $args, ConsoleIo $io): void
     {
+        /**
+         * @var ProgressHelper $progress
+         */
         $progress = $io->helper('Progress');
-        assert($progress instanceof ProgressHelper);
         $progress->init(['total' => count($this->_files)]);
         $isVerbose = $args->getOption('verbose');
 
