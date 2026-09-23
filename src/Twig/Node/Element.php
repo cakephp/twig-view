@@ -37,7 +37,7 @@ class Element extends Node
      * @param \Twig\Node\Expression\AbstractExpression $data Data.
      * @param \Twig\Node\Expression\AbstractExpression $options Options.
      * @param int $lineno Linenumber.
-     * @param string $tag Tag.
+     * @param string|null $tag Tag.
      */
     public function __construct(
         AbstractExpression $name,

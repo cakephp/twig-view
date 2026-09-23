@@ -21,9 +21,19 @@ namespace Cake\TwigView\View;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\TwigView\Panel\TwigPanel;
-use Cake\TwigView\Twig\Extension;
+use Cake\TwigView\Twig\Extension\ArraysExtension;
+use Cake\TwigView\Twig\Extension\BasicExtension;
+use Cake\TwigView\Twig\Extension\ConfigureExtension;
+use Cake\TwigView\Twig\Extension\I18nExtension;
+use Cake\TwigView\Twig\Extension\InflectorExtension;
+use Cake\TwigView\Twig\Extension\NumberExtension;
+use Cake\TwigView\Twig\Extension\ProfilerExtension;
+use Cake\TwigView\Twig\Extension\StringsExtension;
+use Cake\TwigView\Twig\Extension\TimeExtension;
+use Cake\TwigView\Twig\Extension\UtilsExtension;
+use Cake\TwigView\Twig\Extension\ViewExtension;
 use Cake\TwigView\Twig\FileLoader;
-use Cake\TwigView\Twig\TokenParser;
+use Cake\TwigView\Twig\TokenParser\LayoutParser;
 use Cake\View\Exception\MissingLayoutException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\View\View;
@@ -65,16 +75,15 @@ class TwigView extends View
      *
      * @var array<string, mixed>
      */
-    protected array $_defaultConfig = [
-        'environment' => [
-        ],
+    protected array $defaultConfig = [
+        'environment' => [],
         'markdown' => null,
     ];
 
     /**
      * @inheritDoc
      */
-    protected string $_ext = '.twig';
+    protected string $ext = '.twig';
 
     /**
      * List of extensions searched when loading templates.
@@ -189,7 +198,7 @@ class TwigView extends View
      */
     protected function initializeTokenParser(): void
     {
-        $this->getTwig()->addTokenParser(new TokenParser\LayoutParser());
+        $this->getTwig()->addTokenParser(new LayoutParser());
     }
 
     // phpcs:disable CakePHP.Commenting.FunctionComment.InvalidReturnVoid
@@ -211,16 +220,16 @@ class TwigView extends View
         }
 
         // CakePHP bridging extensions
-        $twig->addExtension(new Extension\ArraysExtension());
-        $twig->addExtension(new Extension\BasicExtension());
-        $twig->addExtension(new Extension\ConfigureExtension());
-        $twig->addExtension(new Extension\I18nExtension());
-        $twig->addExtension(new Extension\InflectorExtension());
-        $twig->addExtension(new Extension\NumberExtension());
-        $twig->addExtension(new Extension\StringsExtension());
-        $twig->addExtension(new Extension\TimeExtension());
-        $twig->addExtension(new Extension\UtilsExtension());
-        $twig->addExtension(new Extension\ViewExtension());
+        $twig->addExtension(new ArraysExtension());
+        $twig->addExtension(new BasicExtension());
+        $twig->addExtension(new ConfigureExtension());
+        $twig->addExtension(new I18nExtension());
+        $twig->addExtension(new InflectorExtension());
+        $twig->addExtension(new NumberExtension());
+        $twig->addExtension(new StringsExtension());
+        $twig->addExtension(new TimeExtension());
+        $twig->addExtension(new UtilsExtension());
+        $twig->addExtension(new ViewExtension());
 
         // Markdown extension
         $markdown = $this->getConfig('markdown');
@@ -228,15 +237,12 @@ class TwigView extends View
             $twig->addExtension(new MarkdownExtension());
 
             $engine = $markdown === 'default' ? new DefaultMarkdown() : $markdown;
-            $twig->addRuntimeLoader(new class ($engine) implements RuntimeLoaderInterface {
-                private readonly MarkdownInterface $engine;
-
+            $twig->addRuntimeLoader(new readonly class ($engine) implements RuntimeLoaderInterface {
                 /**
                  * @param \Twig\Extra\Markdown\MarkdownInterface $engine MarkdownInterface instance
                  */
-                public function __construct(MarkdownInterface $engine)
+                public function __construct(private MarkdownInterface $engine)
                 {
-                    $this->engine = $engine;
                 }
 
                 /**
@@ -271,13 +277,13 @@ class TwigView extends View
     protected function initializeProfiler(): void
     {
         static::$profile = new Profile();
-        $this->getTwig()->addExtension(new Extension\ProfilerExtension(static::$profile));
+        $this->getTwig()->addExtension(new ProfilerExtension(static::$profile));
     }
 
     /**
      * @inheritDoc
      */
-    protected function _evaluate(string $templateFile, array $dataForView): string
+    protected function evaluate(string $templateFile, array $dataForView): string
     {
         // Set _view for each render because Twig Environment is shared between views.
         $this->getTwig()->addGlobal('_view', $this);
@@ -293,12 +299,12 @@ class TwigView extends View
     /**
      * @inheritDoc
      */
-    protected function _getTemplateFileName(?string $name = null): string
+    protected function getTemplateFileName(?string $name = null): string
     {
         foreach ($this->extensions as $extension) {
-            $this->_ext = $extension;
+            $this->ext = $extension;
             try {
-                return parent::_getTemplateFileName($name);
+                return parent::getTemplateFileName($name);
             } catch (MissingTemplateException $exception) {
                 $missingException = $exception;
             }
@@ -310,12 +316,12 @@ class TwigView extends View
     /**
      * @inheritDoc
      */
-    protected function _getLayoutFileName(?string $name = null): string
+    protected function getLayoutFileName(?string $name = null): string
     {
         foreach ($this->extensions as $extension) {
-            $this->_ext = $extension;
+            $this->ext = $extension;
             try {
-                return parent::_getLayoutFileName($name);
+                return parent::getLayoutFileName($name);
             } catch (MissingLayoutException $exception) {
                 $missingException = $exception;
             }
@@ -327,11 +333,11 @@ class TwigView extends View
     /**
      * @inheritDoc
      */
-    protected function _getElementFileName(string $name, bool $pluginCheck = true): string|false
+    protected function getElementFileName(string $name, bool $pluginCheck = true): string|false
     {
         foreach ($this->extensions as $extension) {
-            $this->_ext = $extension;
-            $result = parent::_getElementFileName($name, $pluginCheck);
+            $this->ext = $extension;
+            $result = parent::getElementFileName($name, $pluginCheck);
             if ($result !== false) {
                 return $result;
             }

@@ -33,16 +33,10 @@ use function Cake\Core\pluginSplit;
 class FileLoader implements LoaderInterface
 {
     /**
-     * @var array<string>
-     */
-    protected array $extensions;
-
-    /**
      * @param array<string> $extensions Template file extensions
      */
-    public function __construct(array $extensions)
+    public function __construct(protected array $extensions)
     {
-        $this->extensions = $extensions;
     }
 
     /**

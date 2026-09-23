@@ -32,11 +32,6 @@ use Twig\Node\NodeOutputInterface;
 class Cell extends Node implements NodeOutputInterface
 {
     /**
-     * Whether to assign the data or not.
-     */
-    protected bool $assign = false;
-
-    /**
      * Constructor.
      *
      * @param bool $assign Assign or echo.
@@ -45,10 +40,10 @@ class Cell extends Node implements NodeOutputInterface
      * @param \Twig\Node\Expression\AbstractExpression $data Data array.
      * @param \Twig\Node\Expression\AbstractExpression $options Options array.
      * @param int $lineno Line number.
-     * @param string $tag Tag name.
+     * @param string|null $tag Tag name.
      */
     public function __construct(
-        bool $assign,
+        protected bool $assign,
         mixed $variable,
         AbstractExpression $name,
         ?AbstractExpression $data = null,
@@ -76,8 +71,6 @@ class Cell extends Node implements NodeOutputInterface
             $lineno,
             $tag,
         );
-
-        $this->assign = $assign;
     }
 
     /**

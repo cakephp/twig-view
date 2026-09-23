@@ -32,7 +32,7 @@ class LayoutNode extends Node implements NodeOutputInterface
      *
      * @param \Twig\Node\Expression\AbstractExpression $layout layout
      * @param int $line Line number.
-     * @param string $tag Tag name.
+     * @param string|null $tag Tag name.
      */
     public function __construct(AbstractExpression $layout, int $line = 0, ?string $tag = null)
     {

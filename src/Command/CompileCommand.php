@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Cake\TwigView\Command;
 
-use Cake\Console\Arguments;
 use Cake\Console\BaseCommand;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\TwigView\Filesystem\Scanner;
 use Cake\TwigView\View\TwigView;
@@ -50,35 +48,33 @@ class CompileCommand extends BaseCommand
     /**
      * @inheritDoc
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute()
     {
-        $type = $args->getArgumentAt(0);
+        $type = $this->args->getArgumentAt(0);
 
         /** @phpstan-var class-string<\Cake\TwigView\View\TwigView> $viewClass */
-        $viewClass = $args->getOption('view-class');
+        $viewClass = $this->args->getOption('view-class');
 
         // Setup cached TwigView to avoid creating for every file
         $this->twigView = new $viewClass();
 
         // $type is validated by the 'choices' option in buildOptionsParser
-        return $this->{'execute' . $type}($args, $io);
+        return $this->{'execute' . $type}();
     }
 
     /**
      * Compile all templates.
      *
-     * @param \Cake\Console\Arguments $args The command arguments
-     * @param \Cake\Console\ConsoleIo $io The console logger
      * @return int
      */
-    protected function executeAll(Arguments $args, ConsoleIo $io): int
+    protected function executeAll(): int
     {
-        $io->info('Compiling all templates');
+        $this->io->info('Compiling all templates');
 
         foreach (Scanner::all($this->twigView->getExtensions()) as $section => $templates) {
-            $io->info('Compiling section ' . $section);
+            $this->io->info('Compiling section ' . $section);
             foreach ($templates as $template) {
-                if ($this->compileFile($io, $template) === static::CODE_ERROR) {
+                if ($this->compileFile($template) === static::CODE_ERROR) {
                     return static::CODE_ERROR;
                 }
             }
@@ -90,22 +86,20 @@ class CompileCommand extends BaseCommand
     /**
      * Compile all templates for a plugin.
      *
-     * @param \Cake\Console\Arguments $args The command arguments
-     * @param \Cake\Console\ConsoleIo $io The console logger
      * @return int
      */
-    protected function executePlugin(Arguments $args, ConsoleIo $io): int
+    protected function executePlugin(): int
     {
-        $plugin = $args->getArgumentAt(1);
+        $plugin = $this->args->getArgumentAt(1);
         if ($plugin === null) {
-            $io->error('Plugin name not specified.');
+            $this->io->error('Plugin name not specified.');
 
             return static::CODE_ERROR;
         }
 
-        $io->info('Compiling plugin ' . $plugin);
+        $this->io->info('Compiling plugin ' . $plugin);
         foreach (Scanner::plugin($plugin, $this->twigView->getExtensions()) as $template) {
-            if ($this->compileFile($io, $template) === static::CODE_ERROR) {
+            if ($this->compileFile($template) === static::CODE_ERROR) {
                 return static::CODE_ERROR;
             }
         }
@@ -116,37 +110,34 @@ class CompileCommand extends BaseCommand
     /**
      * Compile a single template file.
      *
-     * @param \Cake\Console\Arguments $args The command arguments
-     * @param \Cake\Console\ConsoleIo $io The console logger
      * @return int
      */
-    protected function executeFile(Arguments $args, ConsoleIo $io): int
+    protected function executeFile(): int
     {
-        $filename = $args->getArgumentAt(1);
+        $filename = $this->args->getArgumentAt(1);
         if ($filename === null) {
-            $io->error('File name not specified.');
+            $this->io->error('File name not specified.');
 
             return static::CODE_ERROR;
         }
 
-        return $this->compileFile($io, $filename);
+        return $this->compileFile($filename);
     }
 
     /**
      * Compile a single template file.
      *
-     * @param \Cake\Console\ConsoleIo $io The console logger
      * @param string $filename The template filename
      * @return int
      */
-    protected function compileFile(ConsoleIo $io, string $filename): int
+    protected function compileFile(string $filename): int
     {
         try {
             $this->twigView->getTwig()->load($filename);
-            $io->success(sprintf('Compiled %s.', $filename));
+            $this->io->success(sprintf('Compiled %s.', $filename));
         } catch (Exception $exception) {
-            $io->error(sprintf('Unable to compile %s.', $filename));
-            $io->error($exception->getMessage());
+            $this->io->error(sprintf('Unable to compile %s.', $filename));
+            $this->io->error($exception->getMessage());
 
             return static::CODE_ERROR;
         }
