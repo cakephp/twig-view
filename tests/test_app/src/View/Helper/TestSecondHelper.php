@@ -30,6 +30,6 @@ class TestSecondHelper extends Helper
 
     public function useElement(): string
     {
-        return $this->_View->element('element_with_var');
+        return $this->View->element('element_with_var');
     }
 }

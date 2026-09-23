@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - 2.x
+      - 3.x 
   pull_request:
     branches:
       - '*'
@@ -14,9 +15,9 @@ permissions:
 
 jobs:
   testsuite:
-    uses: cakephp/.github/.github/workflows/testsuite-without-db.yml@5.x
+    uses: cakephp/.github/.github/workflows/testsuite-without-db.yml@6.x
     secrets: inherit
 
   cs-stan:
-    uses: cakephp/.github/.github/workflows/cs-stan.yml@5.x
+    uses: cakephp/.github/.github/workflows/cs-stan.yml@6.x
     secrets: inherit

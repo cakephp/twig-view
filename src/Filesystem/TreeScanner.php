@@ -33,7 +33,7 @@ final class TreeScanner
      */
     public static function all(array $extensions): array
     {
-        return static::deepen(RelativeScanner::all($extensions));
+        return self::deepen(RelativeScanner::all($extensions));
     }
 
     /**
@@ -45,7 +45,7 @@ final class TreeScanner
      */
     public static function plugin(string $plugin, array $extensions): array
     {
-        return static::deepen([
+        return self::deepen([
             $plugin => RelativeScanner::plugin($plugin, $extensions),
         ])[$plugin];
     }
@@ -59,7 +59,7 @@ final class TreeScanner
     protected static function deepen(array $sections): array
     {
         foreach ($sections as $section => $paths) {
-            $sections[$section] = static::convertToTree($paths);
+            $sections[$section] = self::convertToTree($paths);
         }
 
         return $sections;
@@ -74,7 +74,7 @@ final class TreeScanner
     protected static function convertToTree(array $paths): array
     {
         foreach ($paths as $index => $path) {
-            static::convertPathToTree($paths, $index, $path);
+            self::convertPathToTree($paths, $index, $path);
         }
 
         return $paths;
@@ -92,7 +92,7 @@ final class TreeScanner
     {
         if (str_contains($path, DIRECTORY_SEPARATOR)) {
             $chunks = explode(DIRECTORY_SEPARATOR, $path);
-            $paths = static::branch($paths, $chunks);
+            $paths = self::branch($paths, $chunks);
             unset($paths[$index]);
         }
     }
@@ -106,6 +106,7 @@ final class TreeScanner
      */
     protected static function branch(array $paths, array $branches): array
     {
+        /** @var string $twig */
         $twig = array_shift($branches);
         if ($branches === []) {
             $paths[] = $twig;
@@ -113,11 +114,9 @@ final class TreeScanner
             return $paths;
         }
 
-        if (!isset($paths[$twig])) {
-            $paths[$twig] = [];
-        }
+        $paths[$twig] ??= [];
 
-        $paths[$twig] = static::branch($paths[$twig], $branches);
+        $paths[$twig] = self::branch($paths[$twig], $branches);
 
         return $paths;
     }

@@ -47,7 +47,7 @@ class StringsExtensionTest extends AbstractExtensionTest
 
     public function testFilterInsert(): void
     {
-        $string = ':name is :age years old.';
+        $string = '{name} is {age} years old.';
         $keyValues = ['name' => 'Bob', 'age' => '65'];
         $callable = $this->getFilter('insert')->getCallable();
         $result = call_user_func_array($callable, [$string, $keyValues]);

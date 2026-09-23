@@ -36,7 +36,7 @@ final class RelativeScanner
      */
     public static function all(array $extensions): array
     {
-        return static::strip(Scanner::all($extensions));
+        return self::strip(Scanner::all($extensions));
     }
 
     /**
@@ -48,7 +48,7 @@ final class RelativeScanner
      */
     public static function plugin(string $plugin, array $extensions): mixed
     {
-        return static::strip([
+        return self::strip([
             $plugin => Scanner::plugin($plugin, $extensions),
         ])[$plugin];
     }
@@ -62,7 +62,7 @@ final class RelativeScanner
     protected static function strip(array $sections): array
     {
         foreach ($sections as $section => $paths) {
-            $sections[$section] = static::stripAbsolutePath($paths, $section === 'APP' ? null : $section);
+            $sections[$section] = self::stripAbsolutePath($paths, $section === 'APP' ? null : $section);
         }
 
         return $sections;

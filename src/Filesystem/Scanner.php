@@ -46,19 +46,19 @@ final class Scanner
         foreach (App::path('templates') as $path) {
             if (is_dir($path)) {
                 $sections['APP'] ??= [];
-                $sections['APP'] = array_merge($sections['APP'], static::iteratePath($path, $extensions));
+                $sections['APP'] = array_merge($sections['APP'], self::iteratePath($path, $extensions));
             }
         }
 
-        foreach (static::pluginsWithTemplates() as $plugin) {
+        foreach (self::pluginsWithTemplates() as $plugin) {
             $path = Plugin::templatePath($plugin);
             if (is_dir($path)) {
                 $sections[$plugin] ??= [];
-                $sections[$plugin] = array_merge($sections[$plugin], static::iteratePath($path, $extensions));
+                $sections[$plugin] = array_merge($sections[$plugin], self::iteratePath($path, $extensions));
             }
         }
 
-        return static::clearEmptySections($sections);
+        return self::clearEmptySections($sections);
     }
 
     /**
@@ -72,7 +72,7 @@ final class Scanner
     {
         $path = Plugin::templatePath($plugin);
 
-        return static::iteratePath($path, $extensions);
+        return self::iteratePath($path, $extensions);
     }
 
     /**
@@ -121,7 +121,7 @@ final class Scanner
      */
     protected static function iteratePath(string $path, array $extensions): array
     {
-        return static::walkIterator(static::setupIterator($path, $extensions));
+        return self::walkIterator(self::setupIterator($path, $extensions));
     }
 
     /**
