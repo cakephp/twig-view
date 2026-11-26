@@ -96,12 +96,13 @@ class FileLoader implements LoaderInterface
         $templatePaths = App::path('templates');
         if (file_exists($name)) {
             $name = str_replace('//', '/', $name);
+            $namePath = realpath($name);
             // Check both app template paths and all plugins,
             // as template from element() end up here too.
             // We also need to protect against `{% include var_name %}`
             // where var_name is request data.
             foreach ($templatePaths as $templatePath) {
-                if (str_starts_with($name, $templatePath)) {
+                if (str_starts_with($namePath, $templatePath)) {
                     return $name;
                 }
             }
