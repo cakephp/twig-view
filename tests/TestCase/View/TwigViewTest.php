@@ -46,6 +46,9 @@ class TwigViewTest extends TestCase
         Configure::write('App.encoding', 'UTF-8');
 
         $this->view = new AppView();
+        if (file_exists(TMP . 'secret.txt')) {
+            unlink(TMP . 'secret.txt');
+        }
     }
 
     /**
@@ -260,9 +263,31 @@ TEXT;
     public function testTemplatePathRestriction(): void
     {
         $path = TMP . 'secret.txt';
+        if (!is_dir(TMP)) {
+            mkdir(TMP, 0777, true);
+        }
+
         file_put_contents($path, 'SECRET DATA from /tmp/secret.txt');
         $view = new AppView();
         $view->set('item', $path);
+        $this->expectException(LoaderError::class);
+        $this->expectExceptionMessage('Could not find template');
+        $view->render('template_path_restriction');
+    }
+
+    public function testTemplatePathRestrictionRelativePath(): void
+    {
+        $path = TMP . 'secret.txt';
+        if (!is_dir(TMP)) {
+            mkdir(TMP, 0777, true);
+        }
+
+        $base = ROOT;
+        $slashes = substr_count($base, DIRECTORY_SEPARATOR);
+        $includePath = ROOT . str_repeat('/..', $slashes) . TMP . 'secret.txt';
+        file_put_contents($path, 'SECRET DATA from /tmp/secret.txt');
+        $view = new AppView();
+        $view->set('item', $includePath);
         $this->expectException(LoaderError::class);
         $this->expectExceptionMessage('Could not find template');
         $view->render('template_path_restriction');
