@@ -102,7 +102,7 @@ class FileLoader implements LoaderInterface
             // We also need to protect against `{% include var_name %}`
             // where var_name is request data.
             foreach ($templatePaths as $templatePath) {
-                if (str_starts_with($namePath, $templatePath)) {
+                if ($namePath !== false && str_starts_with($namePath, $templatePath)) {
                     return $name;
                 }
             }
